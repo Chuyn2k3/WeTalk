@@ -1,15 +1,22 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'modules/home/page/fragment_talk_home.dart';
 import 'package:flutter_app/modules/authentication/page/fragment_talk_login.dart';
-
-// import 'fragment_talk_chat.dart';
-// import 'fragment_talk_home.dart';
-// import 'package:flutter_app/fragment_talk_login.dart';
-final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
-
-void main() {
-  runApp(MyApp(
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(
+    MultiBlocProvider(providers: [
+      BlocProvider<AuthenticationBloc>(
+      create: (BuildContext context) => AuthenticationBloc(),
+    ),],
+    child:
+    MyApp(
+  )
   ));
 }
 

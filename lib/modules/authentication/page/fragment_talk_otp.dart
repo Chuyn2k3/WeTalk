@@ -1,7 +1,50 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_app/modules/authentication/page/fragment_talk_done.dart';
+import 'dart:async';
 
-class LoginNumberPhonePage2 extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc.dart';
+import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_event.dart';
+import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_state.dart';
+import 'package:flutter_app/modules/authentication/page/fragment_talk_done.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class LoginNumberPhonePage2 extends StatefulWidget {
+  final String email;
+
+  const LoginNumberPhonePage2({super.key, required this.email});
+  @override
+  State<LoginNumberPhonePage2> createState() => _LoginNumberPhonePage2State();
+}
+
+class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
+  OtpBloc fetchOtp = OtpBloc();
+
+  final otpController = TextEditingController();
+  late Timer _timer;
+  int _start = 10;
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +88,7 @@ class LoginNumberPhonePage2 extends StatelessWidget {
               Container(
                 width: 200,
                 child: TextField(
+                  controller: otpController,
                   decoration: InputDecoration(
                     hintText: 'OTP',
                     border: OutlineInputBorder(
@@ -63,12 +107,14 @@ class LoginNumberPhonePage2 extends StatelessWidget {
                     width: 320,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>LoginNumberPhonePage3()),
-                        );
+                        fetchOtp.add(FetchOtp(
+                            email: widget.email,
+                            otp: int.parse(otpController.text)));
                       },
-                      child: Text('Next',style: TextStyle(color: Colors.white, fontSize: 16),),
+                      child: Text(
+                        'Next',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -77,14 +123,30 @@ class LoginNumberPhonePage2 extends StatelessWidget {
                       ),
                     ),
                   ),
+                  BlocConsumer<OtpBloc, OtpState>(
+                    bloc: fetchOtp,
+                    builder: (context, state) {
+                      if (state is OtpLoading) {
+                        return const CircularProgressIndicator();
+                      }
+                      else return SizedBox();
+                    },
+                    listener: (BuildContext context, OtpState state) async {
+                      if (state is OtpLoaded) {
+                        print(state.data.message);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginNumberPhonePage3()),
+                        );
+                      }
+                    },
+                  ),
                   SizedBox(height: 20),
                   // ProgressBar
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ),
                   SizedBox(height: 16),
                   Text(
-                    'Resend OTP in 30 sec',
+                    'Resend OTP in $_start sec',
                     textAlign: TextAlign.center,
                   ),
                 ],

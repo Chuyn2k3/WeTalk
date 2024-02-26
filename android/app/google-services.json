@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "165540383811",
+    "project_id": "app-signal-e7d7e",
+    "storage_bucket": "app-signal-e7d7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165540383811:android:f98d003d43a8b053cf98f6",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL6-aUgDFXiwvyT_LONam7Twb8ksYO4mI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

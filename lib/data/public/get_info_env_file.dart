@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<String?> getApiUrl() async {
   await dotenv.load(fileName: ".env");
-  String? apiUrl = dotenv.env['API_URL'];
+  String? apiUrl = dotenv.env['REGISTER_URL'];
   return apiUrl;
 }
 

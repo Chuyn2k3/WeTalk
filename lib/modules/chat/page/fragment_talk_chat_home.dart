@@ -158,7 +158,7 @@ class ProfilePicView extends StatelessWidget {
       height: 48.0,
       margin: EdgeInsets.only(left: 10.0),
       child: CircleAvatar(
-        backgroundImage: AssetImage('assets/profile_pic.png'),
+        backgroundImage: AssetImage('assets/images/profile.png'),
       ),
     );
   }
