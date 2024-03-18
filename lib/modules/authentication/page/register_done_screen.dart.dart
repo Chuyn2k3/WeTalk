@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/modules/home/page/fragment_talk_home.dart';
+import 'package:flutter_app/modules/home/page/home_screen.dart.dart';
 
-class LoginNumberPhonePage3 extends StatelessWidget {
+class RegisterDoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,19 +53,19 @@ class LoginNumberPhonePage3 extends StatelessWidget {
               ),
               SizedBox(height: 20),
               // EditText để nhập OTP
-              Container(
-                width: 300,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Username',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    contentPadding: EdgeInsets.all(10),
-                  ),
-                ),
-              ),
-              SizedBox(height: 50),
+              // Container(
+              //   width: 300,
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //       hintText: 'Username',
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //       contentPadding: EdgeInsets.all(10),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 50),
               Column(
                 children: [
                   // Nút NEXT
@@ -76,7 +76,7 @@ class LoginNumberPhonePage3 extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>MainPage()),
+                          MaterialPageRoute(builder: (context)=>HomeScreen()),
                         );
                       },
                       child: Text('Next',style: TextStyle(color: Colors.white, fontSize: 16),),

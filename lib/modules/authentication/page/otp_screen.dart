@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_state.dart';
-import 'package:flutter_app/modules/authentication/page/fragment_talk_done.dart';
+import 'package:flutter_app/modules/authentication/page/register_done_screen.dart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginNumberPhonePage2 extends StatefulWidget {
+class OtpScreen extends StatefulWidget {
   final String email;
-
-  const LoginNumberPhonePage2({super.key, required this.email});
+  const OtpScreen({super.key, required this.email});
   @override
-  State<LoginNumberPhonePage2> createState() => _LoginNumberPhonePage2State();
+  State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
+class _OtpScreenState extends State<OtpScreen> {
   OtpBloc fetchOtp = OtpBloc();
 
   final otpController = TextEditingController();
@@ -47,11 +46,12 @@ class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 70.0),
+          padding: EdgeInsets.only(left: size.width*0.05, right: size.width*0.05, top: 70.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -63,9 +63,9 @@ class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
                   _buildTab(3),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: size.width*0.05),
               SizedBox(
-                width: 150,
+                width: size.width*0.05,
                 height: 150,
                 child: Icon(
                   Icons.mail_outline,
@@ -73,7 +73,7 @@ class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
                   size: 150,
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: size.width*0.025),
               Text(
                 'Enter OTP',
                 style: TextStyle(
@@ -84,7 +84,7 @@ class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: size.width*0.05),
               Container(
                 width: 200,
                 child: TextField(
@@ -128,8 +128,8 @@ class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
                     builder: (context, state) {
                       if (state is OtpLoading) {
                         return const CircularProgressIndicator();
-                      }
-                      else return SizedBox();
+                      } else
+                        return SizedBox();
                     },
                     listener: (BuildContext context, OtpState state) async {
                       if (state is OtpLoaded) {
@@ -137,7 +137,7 @@ class _LoginNumberPhonePage2State extends State<LoginNumberPhonePage2> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginNumberPhonePage3()),
+                              builder: (context) => RegisterDoneScreen()),
                         );
                       }
                     },

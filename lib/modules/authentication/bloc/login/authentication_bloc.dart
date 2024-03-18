@@ -3,7 +3,7 @@ import 'package:flutter_app/data/term/app_term.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc_state.dart';
 import 'package:flutter_app/modules/authentication/model/login_model.dart';
-import 'package:flutter_app/modules/authentication/repo/authentication_repo.dart';
+import 'package:flutter_app/modules/authentication/repo/login_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthenticationBloc

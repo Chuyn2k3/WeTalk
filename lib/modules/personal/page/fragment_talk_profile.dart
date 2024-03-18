@@ -1,90 +1,84 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/modules/personal/page/fragment_talk_profile_edit.dart';
+import 'package:flutter_app/modules/personal/widget/appbar_widget.dart';
+import 'package:flutter_app/modules/personal/widget/button_widget.dart';
+import 'package:flutter_app/modules/personal/widget/numbers_widget.dart';
+import 'package:flutter_app/modules/personal/widget/profile_widget.dart';
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
 
-import 'fragment_talk_profile_edit.dart';
-
-
-class ProfilePage extends StatelessWidget {
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 40,),
-          Container(
-            height: kToolbarHeight,
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
+    //final user = UserPreferences.myUser;
+          return Scaffold(
+            backgroundColor: Colors.white,
+          appBar: buildAppBar(context),
+          body: ListView(
 
-                  },
-                ),
-                Card(
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context)=> HPage())
-                        // );
+            physics: BouncingScrollPhysics(),
+            children: [
+              ProfileWidget(
+                imagePath: 'assets/images/anh_CV.jpg',
+                onClicked: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => EditProfilePage()),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              buildName(),
+              const SizedBox(height: 24),
+              //Center(child: buildUpgradeButton()),
+              const SizedBox(height: 24),
+              NumbersWidget(),
+              const SizedBox(height: 48),
+              buildAbout(),
+            ],
+          ),
+        );
+  
 
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                      ),
-                      child: Text("Cập nhật", style: TextStyle(color: Colors.white, fontSize: 14),),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 150,
-            height: 250,
-            child: Icon(
-              Icons.person_outline_rounded,
-              color: Colors.black,
-              size: 200,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Username',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                contentPadding: EdgeInsets.all(10.0),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextField(
-              enabled: false,
-              decoration: InputDecoration(
-                hintText: 'Phone',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                contentPadding: EdgeInsets.all(10.0),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
+
+  Widget buildName() => Column(
+        children: [
+          Text(
+            'chuyen',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'chuyenp32@gmail.com',
+            style: TextStyle(color: Colors.grey),
+          )
+        ],
+      );
+
+  Widget buildUpgradeButton() => ButtonWidget(
+        text: 'hehehe',
+        onClicked: () {},
+      );
+
+  Widget buildAbout() => Container(
+        padding: EdgeInsets.symmetric(horizontal: 48),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Giới thiệu',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              '',
+              style: TextStyle(fontSize: 16, height: 1.4),
+            ),
+          ],
+        ),
+      );
 }

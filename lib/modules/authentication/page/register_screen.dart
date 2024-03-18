@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data/term/app_term.dart';
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc.dart';
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc_state.dart';
@@ -7,14 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'fragment_talk_otp.dart';
+import 'otp_screen.dart';
 
-class TalkRegisterFragment extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+  static String routeName = 'register_screen';
   @override
-  State<TalkRegisterFragment> createState() => _TalkRegisterFragmentState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final formfield = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
@@ -31,14 +34,17 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
 
   final passwordController = TextEditingController();
 
+  final passwordConfirmController = TextEditingController();
+
   RegisterBloc fetchRegister = RegisterBloc();
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.only(top: 70.0),
+        padding: EdgeInsets.only(top: size.height*0.08),
         child: Center(
           child: Form(
             key: formfield,
@@ -48,37 +54,36 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildTab(1),
-                    _buildTab(2),
-                    _buildTab(3),
+                    _buildTab(1,size),
+                    _buildTab(2,size),
+                    _buildTab(3,size),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text(
-                  'Nhập thông tin tài khoản',
+                SizedBox(height: size.width*0.05),
+                const Text(
+                  AppRegister.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: size.width*0.05),
                 Expanded(
                   child: Card(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(size.width*0.025),
                     color: Colors.white,
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.all(size.width*0.025),
                         child: Column(
                           children: [
-                            buildTextField(
-                                'Tên người dùng', Icons.person, nameController),
-                            SizedBox(height: 16),
+                            buildTextField(AppRegister.userName, Icons.person, nameController,size),
+                            SizedBox(height: size.width*0.05),
                             TextFormField(
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: const InputDecoration(
-                                labelText: 'email',
+                                labelText: AppLoginTerm.email,
                                 border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8))),
@@ -89,14 +94,14 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(value!);
                                 if (value.isEmpty) {
-                                  return 'requireEmail';
+                                  return AppLoginTerm.requireEmail;
                                 } else if (!emailVaild) {
-                                  return 'corectEmail';
+                                  return AppLoginTerm.incorectEmail;
                                 }
                                 return null;
                               },
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: size.width*0.05),
                             SizedBox(
                               child: IntlPhoneField(
                                 controller: phoneController,
@@ -116,27 +121,47 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: buildTextField('Giới tính', Icons.male,
-                                      genderController),
+                                  child: buildTextField(AppRegister.gender, Icons.male,
+                                      genderController,size),
                                 ),
-                                SizedBox(width: 16),
+                                SizedBox(width: size.width*0.05),
                                 Expanded(
                                   child: buildTextField(
-                                      'Địa chỉ', Icons.home, addressController),
+                                      AppRegister.address, Icons.home, addressController,size),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: size.width*0.05),
                             buildTextField(
-                                'Tuổi', Icons.calendar_today, ageController),
-                            SizedBox(height: 16),
+                                AppRegister.age, Icons.calendar_today, ageController,size),
+                            SizedBox(height: size.width*0.05),
                             buildTextField(
-                                'Mật khẩu', Icons.lock, passwordController,
+                                AppLoginTerm.password, Icons.lock, passwordController,size,
                                 obscureText: true),
-                            SizedBox(height: 16),
-                            buildTextField('Nhập lại mật khẩu', Icons.lock,
-                                passwordController,
-                                obscureText: true),
+                            SizedBox(height: size.width*0.05),
+                            TextFormField(
+                              controller: passwordConfirmController,
+                              obscureText: true,
+                              //keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                labelText: AppRegister.confirmPass,
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
+                                prefixIcon: Icon(Icons.lock),
+                              ),
+                              validator: (value) {
+                                if (value == '') {
+                                  return AppRegister.needRepeatPass;
+                                } else if (value != passwordController.text) {
+                                  return AppRegister.errorConfirmPass;
+                                }
+                                //return null;
+                              },
+                            ),
+                            // buildTextField('Nhập lại mật khẩu', Icons.lock,
+                            //     passwordConfirmController,
+                            //     obscureText: true),
                           ],
                         ),
                       ),
@@ -145,11 +170,13 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
                 ),
                 SizedBox(height: 6),
                 SizedBox(
-                  height: 60,
-                  width: 320,
+                  height: size.width*0.15,
+                  width: size.height*0.4,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (formfield.currentState!.validate()) {
+                      if (formfield.currentState!.validate() ||
+                          (passwordController.text ==
+                              passwordConfirmController.text)) {
                         fetchRegister.add(FetchRegister(
                             name: nameController.text.isNotEmpty
                                 ? nameController.text
@@ -190,18 +217,17 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginNumberPhonePage2(
+                            builder: (context) => OtpScreen(
                                   email: emailController.text,
                                 )),
                       );
                     } else if (state is RegisterError) {
-                      
                       showDialogCustomize(
                           context, AlertType.error, state.error);
                     }
                   },
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: size.width*0.05),
               ],
             ),
           ),
@@ -210,7 +236,7 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
     );
   }
 
-  Widget _buildTab(int number) {
+  Widget _buildTab(int number, Size size) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -218,8 +244,8 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
       color: number == 1 ? Colors.blue[800] : Colors.white30,
       margin: EdgeInsets.all(10),
       child: Container(
-        width: 32,
-        height: 32,
+        width: size.width*0.1,
+        height: size.width*0.1,
         alignment: Alignment.center,
         child: Text(
           number.toString(),
@@ -233,7 +259,7 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
   }
 
   Widget buildTextField(String hintText, IconData? prefixIcon,
-      TextEditingController textController,
+      TextEditingController textController,Size size,
       {bool obscureText = false}) {
     return Container(
       decoration: BoxDecoration(
@@ -251,7 +277,7 @@ class _TalkRegisterFragmentState extends State<TalkRegisterFragment> {
         controller: textController,
         obscureText: obscureText,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          contentPadding: EdgeInsets.symmetric(vertical: size.width*0.025, horizontal: size.width*0.05),
           hintText: hintText,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

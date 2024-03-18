@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data/term/app_colors.dart';
 
 class ChatScreen extends StatefulWidget {
+  static String routeName = 'messager_screen';
+  const ChatScreen({super.key});
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -11,37 +14,43 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Column(
         children: [
           Container(
             height: kToolbarHeight + 29.0,
-            margin: EdgeInsets.only(top: 24.0),
+            margin: EdgeInsets.only(top: size.width * 0.05),
             child: AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () {},
+                icon: Icon(Icons.arrow_back, color: AppColors.chatPink),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
               title: Row(
                 children: [
                   ProfilePicView(),
                   SizedBox(width: 10.0),
                   Text(
-                    "Username",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                    " Chuyên",
+                    style: TextStyle(
+                        //fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ],
               ),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.videocam),
+                  icon: Icon(Icons.videocam, color: AppColors.chatPink),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: Icon(Icons.more_vert),
+                  icon: Icon(Icons.more_vert, color: AppColors.chatPink),
                   onPressed: () {},
                 ),
               ],
@@ -58,20 +67,30 @@ class _ChatScreenState extends State<ChatScreen> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    child: TextField(
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.white),
                       controller: _messageController,
                       decoration: InputDecoration(
-                        hintText: 'Write message here',
+                        labelStyle:
+                            TextStyle(color: Colors.blue), // Màu cho label
+                        // Màu cho nền của TextFormField khi không được chọn
+                        fillColor: Color.fromARGB(255, 54, 47, 47),
+                        filled: true,
+                        hintText: 'Nhắn tin',
+                        hintStyle:
+                            TextStyle(color: Color.fromARGB(255, 83, 81, 81)),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide(width: 5),
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
                       ),
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.sentiment_satisfied),
+                  icon: Icon(Icons.sentiment_satisfied, color: Colors.blue),
                   onPressed: () {
                     _showStickerDialog(context);
                   },
@@ -153,12 +172,13 @@ class _ChatScreenState extends State<ChatScreen> {
 class ProfilePicView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      width: 48.0,
-      height: 48.0,
+      width: size.width * 0.12,
+      height: size.width * 0.12,
       margin: EdgeInsets.only(left: 10.0),
       child: CircleAvatar(
-        backgroundImage: AssetImage('assets/images/profile.png'),
+        backgroundImage: AssetImage('assets/images/anh_CV.jpg'),
       ),
     );
   }
@@ -171,8 +191,9 @@ class MessageListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return ListView.builder(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(size.width * 0.05),
       itemCount: messages.length,
       itemBuilder: (context, index) {
         return Align(
