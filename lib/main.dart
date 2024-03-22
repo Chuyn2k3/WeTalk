@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc.dart';
+import 'package:flutter_app/modules/challenge/bloc/question_bloc.dart';
 import 'package:flutter_app/modules/screens/splash_screen.dart';
 import 'package:flutter_app/service/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,9 @@ void main() async {
   runApp(MultiBlocProvider(providers: [
     BlocProvider<AuthenticationBloc>(
       create: (BuildContext context) => AuthenticationBloc(),
+    ),
+  BlocProvider<QuestionBloc>(
+      create: (BuildContext context) => QuestionBloc(),
     ),
   ], child: MyApp()));
 }

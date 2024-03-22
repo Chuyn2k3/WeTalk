@@ -20,4 +20,13 @@ class DioBase {
 
     return dio;
   }
+
+  static Future<Dio> dioGetQuestion() async {
+    String apiUrl = await getQuestionUrl() ?? '';
+    final dio = Dio(
+      BaseOptions(baseUrl: apiUrl, connectTimeout: const Duration(seconds: 10)),
+    );
+
+    return dio;
+  }
 }

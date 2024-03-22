@@ -10,7 +10,7 @@ AppBar uploadAppBar() {
         padding: EdgeInsets.all(10),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.white, // Thay đổi màu ở đây
+              backgroundColor: Colors.white, // Thay đổi màu ở đây
             ),
             onPressed: () {},
             child: Text(

@@ -5,8 +5,13 @@
 // import 'package:devquiz/home/widgets/levelbutton/level_button_widget.dart';
 // import 'package:devquiz/home/widgets/quizcard/quiz_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/modules/challenge/bloc/question_bloc.dart';
+import 'package:flutter_app/modules/challenge/bloc/question_bloc_event.dart';
+import 'package:flutter_app/modules/challenge/bloc/question_bloc_state.dart';
+import 'package:flutter_app/modules/challenge/challenge_page.dart';
 import 'package:flutter_app/modules/study/page/quiz_card.dart';
 import 'package:flutter_app/modules/study/widget/appbar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 //import 'widgets/appbar/app_bar_widget.dart';
 
@@ -30,6 +35,8 @@ class _ExamPageState extends State<ExamPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    QuestionBloc fetch = BlocProvider.of<QuestionBloc>(context);
+    fetch.add(FetchQuestion());
     //if (controller.state == HomeState.success) {
     return Scaffold(
         appBar: AppBarWidget(context),
@@ -50,10 +57,43 @@ class _ExamPageState extends State<ExamPage> {
               ),
               Expanded(
                 child: GridView.count(
-                     crossAxisSpacing: 15,
-                     mainAxisSpacing: 16,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 16,
                     crossAxisCount: 4,
                     children: [
+                      BlocBuilder<QuestionBloc, QuestionState>(
+                          builder: (context, state) {
+                        if (state is QuestionLoading) {
+                          return const CircularProgressIndicator();
+                        } else if (state is QuestionLoaded) {
+                          return InkWell(
+                            child: QuizCardWidget(
+                                title: 'an',
+                                onTap: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (contex) => ChallengePage(
+                                  //         questions: state.data,
+                                  //         title: state.data.message!,
+                                  //       ),
+                                  //     ));
+                                },
+                                size: size),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (contex) => ChallengePage(
+                                          questions: state.data,
+                                          title: state.data.message!,
+                                        ),
+                                      ));
+                                },
+                          );
+                        } else
+                          return Text('data');
+                      }),
                       QuizCardWidget(
                         size: size,
                         title: 'oke',
@@ -75,7 +115,8 @@ class _ExamPageState extends State<ExamPage> {
                       ),
                       QuizCardWidget(
                         title: 'học tập',
-                        onTap: () {}, size: size,
+                        onTap: () {},
+                        size: size,
                       ),
                       QuizCardWidget(
                         size: size,

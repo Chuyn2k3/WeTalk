@@ -11,3 +11,9 @@ Future<String?> getLoginUrl() async {
   String? apiUrl = dotenv.env['LOGIN_URL'];
   return apiUrl;
 }
+
+Future<String?> getQuestionUrl() async {
+  await dotenv.load(fileName: ".env");
+  String? apiUrl = dotenv.env['QUESTION_URL'];
+  return apiUrl;
+}

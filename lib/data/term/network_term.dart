@@ -13,16 +13,17 @@ class ApiConstants {
   //friend-ship
   //study
   //vocabulary
-  static const vocabFromTopic='/vocabulary/';
-  static const searchTopic='/vocabularies/search';
-  // static const 
+  static const vocabFromTopic = '/vocabulary/';
+  static const searchTopic = '/vocabularies/search';
   // static const
   // static const
-  static const deleteVocab='/vocabularies/';
-  //static const 
+  // static const
+  static const deleteVocab = '/vocabularies/';
+  //static const
   //topic
-  static const allTopicUrl='/topics/all';
-  static const searchTopicUrl='/topics/search';
-  static const deleteTopicUrl='/topics/';
-  
+  static const allTopicUrl = '/topics/all';
+  static const searchTopicUrl = '/topics/search';
+  static const deleteTopicUrl = '/topics/';
+  //question
+  static const getQuestionUrl = '/questions/1';
 }

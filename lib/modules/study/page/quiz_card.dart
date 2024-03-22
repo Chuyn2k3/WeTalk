@@ -17,7 +17,8 @@ class QuizCardWidget extends StatelessWidget {
     Key? key,
     required this.title,
     //required this.progressText,
-    required this.onTap, required this.size,
+    required this.onTap,
+     required this.size,
     //this.progressPercent = 0,
   }) : super(key: key);
 

@@ -24,12 +24,12 @@ Widget FriendAcept(String name,Size size) {
                     ElevatedButton(
 
                       onPressed: (){}, child: Text('Chấp nhận'),style:  ElevatedButton.styleFrom(
-                primary: AppColors.blue,
+                backgroundColor: AppColors.blue,
                  // Đổi màu nền thành màu xanh
               )),
                     Gap(size.width*0.035),
                     ElevatedButton(onPressed: (){}, child: Text('Xóa',),style:  ElevatedButton.styleFrom(
-                primary: AppColors.greyFriend, // Đổi màu nền thành màu xanh
+                backgroundColor: AppColors.greyFriend, // Đổi màu nền thành màu xanh
               )),
                   ],
                 ),
