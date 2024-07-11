@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
+import 'package:flutter_app/modules/chat/bloc/message/list_message_cubit.dart';
+import 'package:flutter_app/modules/personal/bloc/user_cubit.dart';
+import 'package:flutter_app/utils/base_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatScreen extends StatefulWidget {
   static String routeName = 'messager_screen';
@@ -15,8 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.black,
+    return BaseScaffold(
       body: Column(
         children: [
           Container(
@@ -191,26 +194,42 @@ class MessageListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userId = (context.read<UserInfoCubit>().state as UserInfoLoadedState)
+        .user
+        .data!
+        .userId;
     Size size = MediaQuery.of(context).size;
-    return ListView.builder(
-      padding: EdgeInsets.all(size.width * 0.05),
-      itemCount: messages.length,
-      itemBuilder: (context, index) {
-        return Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 4.0),
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Text(
-              messages[index],
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
+    return BlocBuilder<ListMessageCubit, ListMessageState>(
+      builder: (context, state) {
+        if (state is ListMessageLoadedState) {
+          return ListView.builder(
+            padding: EdgeInsets.all(size.width * 0.05),
+            itemCount: state.lstMessage.data?.length??0,
+            itemBuilder: (context, index) {
+              return Align(
+                alignment: Alignment.centerRight,
+                child: Row(
+                  mainAxisAlignment: userId==state.lstMessage.data![index].contactId?MainAxisAlignment.end:MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 4.0),
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Text(
+                        state.lstMessage.data![index].content??"",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+        return SizedBox.shrink();
       },
     );
   }

@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_app/data/term/app_term.dart';
 import 'package:flutter_app/data/term/study_link_image.dart';
 import 'package:flutter_app/data/term/text_style.dart';
@@ -6,6 +8,9 @@ import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc_state.dart';
+import 'package:flutter_app/modules/authentication/widget/input_login.dart';
+import 'package:flutter_app/modules/tab_bar/tab_bar.dart';
+import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../home/page/home_screen.dart.dart';
@@ -22,7 +27,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formfield = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
 
@@ -35,206 +40,150 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Form(
-          key: formfield,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: size.height * 0.38,
-                  child: Image.asset(AppLinkImage.topBackground),
-                ),
-                 Padding(
-                  padding: EdgeInsets.only(left: size.width * 0.02),
-                  child: Text(
-                    AppTexts.welcome,
-                    style: AppTextStyles.welcome
-                  ),
-                ),
-                Padding(
-                  padding:
-                       EdgeInsets.symmetric(horizontal: size.width * 0.05, vertical: size.width * 0.06),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.email),
-                      hintText: AppLoginTerm.email,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    validator: (value) {
-                      bool emailVaild = RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                          .hasMatch(value!);
-                      if (value.isEmpty) {
-                        return AppLoginTerm.requireEmail;
-                      } else if (!emailVaild) {
-                        return AppLoginTerm.incorectEmail;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                  child: TextFormField(
-
-                    obscureText: passToggle,
-                    controller: passController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-
-                        hintText: AppLoginTerm.password,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        prefixIcon: const Icon(Icons.lock),
-                        suffix: InkWell(
-                          onTap: () {
-                            setState(() {
-                              passToggle = !passToggle;
-                            });
-                          },
-                          child: Icon(passToggle
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                        )),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppLoginTerm.requirePassword;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  height: size.width * 0.15,
-                  padding: EdgeInsets.only(
-                      left: size.width * 0.6), // Dịch SizedBox cách lề phải 30px
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(AppLinkImage.loginButton),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_forward_ios),
-                      iconSize: 60,
-                      color: Colors.transparent, // Ẩn IconButton
-                      onPressed: () async {
-                        if (formfield.currentState!.validate()) {
-                          fetchLogin.add(FetchLogin(
-                              email: emailController.text,
-                              password: passController.text));
-                        }
-                      },
-                    ),
-                  ),
-                ),
-                BlocConsumer<AuthenticationBloc, AuthenticationState>(
-                    bloc: fetchLogin,
-                    builder: (context, state) {
-                      if (state is AuthenticationLoading) {                       
-                        return const CircularProgressIndicator();
-                      }
-                      return const SizedBox();
-                    },
-                    listener: (BuildContext context,
-                        AuthenticationState state) async {
-                      if (state is AuthenticationLoaded) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      }
-                    }),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+      home: BaseScaffold(
+          body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
                   children: [
+                    const SizedBox(height: 24),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                      width: size.width * 0.35,
-                      height: size.width * 0.15,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.blueGrey, width: 1),
-                      ),
-                      child: InkWell(
-                        child: Center(
-                          child: Text(
-                            'Vào nhanh',
-                            style: AppTextStyles.authentication
-                          ),
+                      width: 150,
+                      height: 150,
+                      child: Image.asset('assets/image/WeSignLogo.png'),
+                    ),
+                    const SizedBox(height: 24),
+                    InputLogin(
+                      passwordController: passController,
+                      usernameController: emailController,
+                      fetchLogin: fetchLogin,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 24),
+                      child: Text(
+                        'Hoặc đăng nhập bằng',
+                        style: TextStyle(
+                          color: Color(0xFF000000),
+                          fontSize: 16,
                         ),
+                      ),
+                    ),
+                    IntrinsicHeight(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xFFF5F5F5),
+                        ),
+                        padding: EdgeInsets.only(
+                            top: 10, bottom: 10, left: 16, right: 16),
+                        margin:
+                            EdgeInsets.only(bottom: 17, left: 22, right: 22),
+                        //width: double.infinity,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                  width: 25,
+                                  height: 25,
+                                  child: Image.asset(
+                                    'assets/image/google.png',
+                                    fit: BoxFit.fill,
+                                  )),
+                              //SizedBox(width: 8,),
+                              Text(
+                                'Đăng nhập với tài khoản Google',
+                                style: TextStyle(
+                                  color: Color(0xFF000000),
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox()
+                            ]),
+                      ),
+                    ),
+                    IntrinsicHeight(
+                      child: InkWell(
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainTabbarScreen(),
+                              ));
                         },
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      width: size.width * 0.35,
-                      height: size.width * 0.15,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.blueGrey, width: 1),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Google',
-                          style: AppTextStyles.authentication
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFFF5F5F5),
+                          ),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 16, right: 16),
+                          margin:
+                              EdgeInsets.only(bottom: 17, left: 22, right: 22),
+                          width: double.infinity,
+                          child: Column(
+                            children: [
+                              Text(
+                                'Đăng nhập Khách',
+                                style: TextStyle(
+                                  color: Color(0xFF000000),
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
+                    _textRegister(context),
                   ],
                 ),
-                SizedBox(height: size.width * 0.05),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(AppTexts.unAccount),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RegisterScreen.routeName,
-                        );
-                      },
-                      child: const Text(
-                        AppTexts.reAccount,
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                const Visibility(
-                  visible: false,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        ],
+      )
+          ),
+    );
+  }
+
+  Widget _textRegister(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: RichText(
+          text: TextSpan(
+              //style: textTheme.t16R.copyWith(color: colorApp.blue),
+              children: [
+            TextSpan(
+              text: "Chưa có tài khoản?",
+              style: TextStyle(
+                color: Color(0xFF000000),
+                fontSize: 16,
+              ),
+            ),
+            const TextSpan(
+              text: '  ',
+            ),
+            TextSpan(
+              text: "Đăng kí",
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  //GoRouter.of(context).push(RouteUri.register);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen(),
+                      ));
+                },
+              style: TextStyle(
+                color: Color(0xFF007aff),
+                fontSize: 16,
+              ),
+            )
+          ])),
     );
   }
 }

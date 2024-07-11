@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-const Color kBgColor = Color(0xFFecf5fb);
+const Color kBgColor = Color.fromARGB(255, 216, 234, 247);
 const Color hBlueColor = Color.fromARGB(255, 61, 117, 212);
 const Color kDarkGreyColor = Color(0xFF727C9B);
 const Color kGreenColor = Color.fromARGB(255, 83, 193, 87);

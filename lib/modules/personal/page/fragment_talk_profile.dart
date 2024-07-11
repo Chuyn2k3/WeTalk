@@ -7,6 +7,8 @@ import 'package:flutter_app/modules/personal/widget/button_widget.dart';
 import 'package:flutter_app/modules/personal/widget/numbers_widget.dart';
 import 'package:flutter_app/modules/personal/widget/profile_widget.dart';
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -41,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         );
-  
+
 
   }
 

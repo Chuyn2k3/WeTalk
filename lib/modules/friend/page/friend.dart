@@ -14,7 +14,10 @@ class FriendConectScreen extends StatefulWidget {
 }
 
 class _FriendConectScreenState extends State<FriendConectScreen> {
+
+  final TextEditingController _textEditingController = TextEditingController();
   @override
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -55,9 +58,14 @@ class _FriendConectScreenState extends State<FriendConectScreen> {
               height: size.height * 0.01,
               color: Colors.grey,
             ),
-            Text('Lời mời kết bạn',
-                style: GoogleFonts.robotoFlex(color: Colors.white,fontSize: size.width * 0.05,
-                        )),
+            Row(
+              children: [
+                Text('Lời mời kết bạn',
+                    style: GoogleFonts.robotoFlex(color: Colors.white,fontSize: size.width * 0.05,
+                            )),
+                SearchForm(_textEditingController)
+              ],
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: 15,
@@ -71,4 +79,43 @@ class _FriendConectScreenState extends State<FriendConectScreen> {
       ),
     );
   }
+
+
+  Widget SearchForm(TextEditingController _textEditingController) {
+    return TextFormField(
+      //onChanged: search,
+      maxLength: 500,
+      controller: _textEditingController,
+      decoration: const InputDecoration(
+          filled: true,
+          //fillColor: AppColors.white2,
+          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), bottomLeft: Radius.circular(30)),
+            borderSide: BorderSide(width: 0.8),
+          ),
+          //hintText: AppDeviceTerm.hintTextLookForm,
+          prefixIcon: Icon(
+            Icons.search,
+            size: 30,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), bottomLeft: Radius.circular(30)),
+            borderSide: BorderSide(width: 0.8),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), bottomLeft: Radius.circular(30)),
+            borderSide: BorderSide(
+              width: 4,
+              color: Colors.blue,
+            ),
+          )),
+    );
+  }
+
 }
+
+

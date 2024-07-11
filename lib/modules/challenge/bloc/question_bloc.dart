@@ -7,20 +7,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
   QuestionBloc() : super(QuestionInitial()) {
     on<QuestionEvent>(
-      (event, emit) async{
-         if (event is FetchQuestion) {
+      (event, emit) async {
+        if (event is FetchQuestion) {
           // String email = event.email;
-          // String password = event.password;     
+          // String password = event.password;
+          String id = event.idTopic;
           emit(QuestionLoading());
-          try {        
+          try {
             // final connectivityResult =
             //     await (Connectivity().checkConnectivity());
             // if (connectivityResult == ConnectivityResult.wifi ||
             //     connectivityResult == ConnectivityResult.mobile) {
-            QuestionModel? data =
-                await QuestionnRepo.diogetQuestion();
+            QuestionModel? data = await QuestionnRepo.diogetQuestion(id);
 
-            if (data!.code==200) {
+            if (data!.code == 200) {
               emit(QuestionLoaded(data: data));
             } else {
               emit(QuestionError());

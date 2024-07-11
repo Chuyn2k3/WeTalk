@@ -4,11 +4,14 @@ import 'package:flutter_app/modules/study/page/alphabet.dart';
 import 'package:flutter_app/modules/study/page/customcard.dart';
 import 'package:flutter_app/modules/study/page/exam.dart';
 import 'package:flutter_app/modules/study/page/numbers.dart';
+import 'package:flutter_app/modules/study/page/study_topic.dart';
 import 'fragment_talk_upload.dart';
 
 final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
 class TalkStudyScreen extends StatelessWidget {
+  const TalkStudyScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -16,10 +19,12 @@ class TalkStudyScreen extends StatelessWidget {
       //backgroundColor: Color.fromARGB(255, 224, 216, 243),
       appBar: AppBar(
         title: Text("Học tập"),
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height:size.height*0.05),
             Card(
               margin: EdgeInsets.all(12.0),
               shape: RoundedRectangleBorder(
@@ -27,6 +32,7 @@ class TalkStudyScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  SizedBox(height: size.height * 0.025),
                   // Image.asset(
                   //   'assets/images/ic_sign_language.png',
                   //   height: 130.0,
@@ -191,7 +197,13 @@ class TalkStudyScreen extends StatelessWidget {
                           // statusOn: "ON",
                           // statusOff: "OFF",
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StudyTopic()),
+                        );
+                        },
                       ),
                     ],
                   ),

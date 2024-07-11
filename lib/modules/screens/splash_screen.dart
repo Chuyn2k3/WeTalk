@@ -5,10 +5,11 @@ import 'package:flutter_app/data/term/app_term.dart';
 import 'package:flutter_app/data/term/study_link_image.dart';
 import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/modules/authentication/page/login_screen.dart';
+import 'package:flutter_app/utils/base_scaffold.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routeName = 'splash_screen';
-  
+
   const SplashScreen({super.key, });
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -29,8 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.blue[800],
+    return BaseScaffold(
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -38,15 +38,13 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                AppLinkImage.logoLink,
+                'assets/image/WeSignLogo.png',
                 width: size.width * 0.4,
                 height: size.width * 0.4,
               ),
               SizedBox(height: size.width * 0.1),
-              Text(AppTexts.titleBold, style: AppTextStyles.titleBold),
-              SizedBox(height: size.width * 0.02),
               const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
               ),
             ],
           ),
@@ -55,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
             left: 0,
             right: 0,
             child: Text(AppTexts.developedBy,
-                textAlign: TextAlign.center, style: AppTextStyles.bottom),
+                textAlign: TextAlign.center, style: TextStyle(color: Colors.black)),
           ),
         ],
       ),

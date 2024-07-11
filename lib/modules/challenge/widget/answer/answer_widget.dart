@@ -1,42 +1,65 @@
 //import 'package:DevQuiz/core/core.dart';
 //import 'package:DevQuiz/shared/models/answer_model.dart';
+import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/modules/challenge/model/question/question_model.dart';
 
-class AnswerWidget extends StatelessWidget {
+class AnswerWidget extends StatefulWidget {
   final AnswerResList answer;
   final bool isSelected;
   final bool disabled;
   final ValueChanged<bool> onTap;
 
-  const AnswerWidget({ 
-    Key? key, 
+  const AnswerWidget({
+    Key? key,
     required this.answer,
     required this.onTap,
-    this.isSelected = false, 
-    this.disabled = false, 
+    this.isSelected = false,
+    this.disabled = false,
   }) : super(key: key);
 
-  Color get _selectedColorRight => answer.correct! ? 
-    AppColors.darkGreen : 
-    AppColors.darkRed;
+  @override
+  State<AnswerWidget> createState() => _AnswerWidgetState();
+}
 
-  Color get _selectedBorderRight => answer.correct! ?
-    AppColors.lightGreen :
-    AppColors.lightRed;
+class _AnswerWidgetState extends State<AnswerWidget> {
+  Color get _selectedColorRight =>
+      widget.answer.correct! ? AppColors.darkGreen : AppColors.darkRed;
 
-  Color get _selectedColorCardRight => answer.correct! ?
-    AppColors.lightGreen : AppColors.lightRed;
+  Color get _selectedBorderRight =>
+      widget.answer.correct! ? AppColors.lightGreen : AppColors.lightRed;
 
-  TextStyle get _selectedTextStyle => answer.correct! ?
-    AppTextStyles.bodyDarkGreen : 
-    AppTextStyles.bodyDarkRed;
+  Color get _selectedColorCardRight =>
+      widget.answer.correct! ? AppColors.lightGreen : AppColors.lightRed;
 
-  IconData get _selectedIconRight => answer.correct! ?
-    Icons.check :
-    Icons.close;
+  TextStyle get _selectedTextStyle => widget.answer.correct!
+      ? AppTextStyles.bodyDarkGreen
+      : AppTextStyles.bodyDarkRed;
+
+  IconData get _selectedIconRight =>
+      widget.answer.correct! ? Icons.check : Icons.close;
+
+  CachedVideoPlayerController? _controller;
+  CustomVideoPlayerController? _customVideoPlayerController;
+  double high = 50;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.answer.videoLocation != null && widget.answer.content == null) {
+      high = 120;
+      _controller =
+          CachedVideoPlayerController.network(widget.answer.videoLocation);
+      _controller!.initialize().then((_) {
+        setState(() {});
+        _controller!.setLooping(true);
+        _controller!.play();
+      });
+      _customVideoPlayerController = CustomVideoPlayerController(
+          context: context, videoPlayerController: _controller!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +68,23 @@ class AnswerWidget extends StatelessWidget {
         vertical: 4,
       ),
       child: IgnorePointer(
-        ignoring: disabled,
+        ignoring: widget.disabled,
         child: GestureDetector(
           onTap: () {
-            onTap(answer.correct!);
+            widget.onTap(widget.answer.correct!);
           },
           child: Container(
-            padding: EdgeInsets.all(16),
+            height: high,
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: isSelected ? _selectedColorCardRight : AppColors.white,
+              color:
+                  widget.isSelected ? _selectedColorCardRight : AppColors.white,
               borderRadius: BorderRadius.circular(10),
               border: Border.fromBorderSide(
                 BorderSide(
-                  color: isSelected ? _selectedColorCardRight : AppColors.border,
+                  color: widget.isSelected
+                      ? _selectedColorCardRight
+                      : AppColors.border,
                 ),
               ),
             ),
@@ -65,29 +92,47 @@ class AnswerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(
-                    answer.content!,
-                    style: isSelected ? _selectedTextStyle : AppTextStyles.body,
-                  ),
+                  child: (widget.answer.videoLocation != null &&
+                          widget.answer.content == null)
+                      ? (_controller != null && _controller!.value.isInitialized
+                          ? AspectRatio(
+                              aspectRatio: _controller!.value.aspectRatio,
+                              child: CustomVideoPlayer(
+                                customVideoPlayerController:
+                                    _customVideoPlayerController!,
+                              ),
+                            )
+                          : CircularProgressIndicator())
+                      : Text(
+                          widget.answer.content!,
+                          style: widget.isSelected
+                              ? _selectedTextStyle
+                              : AppTextStyles.body,
+                        ),
                 ),
                 Container(
                   width: 24,
                   height: 24,
                   decoration: BoxDecoration(
-                    color: isSelected ? _selectedColorRight : AppColors.white,
+                    color: widget.isSelected
+                        ? _selectedColorRight
+                        : AppColors.white,
                     borderRadius: BorderRadius.circular(500),
                     border: Border.fromBorderSide(
                       BorderSide(
-                        color: isSelected ? _selectedBorderRight : AppColors.border,
+                        color: widget.isSelected
+                            ? _selectedBorderRight
+                            : AppColors.border,
                       ),
                     ),
                   ),
-                  child: isSelected ? 
-                    Icon(
-                      _selectedIconRight,
-                      size: 16,
-                      color: AppColors.white,
-                    ) : null,
+                  child: widget.isSelected
+                      ? Icon(
+                          _selectedIconRight,
+                          size: 16,
+                          color: AppColors.white,
+                        )
+                      : null,
                 ),
               ],
             ),

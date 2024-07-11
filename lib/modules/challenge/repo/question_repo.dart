@@ -11,11 +11,11 @@ class QuestionnRepo {
   //   await Store.setToken(token);
   // }
 
-  static Future<QuestionModel?> diogetQuestion() async {
-    final dio = await DioBase.dioGetQuestion();
+  static Future<QuestionModel?> diogetQuestion(String id) async {
+    final dio = await DioBase.dioGetStudyFunction();
     try {
       final response = await dio.get(
-        ApiConstants.getQuestionUrl,
+        ApiConstants.getQuestionUrl+id,
         //data: {"email": email, "password": password},
       );
       //await _saveToken(response.data);

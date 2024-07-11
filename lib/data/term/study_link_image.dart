@@ -40,13 +40,14 @@ List<String>? Number_List = [
 ];
 
 List<String>? Sign_List = [
-  'assets/images/Dấu hỏi.png',
-  'assets/images/Dấu huyền.png',
-  'assets/images/Dấu sắc.png',
-  'assets/images/Dấu nặng.png',
-  'assets/images/Dấu ngã.png',
   'assets/images/Â.png',
+  
+  'assets/images/Dấu huyền.png',
+  'assets/images/Dấu nặng.png',
+  'assets/images/Dấu hỏi.png',
+  'assets/images/Dấu sắc.png',
   'assets/images/Ă.png',
+  'assets/images/Dấu ngã.png',
   'assets/images/Chữ Đ.png',
   'assets/images/Ơ.png',
 ];

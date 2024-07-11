@@ -108,7 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           //   ),
                           // ],
                         ),
-                        child: Container(
                           //padding: EdgeInsets.all(8),
                           child: TextFormField(
                             //cursorHeight: 15,
@@ -119,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             //controller: _textEditingController,
                             decoration: const InputDecoration(
 
-                                //filled: true,
+                                //filleborder: InputBorder.none,d: true,
                                 //fillColor: AppColors.white2,
                                 // contentPadding:
                                 //     EdgeInsets.symmetric(vertical: 5),
@@ -148,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 )),
                           ),
-                        )),
+                        ),
                     //textFormField(),
                     // Text(
                     //   'Trang chủ',

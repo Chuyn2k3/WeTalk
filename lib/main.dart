@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/di/locator.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc.dart';
 import 'package:flutter_app/modules/challenge/bloc/question_bloc.dart';
+import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
+import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
 import 'package:flutter_app/modules/screens/splash_screen.dart';
 import 'package:flutter_app/service/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiBlocProvider(providers: [
     BlocProvider<AuthenticationBloc>(
@@ -19,6 +23,10 @@ void main() async {
     ),
   BlocProvider<QuestionBloc>(
       create: (BuildContext context) => QuestionBloc(),
+    ),BlocProvider<ListFriendCubit>(
+      create: (BuildContext context) => ListFriendCubit()..getListFriend(),
+    ),BlocProvider<ListConversationCubit>(
+      create: (BuildContext context) => ListConversationCubit()..getListConversation(),
     ),
   ], child: MyApp()));
 }

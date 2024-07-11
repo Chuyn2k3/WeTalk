@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_images.dart';
 import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/modules/challenge/widget/next_button/next_button.dart';
+import 'package:flutter_app/modules/study/page/exam.dart';
 
 // import 'package:DevQuiz/challenge/widget/next_button/next_button_widget.dart';
 // import 'package:DevQuiz/core/core.dart';
 // import 'package:share_plus/share_plus.dart';
 
-class ResultPage extends StatelessWidget {
+class ResultPage extends StatefulWidget {
   final String title;
   final int length;
   final int result;
@@ -19,6 +20,11 @@ class ResultPage extends StatelessWidget {
     required this.result,
   }) : super(key: key);
 
+  @override
+  State<ResultPage> createState() => _ResultPageState();
+}
+
+class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +57,7 @@ class ResultPage extends StatelessWidget {
                           style: AppTextStyles.bodyBold,
                         ),
                         TextSpan(
-                          text: ' chính xác $result trên $length câu hỏi,',
+                          text: ' chính xác ${widget.result} trên ${widget.length} câu hỏi,',
                         )
                       ],
                     ),
@@ -89,7 +95,10 @@ class ResultPage extends StatelessWidget {
                         child: NextButtonWidget.transparent(
                             label: 'Trở về trang chính',
                             onTap: () {
-                              Navigator.pop(context);
+                              Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ExamPage())
+                        );
                             }),
                       ),
                     ),

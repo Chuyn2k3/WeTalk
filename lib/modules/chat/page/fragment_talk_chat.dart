@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
+import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
+import 'package:flutter_app/utils/base_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'fragment_talk_chat_home.dart';
@@ -21,6 +26,7 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
           child: Container(
             //padding: const EdgeInsets.symmetric(horizontal: 10),
             height: size.width * 0.11,
+            width: 100,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -142,150 +148,147 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        height: double.infinity,
-        //color: const Color.fromARGB(255, 241, 241, 241),
-        color: Color.fromARGB(255, 43, 41, 41),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: size.width * 0.11,
-                bottom: 5,
-                right: 20,
-                left: 20,
+    return BaseScaffold(
+        appBar: AppBar(
+          leading: Icon(
+            Icons.arrow_back_ios,
+            size: 18,
+          ),
+          centerTitle: true,
+          title: Text("Nhắn tin"),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+
+
+        ),
+        body: SafeArea(
+            child: Expanded(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 100,
+                    margin: EdgeInsets.all(8),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintStyle: TextStyle(color: Colors.grey),
+                          prefixIcon: Icon(Icons.search),
+                          hintText: 'Tìm kiếm bạn bè...'),
+                    ),
+                  ),
+                  InkWell(
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      child: Image.asset('assets/image/friends.png'),
+                    ),
+                  )
+                ],
               ),
-              child: topBar(size),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  right: 20,
-                  left: 20,
-                  bottom: 5,
-                ),
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        openChatScreen(context);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(8),
-                        height: size.height * 0.1,
-                        width: size.height * 0.2,
-                        //constraints: ,
-                        decoration: BoxDecoration(
-                            //color: Colors.black,
-                            borderRadius: BorderRadius.circular(20)),
-                        //color: Colors.black,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                                //backgroundColor: Colors.white,
-                                //foregroundColor: Colors.white,
-                                backgroundImage:
-                                    AssetImage('assets/images/anh_CV.jpg'),
-                                radius: 50),
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text('Chuyên $index',
-                                      style: GoogleFonts.lato(
-                                          fontSize: size.width * 0.05,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.grey)),
-                                  Text('Đã gửi tin nhắn cho bạn $index',
-                                      style: GoogleFonts.lato(
-                                          fontSize: size.width * 0.04,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.grey))
-                                ])
-                            // ListTile(
-                            //   title: Text('User $index'),
-                            //   subtitle: Text('Last message $index'),
-                            //   onTap: () {
-                            //     openChatScreen(context);
-                            //   },
-                            // ),
-                          ],
-                        ),
-                      ),
-                    );
-                    // Container(
-                    //   child: Row(
-                    //     children: [
-                    //       CircleAvatar(
-                    //           child:
-                    //               Image.asset('assets/images/profile.png')),
-                    //       ListTile(
-                    //         title: Text('User $index'),
-                    //         subtitle: Text('Last message $index'),
-                    //         onTap: () {
-                    //           openChatScreen(context);
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // );
+              SizedBox(
+                height: 12,
+              ),
+              Expanded(
+                child: BlocBuilder<ListFriendCubit, ListFriendState>(
+                  builder: (context, state) {
+                    if (state is ListFriendLoadingState) {
+                      return CircularProgressIndicator();
+                    }
+                    if (state is ListFriendLoadedState) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.lstFriend.data!.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  child: Image(
+                                      image: AssetImage(
+                                          'assets/images/profile.png')),
+                                ),
+                                Text(state.lstFriend.data![index].name ?? "")
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return SizedBox();
                   },
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-      // appBar: AppBar(
-      //   title: Text("Tin nhắn"),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(Icons.search),
-      //       onPressed: () {
-      //         // Handle search button press
-      //       },
-      //     ),
-      //     IconButton(
-      //       icon: Icon(Icons.menu),
-      //       onPressed: () {
-      //         // Handle menu button press
-      //       },
-      //     ),
-      //   ],
-      // ),
-      // body: Column(
-      //   children: [
-      //     Expanded(
-      //       child: Container(
-      //         padding: EdgeInsets.all(8.0),
-      //         child: ListView.builder(
-      //           itemCount: 10,
-      //           itemBuilder: (context, index) {
-      //             return ListTile(
-      //               title: Text('User $index'),
-      //               subtitle: Text('Last message $index'),
-      //               onTap: () {
-      //                 openChatScreen(context);
-      //               },
-      //             );
-      //           },
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
-    );
+              SizedBox(
+                height: 24,
+              ),
+              Expanded(
+                child:
+                    BlocBuilder<ListConversationCubit, ListConversationState>(
+                  builder: (context, state) {
+                    if (state is ListConversationLoadingState) {
+                      return CircularProgressIndicator();
+                    }
+                    if (state is ListConversationLoadedState) {
+                      return ListView.builder(
+                        itemCount: state.lstConversation.data!.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  child: Image(
+                                      image: AssetImage(
+                                          'assets/images/profile.png')),
+                                ),
+                                Column(
+                                  children: [
+                                    Text(state
+                                            .lstConversation
+                                            .data![index]
+                                            .grouAttachConvResList![0]
+                                            .contactName ??
+                                        ""),
+                                    Text((state
+                                                .lstConversation
+                                                .data![index]
+                                                .grouAttachConvResList![0]
+                                                .lastMessageRes !=
+                                            null)
+                                        ? state
+                                            .lstConversation
+                                            .data![index]
+                                            .grouAttachConvResList![0]
+                                            .lastMessageRes!
+                                            .content!
+                                        : ""),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return SizedBox();
+                  },
+                ),
+              ),
+            ],
+          ),
+        )));
   }
-}
 
-void openChatScreen(BuildContext context) {
-  Navigator.of(
-    context,
-  ).push(MaterialPageRoute(
-    builder: (context) => ChatScreen(),
-  ));
+  void openChatScreen(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(
+      builder: (context) => ChatScreen(),
+    ));
+  }
 }

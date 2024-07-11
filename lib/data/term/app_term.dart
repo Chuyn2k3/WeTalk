@@ -16,7 +16,7 @@ class AppLoginTerm {
 
 class AppTexts {
   static const titleBold = 'SignChat';
-  static const developedBy = 'Developed by iBME Lab';
+  static const developedBy = 'Developed by iBME Lab, Hust';
   static const welcome = 'Chào Mừng Bạn';
   static const unAccount = "Bạn chưa có tài khoản?";
   static const reAccount = 'Đăng kí';

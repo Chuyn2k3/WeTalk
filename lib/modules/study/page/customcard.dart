@@ -3,14 +3,14 @@ import 'package:flutter_app/data/term/constants.dart';
 import 'package:flutter_app/data/term/constants.dart';
 
 class CustomCard1 extends StatefulWidget {
-  const CustomCard1(
-      {
-      required this.size,
-      required this.image,
-      required this.title,})
-      // required this.statusOn,
-      // required this.statusOff})
-      : super();
+  const CustomCard1({
+    required this.size,
+    required this.image,
+    required this.title,
+  })
+  // required this.statusOn,
+  // required this.statusOff})
+  : super();
 
   final Size size;
   final Image image;
@@ -50,7 +50,7 @@ class _CustomCard1State extends State<CustomCard1>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.size.height*0.2,
+      height: widget.size.height * 0.21,
       width: widget.size.width * 0.35,
       decoration: BoxDecoration(
         color: kBgColor,
@@ -74,7 +74,7 @@ class _CustomCard1State extends State<CustomCard1>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             widget.image,
-            SizedBox(height: widget.size.height*0.01),
+            SizedBox(height: widget.size.height * 0.01),
             Text(
               widget.title,
               style: TextStyle(
