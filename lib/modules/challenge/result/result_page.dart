@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_images.dart';
 import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/modules/challenge/widget/next_button/next_button.dart';
+import 'package:flutter_app/modules/home/page/home_screen.dart.dart';
 import 'package:flutter_app/modules/study/page/exam.dart';
+import 'package:flutter_app/modules/study/page/question/question_screen.dart';
+import 'package:flutter_app/modules/tab_bar/tab_bar.dart';
 
 // import 'package:DevQuiz/challenge/widget/next_button/next_button_widget.dart';
 // import 'package:DevQuiz/core/core.dart';
@@ -42,7 +45,7 @@ class _ResultPageState extends State<ResultPage> {
                   'Chúc mừng',
                   style: AppTextStyles.heading40,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Padding(
@@ -95,9 +98,9 @@ class _ResultPageState extends State<ResultPage> {
                         child: NextButtonWidget.transparent(
                             label: 'Trở về trang chính',
                             onTap: () {
-                              Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ExamPage())
+                              Navigator.pop(
+                          context
+
                         );
                             }),
                       ),

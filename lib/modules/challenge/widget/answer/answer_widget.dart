@@ -4,7 +4,8 @@ import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/data/term/text_style.dart';
-import 'package:flutter_app/modules/challenge/model/question/question_model.dart';
+import 'package:flutter_app/modules/study/model/question_model.dart';
+
 
 class AnswerWidget extends StatefulWidget {
   final AnswerResList answer;
@@ -41,24 +42,11 @@ class _AnswerWidgetState extends State<AnswerWidget> {
   IconData get _selectedIconRight =>
       widget.answer.correct! ? Icons.check : Icons.close;
 
-  CachedVideoPlayerController? _controller;
-  CustomVideoPlayerController? _customVideoPlayerController;
+
   double high = 50;
   @override
   void initState() {
     super.initState();
-    if (widget.answer.videoLocation != null && widget.answer.content == null) {
-      high = 120;
-      _controller =
-          CachedVideoPlayerController.network(widget.answer.videoLocation);
-      _controller!.initialize().then((_) {
-        setState(() {});
-        _controller!.setLooping(true);
-        _controller!.play();
-      });
-      _customVideoPlayerController = CustomVideoPlayerController(
-          context: context, videoPlayerController: _controller!);
-    }
   }
 
   @override
@@ -75,7 +63,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
           },
           child: Container(
             height: high,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color:
                   widget.isSelected ? _selectedColorCardRight : AppColors.white,
@@ -92,18 +80,7 @@ class _AnswerWidgetState extends State<AnswerWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: (widget.answer.videoLocation != null &&
-                          widget.answer.content == null)
-                      ? (_controller != null && _controller!.value.isInitialized
-                          ? AspectRatio(
-                              aspectRatio: _controller!.value.aspectRatio,
-                              child: CustomVideoPlayer(
-                                customVideoPlayerController:
-                                    _customVideoPlayerController!,
-                              ),
-                            )
-                          : CircularProgressIndicator())
-                      : Text(
+                  child: Text(
                           widget.answer.content!,
                           style: widget.isSelected
                               ? _selectedTextStyle

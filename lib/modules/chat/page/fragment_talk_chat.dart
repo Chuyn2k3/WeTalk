@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'fragment_talk_chat_home.dart';
 
 final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
@@ -18,245 +18,187 @@ class ChatMainScreen extends StatefulWidget {
 }
 
 class _ChatMainScreenState extends State<ChatMainScreen> {
-  Widget topBar(Size size) {
-    return Row(
-      children: [
-        BackButton(color: Colors.white),
-        Expanded(
-          child: Container(
-            //padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: size.width * 0.11,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-            ),
+  FocusNode _focusNode = FocusNode();
+  bool isFocused = false;
 
-            child: TextFormField(
-              //cursorHeight: 15,
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+  }
 
-              ///onChanged: search,
-              //maxLength: 500,
-              //expands: true,
-              //controller: _textEditingController,
-              decoration: const InputDecoration(
-                //filled: true,
-                //fillColor: AppColors.white2,
-                // contentPadding:
-                //     EdgeInsets.symmetric(vertical: 5),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide(width: 0.8),
-                ),
-                hintText: 'Tìm kiếm.......',
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 30,
-                ),
-                // enabledBorder: OutlineInputBorder(
-                //   borderRadius:
-                //       BorderRadius.all(Radius.circular(30)),
-                //   borderSide: BorderSide(width: 0.8),
-                // ),
-                // focusedBorder: UnderlineInputBorder(
-                //   borderRadius: BorderRadius.only(
-                //       topLeft: Radius.circular(30),
-                //       bottomLeft: Radius.circular(30)),
-                //   borderSide: BorderSide(
-                //     width: 4,
-                //     color: Colors.blue,
-                //   ),
-                // )
-              ),
-            ),
-            // Row(
-            //   children: [
-            //     Icon(
-            //       Icons.search,
-            //       size: 30,
-            //       color: Color.fromARGB(255, 128, 128, 128),
-            //     ),
-            //     Gap(size.width*0.01),
-            //     TextFormField(
-            //                 //cursorHeight: 15,
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
 
-            //                 ///onChanged: search,
-            //                 //maxLength: 500,
-            //                 //expands: true,
-            //                 //controller: _textEditingController,
-            //                 decoration: const InputDecoration(
-
-            //                     //filled: true,
-            //                     //fillColor: AppColors.white2,
-            //                     // contentPadding:
-            //                     //     EdgeInsets.symmetric(vertical: 5),
-            //                     border: OutlineInputBorder(
-            //                       borderRadius:
-            //                           BorderRadius.all(Radius.circular(10)),
-            //                       borderSide: BorderSide(width: 0.8),
-            //                     ),
-            //                     hintText: 'Tìm kiếm',
-            //                     prefixIcon: Icon(
-            //                       Icons.search,
-            //                       size: 30,
-            //                     ),
-            //                     // enabledBorder: OutlineInputBorder(
-            //                     //   borderRadius:
-            //                     //       BorderRadius.all(Radius.circular(30)),
-            //                     //   borderSide: BorderSide(width: 0.8),
-            //                     // ),
-            //                     // focusedBorder: UnderlineInputBorder(
-            //                     //   borderRadius: BorderRadius.only(
-            //                     //       topLeft: Radius.circular(30),
-            //                     //       bottomLeft: Radius.circular(30)),
-            //                     //   borderSide: BorderSide(
-            //                     //     width: 4,
-            //                     //     color: Colors.blue,
-            //                     //   ),
-            //                     // )
-            //                     ),
-            //               ),
-            //     // Text(
-            //     //   "Search message...",
-            //     //   style: TextStyle(
-            //     //     fontSize: 18,
-            //     //     color: Color.fromARGB(255, 128, 128, 128),
-            //     //   ),
-            //     // ),
-            //   ],
-            // ),
-          ),
-        ),
-        const Gap(15),
-        Container(
-          width: size.width * 0.11,
-          height: size.width * 0.11,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Icon(
-            Icons.edit_square,
-            size: 30,
-            color: Color.fromARGB(255, 128, 128, 128),
-          ),
-        ),
-      ],
-    );
+  void _onFocusChange() {
+    setState(() {
+      isFocused = _focusNode.hasFocus;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BaseScaffold(
-        appBar: AppBar(
-          leading: Icon(
-            Icons.arrow_back_ios,
-            size: 18,
-          ),
-          centerTitle: true,
-          title: Text("Nhắn tin"),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-
-
-        ),
-        body: SafeArea(
-            child: Expanded(
-          child: Column(
+        body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 100,
-                    margin: EdgeInsets.all(8),
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          const SizedBox(
+            height: 16,
+          ),
+          const Text(
+            "Nhắn tin",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          SizedBox(
+            height: size.height * 0.08,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      focusNode: _focusNode,
+                      decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              )),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(16),
+                            ),
+                          ),
                           hintStyle: TextStyle(color: Colors.grey),
                           prefixIcon: Icon(Icons.search),
                           hintText: 'Tìm kiếm bạn bè...'),
                     ),
                   ),
-                  InkWell(
-                    child: Container(
-                      height: 30,
-                      width: 30,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: InkWell(
+                    child: SizedBox(
+                      height: 35,
+                      width: 35,
                       child: Image.asset('assets/image/friends.png'),
                     ),
-                  )
+                  ),
+                )
+              ],
+            ),
+          ),
+          Visibility(
+            visible: !isFocused,
+            child: Flexible(
+              flex: 1,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: BlocBuilder<ListFriendCubit, ListFriendState>(
+                      builder: (context, state) {
+                        if (state is ListFriendLoadingState) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (state is ListFriendLoadedState) {
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.lstFriend.data!.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: Column(
+                                  children: [
+                                    const CircleAvatar(
+                                      radius: 30,
+                                      child: Image(
+                                          image: AssetImage(
+                                              'assets/images/profile.png')),
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(
+                                        state.lstFriend.data![index].name ?? "")
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        return const SizedBox();
+                      },
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 12,
-              ),
-              Expanded(
-                child: BlocBuilder<ListFriendCubit, ListFriendState>(
-                  builder: (context, state) {
-                    if (state is ListFriendLoadingState) {
-                      return CircularProgressIndicator();
-                    }
-                    if (state is ListFriendLoadedState) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: state.lstFriend.data!.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  child: Image(
-                                      image: AssetImage(
-                                          'assets/images/profile.png')),
-                                ),
-                                Text(state.lstFriend.data![index].name ?? "")
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    }
-                    return SizedBox();
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Expanded(
-                child:
-                    BlocBuilder<ListConversationCubit, ListConversationState>(
-                  builder: (context, state) {
-                    if (state is ListConversationLoadingState) {
-                      return CircularProgressIndicator();
-                    }
-                    if (state is ListConversationLoadedState) {
-                      return ListView.builder(
-                        itemCount: state.lstConversation.data!.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  child: Image(
-                                      image: AssetImage(
-                                          'assets/images/profile.png')),
-                                ),
-                                Column(
-                                  children: [
-                                    Text(state
+            ),
+          ),
+          Expanded(
+            flex: 6,
+            child: BlocBuilder<ListConversationCubit, ListConversationState>(
+              builder: (context, state) {
+                if (state is ListConversationLoadingState) {
+                  return const CircularProgressIndicator();
+                }
+                if (state is ListConversationLoadedState) {
+                  return ListView.builder(
+                    itemCount: state.lstConversation.data?.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              color: Colors.white),
+                          child: Row(
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const CircleAvatar(
+                                radius: 35,
+                                child: Image(
+                                    image: AssetImage(
+                                        'assets/images/profile.png')),
+                              ),
+                              SizedBox(
+                                width: 16,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    state
                                             .lstConversation
-                                            .data![index]
+                                            .data?[index]
                                             .grouAttachConvResList![0]
                                             .contactName ??
-                                        ""),
-                                    Text((state
+                                        "",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    (state
                                                 .lstConversation
-                                                .data![index]
+                                                .data?[index]
                                                 .grouAttachConvResList![0]
                                                 .lastMessageRes !=
                                             null)
@@ -266,29 +208,34 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                                             .grouAttachConvResList![0]
                                             .lastMessageRes!
                                             .content!
-                                        : ""),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
+                                        : "",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey),
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       );
-                    }
-                    return SizedBox();
-                  },
-                ),
-              ),
-            ],
+                    },
+                  );
+                }
+                return SizedBox();
+              },
+            ),
           ),
-        )));
+        ]));
   }
 
   void openChatScreen(BuildContext context) {
     Navigator.of(
       context,
     ).push(MaterialPageRoute(
-      builder: (context) => ChatScreen(),
+      builder: (context) => const ChatScreen(),
     ));
   }
 }

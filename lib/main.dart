@@ -1,15 +1,22 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/di/locator.dart';
 import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc.dart';
 import 'package:flutter_app/modules/challenge/bloc/question_bloc.dart';
 import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
 import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
+import 'package:flutter_app/modules/home/bloc/vocabulary_by_topic_cubit.dart';
+import 'package:flutter_app/modules/personal/bloc/user_cubit.dart';
 import 'package:flutter_app/modules/screens/splash_screen.dart';
+import 'package:flutter_app/modules/study/bloc/list_classroom_cubit.dart';
+import 'package:flutter_app/modules/study/bloc/list_topic_by_classroom_cubit.dart';
+import 'package:flutter_app/modules/study/bloc/list_topic_cubit.dart';
+import 'package:flutter_app/modules/study/bloc/list_vocabulary_by_topic_cubit.dart';
+import 'package:flutter_app/modules/study/bloc/question_all_cubit.dart';
+import 'package:flutter_app/modules/study/bloc/question_by_classroom_cubit.dart';
 import 'package:flutter_app/service/routes.dart';
+import 'package:flutter_app/utils/navigator_key.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'modules/home/page/home_screen.dart.dart';
-import 'package:flutter_app/modules/authentication/page/login_screen.dart';
+import 'package:get_it/get_it.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -21,95 +28,64 @@ void main() async {
     BlocProvider<AuthenticationBloc>(
       create: (BuildContext context) => AuthenticationBloc(),
     ),
-  BlocProvider<QuestionBloc>(
-      create: (BuildContext context) => QuestionBloc(),
-    ),BlocProvider<ListFriendCubit>(
+    // BlocProvider<QuestionBloc>(
+    //   create: (BuildContext context) => QuestionBloc(),
+    // ),
+    BlocProvider<ListFriendCubit>(
       create: (BuildContext context) => ListFriendCubit()..getListFriend(),
-    ),BlocProvider<ListConversationCubit>(
-      create: (BuildContext context) => ListConversationCubit()..getListConversation(),
     ),
-  ], child: MyApp()));
+    BlocProvider<ListConversationCubit>(
+      create: (BuildContext context) =>
+          ListConversationCubit()..getListConversation(),
+    ),
+    BlocProvider<UserInfoCubit>(
+      create: (BuildContext context) => UserInfoCubit()..getUserInfo(),
+    ),
+    BlocProvider<VocabularyByTopicCubit>(
+      create: (BuildContext context) =>
+          VocabularyByTopicCubit()..vocabularyByTopic(),
+    ),
+   BlocProvider<ListClassroomCubit>(
+      create: (BuildContext context) =>
+          ListClassroomCubit()..getListClassroom(),
+    ),
+    BlocProvider<ListTopicByClassroomCubit>(
+      create: (BuildContext context) =>
+          ListTopicByClassroomCubit(),
+    ),
+    BlocProvider<ListTopicCubit>(
+      create: (BuildContext context) =>
+          ListTopicCubit()..getListTopic(),
+    ),
+    BlocProvider<ListVocabularyByTopicCubit>(
+      create: (BuildContext context) =>
+          ListVocabularyByTopicCubit(),
+    ),
+    BlocProvider<QuestionAllCubit>(
+      create: (BuildContext context) =>
+          QuestionAllCubit()..getAllQuestion(),
+    ),
+    BlocProvider<QuestionByClassroomCubit>(
+      create: (BuildContext context) =>
+          QuestionByClassroomCubit(),
+    ),
+  ], child: const MyApp()));
 }
 
+final navigatorKey = GetIt.instance<NavigationService>().navigatorKey;
+
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       routes: routes,
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: const Scaffold(
         body: SplashScreen(),
       ),
     );
   }
 }
-// class Activity_Main extends StatefulWidget {
-//   @override
-//   _Activity_MainState createState() => _Activity_MainState();
-// }
-
-// class _Activity_MainState extends State<Activity_Main> {
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     Timer(Duration(seconds: 3), () {
-//       Navigator.pushReplacement(
-//         context,
-//         MaterialPageRoute(builder: (context) => MyWidget()),
-//       );
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.blue[800],
-
-//       body: Stack(
-//         fit: StackFit.expand,
-//         children: <Widget>[
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               Image.asset(
-//                 'assets/images/logo.png',
-//                 width: 160,
-//                 height: 160,
-//               ),
-//               const SizedBox(height: 20),
-//               const Text(
-//                 'SignChat',
-//                 style: TextStyle(
-//                   fontFamily: 'Roboto',
-//                   fontSize: 30,
-//                   fontWeight: FontWeight.bold,
-//                   color: Colors.white,
-//                 ),
-//               ),
-//               const SizedBox(height: 4),
-//               const CircularProgressIndicator(
-//                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-//               ),
-//             ],
-//           ),
-
-
-//           Positioned(
-//             bottom: 20,
-//             left: 0,
-//             right: 0,
-//             child: const Text(
-//               'Developed by iBME Lab',
-//               textAlign: TextAlign.center,
-//               style: TextStyle(
-//                 color: Colors.white,
-//                 fontSize: 14,
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

@@ -13,19 +13,23 @@ class ApiConstants {
   //friend-ship
   //study
   //vocabulary
-  static const vocabFromTopic = '/vocabulary/';
-  static const searchTopic = '/vocabularies/search';
   // static const
   // static const
   // static const
-  static const deleteVocab = '/vocabularies/';
+  static const allVocabulary = '/vocabularies/all/v2';
+  static const vocabularyByTopic = '/vocabularies/limits-topic/v2';
+  static const searchVocabulary = "/vocabularies/get-by-content/v2";
+  static const searchVocabularyInTopic = "/vocabularies/search/v2";
   //static const
   //topic
   static const allTopicUrl = '/topics/all';
-  static const searchTopicUrl = '/topics/search';
+  static const searchTopicUrl = '/topics/search/v2';
   static const deleteTopicUrl = '/topics/';
+  static const topicByClassroom = "/topics/all-common/";
   //question
   static const getQuestionUrl = '/questions/';
+  static const getAllQuestion = '/questions/all';
+  static const getQuestionByClassroomId = '/questions/limits-classRoom/v2';
   //friend
   static const addFriendUrl = '/friend-ship/add-friend/';
   static const acceptFriendUrl = '/friend-ship/accept-friend/';
@@ -37,4 +41,6 @@ class ApiConstants {
   static const getListConversationUrl = '/conversations/all-me';
   static const createConversationUrl = '/conversations';
   static const sendMessageUrl = '/messages';
+  //classroom
+  static const getAllClassroom = "/classrooms/all";
 }

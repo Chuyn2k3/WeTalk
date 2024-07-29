@@ -1,91 +1,97 @@
-// import 'package:appdemo/data/term/app_term.dart';
-// import 'package:appdemo/modules/notification/bloc/notification_bloc.dart';
-// import 'package:appdemo/modules/notification/bloc/notification_bloc_event.dart';
-// import 'package:appdemo/modules/notification/bloc/notification_bloc_state.dart';
-// import 'package:appdemo/modules/notification/widget/show_notification.dart';
-// import 'package:appdemo/service/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/modules/notification/widget/content_noti.dart';
+import 'package:flutter_app/modules/notification/widget/iteam.dart';
+import 'package:flutter_app/utils/common_app.dart';
+import 'package:flutter_app/utils/custom_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
-  static String routeName = "notificaton_screen";
+import '../../../utils/base_scaffold.dart';
+
+class HistoryNotificationScreen extends StatefulWidget {
+  const HistoryNotificationScreen({super.key});
+
   @override
-  State<NotificationScreen> createState() => _NotificationScreen();
+  State<HistoryNotificationScreen> createState() =>
+      _HistoryNotificationScreenState();
 }
 
-class _NotificationScreen extends State<NotificationScreen> {
+class _HistoryNotificationScreenState extends State<HistoryNotificationScreen> {
+  final _scrollController = ScrollController();
+  var isLoadmore = false;
+
   @override
   void initState() {
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.pixels ==
+    //       _scrollController.position.maxScrollExtent) {
+    //     if (_cubit.isLoadMore) {
+    //       setState(() {
+    //         isLoadmore = true;
+    //       });
+    //     }
+    //     _cubit.loadMoreHistoryNotification();
+    //   }
+    // });
     super.initState();
-    //connect();
   }
 
   @override
   Widget build(BuildContext context) {
-    // NotificationBloc fetchNotification =
-    //     BlocProvider.of<NotificationBloc>(context);
-    // fetchNotification.add(FetchNotification());
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        title: const Text(
-          'Thông Báo',
-        ),
-      ),
-      backgroundColor: Colors.blue,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            color: Colors.white),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Flexible(
-                child: ShowNotification(
-                        // notification: 'day la tb',
-                        // employees: 'chuyen'
-                        )
+    return BaseScaffold(
+        appBar: CustomAppbar.basic(title: "Lịch sử thông báo", isLeading: false,),
+        body: _screen());
+  }
 
-            //     RefreshIndicator(
-            //   onRefresh: () async {
-            //     await Future.delayed(const Duration(seconds: 1));
-            //     fetchNotification.add(FetchNotification());
-            //   },
-            //   child: BlocBuilder<NotificationBloc, NotificationState>(
-            //     builder: (context, state) {
-            //       if (state is NotificationLoading) {
-            //         return const CircularProgressIndicator();
-            //       } else if (state is NotificationLoaded) {
-            //         return ShowNotification(
-            //             notification: state.notification.data!,
-            //             employees: state.employee.data!);
-            //       } else {
-            //         return Column(
-            //           children: [
-            //             TextButton(
-            //                 onPressed: () {
-            //                   fetchNotification.add(FetchNotification());
-            //                 },
-            //                 child: const Text(AppLoadDataTerm.reload)),
-            //             const Text(AppLoadDataTerm.errorLoad)
-            //           ],
-            //         );
-            //       }
-            //     },
-            //   ),
-            // )
-            ),
-          ],
+  Widget _screen() {
+
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+              controller: _scrollController,
+              //  physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: 10,
+              itemBuilder: (BuildContext context, int index) {
+                return _listByDate();
+              }),
         ),
-      ),
+        const SizedBox(height: kBottomNavigationBarHeight)
+      ],
     );
   }
+
+  Widget _listByDate(
+
+  ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 10,
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const SizedBox(),
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index) {
+            return ItemNotification();
+          },
+        )
+      ],
+    );
+  }
+
+  Future<void> _showDialogFilter(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext _) {
+        return const SizedBox();
+      },
+    );
+  }
+
+
 }

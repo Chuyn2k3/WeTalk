@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/upload/widget/appbar_widget.dart';
 import 'package:flutter_app/modules/upload/widget/centerPopUp.dart';
+import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,9 +17,9 @@ class _UpLoadState extends State<UpLoad> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: Color.fromARGB(255, 234, 227, 227),
-        appBar: uploadAppBar(),
+    return BaseScaffold(
+        //backgroundColor: Color.fromARGB(255, 234, 227, 227),
+        //appBar: uploadAppBar(),
         body: Stack(
           children: [
             Positioned(

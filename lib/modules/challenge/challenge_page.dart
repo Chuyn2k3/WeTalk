@@ -1,20 +1,16 @@
-// import 'package:DevQuiz/challenge/challenge_controller.dart';
-// import 'package:DevQuiz/challenge/widget/next_button/next_button_widget.dart';
-// import 'package:DevQuiz/challenge/widget/question_indicator/question_indicator_widget.dart';
-// import 'package:DevQuiz/challenge/widget/quiz/quiz_widget.dart';
-// import 'package:DevQuiz/result/result_page.dart';
-// import 'package:DevQuiz/shared/models/question_model.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/challenge/challenge_controller.dart';
-import 'package:flutter_app/modules/challenge/model/question/question_model.dart';
 import 'package:flutter_app/modules/challenge/result/result_page.dart';
 import 'package:flutter_app/modules/challenge/widget/next_button/next_button.dart';
 import 'package:flutter_app/modules/challenge/widget/question_indicator.dart';
 import 'package:flutter_app/modules/challenge/widget/quiz/quiz_widget.dart';
+import 'package:flutter_app/modules/study/model/question_model.dart';
+import 'package:flutter_app/utils/base_scaffold.dart';
+import 'package:flutter_app/utils/custom_app_bar.dart';
 
 class ChallengePage extends StatefulWidget {
-  final QuestionModel questions;
+  final QuestionStudyModel questions;
   final String title;
 
   const ChallengePage({
@@ -30,10 +26,13 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
   final pageController = PageController();
-  // CachedVideoPlayerController? _controller;
-  // CustomVideoPlayerController? _customVideoPlayerController;
+  var question = [];
   @override
   void initState() {
+    if (widget.questions.data != null) {
+      question = widget.questions.data ?? [];
+    }
+
     pageController.addListener(() {
       controller.currentPage = pageController.page!.toInt() + 1;
     });
@@ -48,6 +47,13 @@ class _ChallengePageState extends State<ChallengePage> {
     }
   }
 
+  void previousPage(int duration) {
+    if (controller.currentPage > 0) {
+      pageController.previousPage(
+          duration: Duration(milliseconds: duration), curve: Curves.linear);
+    }
+  }
+
   void onSelected(bool value) {
     if (value) {
       controller.rightAnswers++;
@@ -56,41 +62,57 @@ class _ChallengePageState extends State<ChallengePage> {
     nextPage(1000);
   }
 
+  Widget _previousButton(VoidCallback? onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(99),
+        ),
+        child: const Icon(
+          Icons.arrow_back_ios_new,
+          color: Colors.black,
+          size: 16,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(size.height * 0.11),
-        child: SafeArea(
-          top: true,
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BackButton(),
-                ValueListenableBuilder<int>(
-                    valueListenable: controller.currentPageNotifier,
-                    builder: (context, value, _) => QuestionIndicatorWidget(
-                          currentPage: value,
-                          length: widget.questions.data!.length,
-                        )),
-              ],
-            ),
-          ),
-        ),
+    return BaseScaffold(
+      appBar:CustomAppbar.basic(
+        onTap: () => Navigator.pop(context),
       ),
-      body: PageView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: widget.questions.data!
-            .map((e) => QuizWidget(
-                  question: e,
-                  onSelected: onSelected,
-                ))
-            .toList(),
-      ),
-      bottomNavigationBar: SafeArea(
+      body: (question.isNotEmpty)
+          ? Column(
+            children: [
+              ValueListenableBuilder<int>(
+                  valueListenable: controller.currentPageNotifier,
+                  builder: (context, value, _) => QuestionIndicatorWidget(
+                        currentPage: value,
+                        length: widget.questions.data?.length ?? 0,
+                      )),
+              Expanded(
+                child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: pageController,
+                    children: question
+                        .map((e) => QuizWidget(
+                              question: e,
+                              onSelected: onSelected,
+                            ))
+                        .toList(),
+                  ),
+              ),
+            ],
+          )
+          : const SizedBox.shrink(),
+      bottom: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: ValueListenableBuilder(
@@ -98,6 +120,15 @@ class _ChallengePageState extends State<ChallengePage> {
             builder: (context, value, _) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                if (controller.currentPage > 0)
+                  Expanded(
+                      child: NextButtonWidget.white(
+                    label: 'Lùi',
+                    onTap: () => previousPage(300),
+                  )),
+                const SizedBox(
+                  width: 16,
+                ),
                 if (controller.currentPage < widget.questions.data!.length)
                   Expanded(
                       child: NextButtonWidget.white(
