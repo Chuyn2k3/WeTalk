@@ -108,11 +108,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     IntrinsicHeight(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MainTabbarScreen(),
-                              ));
+                          fetchLogin.add(FetchLogin(
+                              email: "chuyenp32@gmail.com",
+                              password: "123456789"));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => MainTabbarScreen(),
+                          //     ));
                         },
                         child: Container(
                           decoration: BoxDecoration(

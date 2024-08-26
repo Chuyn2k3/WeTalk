@@ -5,6 +5,7 @@ import 'package:flutter_app/modules/notification/page/notification_screen.dart';
 import 'package:flutter_app/modules/personal/page/fragment_talk_profile.dart';
 import 'package:flutter_app/modules/personal/page/user_profile.dart';
 import 'package:flutter_app/modules/upload/page/upload_screen.dart';
+import 'package:flutter_app/utils/common_app.dart';
 
 class MainTabbarScreen extends StatefulWidget {
   const MainTabbarScreen({super.key});
@@ -131,6 +132,9 @@ class _MainTabbarScreenState extends State<MainTabbarScreen> {
       selectedItemColor: Colors.blue[500],
       unselectedItemColor: Colors.grey[500],
       showUnselectedLabels: true,
+      selectedLabelStyle: textTheme.t10M.copyWith(color: colorApp.blue),
+      unselectedLabelStyle:
+          textTheme.t10R.copyWith(color: colorApp.labelSecondary),
       items: listItems,
     );
 

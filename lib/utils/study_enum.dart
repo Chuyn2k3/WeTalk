@@ -6,9 +6,11 @@ import 'package:flutter_app/modules/study/page/exam.dart';
 import 'package:flutter_app/modules/study/page/numbers.dart';
 import 'package:flutter_app/modules/study/page/question/question_screen.dart';
 import 'package:flutter_app/modules/study/page/study/study_screen.dart';
+import 'package:flutter_app/service/test1.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
 import 'package:flutter_app/utils/snack_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tflite_plugin/tflite_plugin.dart';
 
 enum StudyEnum { alphabet, number, exam, vocabulary, practice }
 
@@ -66,9 +68,13 @@ extension ExtStudyEnum on StudyEnum {
               MaterialPageRoute(builder: (context) => const StudyScreen()),
             );
       case StudyEnum.practice:
-        return () {
-          getContext.showSnackBarSuccess(text: "Đang phát triển");
-        };
+      return () => Navigator.push(
+              getContext,
+              MaterialPageRoute(builder: (context) => const ObjectDetectionPage1()),
+            );
+        // return () {
+        //   getContext.showSnackBarSuccess(text: "Đang phát triển");
+        // };
     }
   }
 }

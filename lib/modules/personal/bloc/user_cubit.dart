@@ -8,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 part 'user_state.dart';
+
 GetIt _sl = GetIt.instance;
+
 class UserInfoCubit extends Cubit<UserInfoState> {
   UserInfoCubit() : super(UserInfoInitialState());
 
@@ -17,8 +19,10 @@ class UserInfoCubit extends Cubit<UserInfoState> {
   void getUserInfo() async {
     try {
       emit(UserInfoLoadingState());
+      print("ok");
       final result = await _userRepository.getUserInfo();
       emit(UserInfoLoadedState(user: result));
+      print("user ok");
     } on DioException catch (e) {
       emit(UserInfoErrorState(error: e.message!));
     }

@@ -23,12 +23,12 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
     Size size = MediaQuery.of(context).size;
     return BaseScaffold(
         appBar: AppBar(
-          leading: Icon(
+          leading: const Icon(
             Icons.arrow_back_ios,
             size: 18,
           ),
           centerTitle: true,
-          title: Text("Bạn bè"),
+          title: const Text("Bạn bè"),
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
@@ -47,38 +47,41 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
               Container(
                 height: 50,
                 width: 100,
-                margin: EdgeInsets.all(8),
+                margin: const EdgeInsets.all(8),
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       hintStyle: TextStyle(color: Colors.grey),
                       prefixIcon: Icon(Icons.search),
                       hintText: 'Tìm kiếm bạn bè...'),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               Expanded(
                 child: BlocBuilder<ListFriendCubit, ListFriendState>(
                   builder: (context, state) {
                     if (state is ListFriendLoadingState) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                     if (state is ListFriendLoadedState) {
                       return ListView.builder(
                         itemCount: state.lstFriend.data!.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
                               children: [
-                                CircleAvatar(
-                                  child: Image(
-                                      image: AssetImage(
-                                          'assets/images/profile.png')),
-                                ),
+                                 CircleAvatar(
+                              radius: 30,
+                              backgroundImage: state.lstFriend.data?[index]
+                                        .avatarLocation != null
+                                  ? NetworkImage(state.lstFriend.data![index]
+                                        .avatarLocation!)
+                                  : const AssetImage("assets/images/profile.png")as ImageProvider,
+                            ),
                                 Column(
                                   children: [
                                     Text(state.lstFriend.data![index].name ??
@@ -91,11 +94,11 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                         },
                       );
                     }
-                    return SizedBox();
+                    return const SizedBox();
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
             ],

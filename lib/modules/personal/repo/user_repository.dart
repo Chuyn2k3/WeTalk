@@ -18,7 +18,7 @@ abstract class UserRepository {
 class UserRepositoryImp implements UserRepository {
   @override
   Future<UserModel> getUserInfo() async {
-    final dio = await DioBase.dioGetChatFunction();
+    final dio = await DioBase.dioGetFriendFunction();
     try {
       final response = await dio.get(ApiConstants.userUrl,
           options: Options(

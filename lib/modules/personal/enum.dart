@@ -3,6 +3,7 @@ import 'package:design_system_sl/theme/components/button/sl_button.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/modules/personal/page/history.dart';
 import 'package:flutter_app/modules/personal/widget/profile_body_button.dart';
 import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
@@ -74,6 +75,13 @@ extension RenderUserProfileEnum on UserProfileEnum {
   VoidCallback get onTap {
     switch (this) {
       case UserProfileEnum.packageBattery:
+        return () {
+          Navigator.push(
+              getContext,
+              MaterialPageRoute(
+                builder: (context) => const ListHistoryScreen(),
+              ));
+        };
       case UserProfileEnum.history:
       case UserProfileEnum.contact:
       case UserProfileEnum.privacy:
@@ -88,22 +96,16 @@ extension RenderUserProfileEnum on UserProfileEnum {
     }
   }
 
-
   Widget get toUI {
-
-
-      return ProfileBodyButtonNext(
-        onTap: onTap,
-        icon: SvgPicture.asset(
-          toIconPath,
-        ),
-        body: Text(
-          toText,
-          style: textTheme.t16R,
-        ),
-      );
-    }
+    return ProfileBodyButtonNext(
+      onTap: onTap,
+      icon: SvgPicture.asset(
+        toIconPath,
+      ),
+      body: Text(
+        toText,
+        style: textTheme.t16R,
+      ),
+    );
   }
-
-
-
+}

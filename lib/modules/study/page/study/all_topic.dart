@@ -10,7 +10,7 @@ class AllTopicScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ListTopicCubit>().getListTopic();
+    //context.read<ListTopicCubit>().getListTopic();
     return BaseScaffold(
       appBar: CustomAppbar.basic(
         title: "Chủ đề học tập",

@@ -6,6 +6,7 @@ import 'package:flutter_app/modules/authentication/page/login_screen.dart';
 import 'package:flutter_app/modules/personal/bloc/user_cubit.dart';
 import 'package:flutter_app/modules/personal/enum.dart';
 import 'package:flutter_app/modules/personal/model/user_model.dart';
+import 'package:flutter_app/modules/personal/page/detail_profile.dart';
 import 'package:flutter_app/modules/personal/widget/circular_profile.dart';
 import 'package:flutter_app/modules/personal/widget/profile_body_button.dart';
 import 'package:flutter_app/modules/personal/widget/version_app.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_app/utils/button/base_button.dart';
 import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
+import 'package:flutter_app/utils/snack_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -25,41 +27,64 @@ class UserProfileScreen extends StatelessWidget {
   }
 }
 
-class _UserProfileScreen extends StatelessWidget {
+class _UserProfileScreen extends StatefulWidget {
   const _UserProfileScreen();
 
   @override
-  Widget build(BuildContext context) {
-    var user = UserModel();
-    if ((context.read<UserInfoCubit>().state is UserInfoLoadedState)) {
-      user = (context.read<UserInfoCubit>().state as UserInfoLoadedState).user;
-    }
+  State<_UserProfileScreen> createState() => _UserProfileScreenState();
+}
 
+class _UserProfileScreenState extends State<_UserProfileScreen> {
+  late UserInfoCubit _userInfoCubit;
+  @override
+  void initState() {
+    super.initState();
+    _userInfoCubit = UserInfoCubit();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     late Widget displayName = BaseRoundedButton.all(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailProfile(),
+            ));
+      },
       child: ProfileBodyButtonNext(
         icon: const SizedBox(
           height: 48.0,
           width: 48.0,
           child: CircularProfile(),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              user.data?.name ?? '',
-              style: SLStyle.t16M,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              user.data?.phoneNumber?.toString() ?? "",
-              style: SLStyle.t16R,
-            )
-          ],
-        ),
+        body: BlocConsumer<UserInfoCubit, UserInfoState>(
+            listener: (context, state) {
+          if (state is UserInfoErrorState) {
+            context.showSnackBarFail(text: state.error);
+          }
+        }, builder: (context, state) {
+          if (state is UserInfoLoadedState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  state.user.data?.name ?? '',
+                  style: SLStyle.t16M,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  state.user.data?.phoneNumber?.toString() ?? "",
+                  style: SLStyle.t16R,
+                )
+              ],
+            );
+          }
+          return const SizedBox.shrink();
+        }),
       ),
     );
 
@@ -99,19 +124,22 @@ class _UserProfileScreen extends StatelessWidget {
         isLeading: false,
         title: "Tài khoản",
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              displayName,
-              displayFunction(),
-              const SizedBox(height: 24),
-              const VersionAppDebug(),
-              deleteUser(),
-              const SizedBox(height: 24 + kBottomNavigationBarHeight),
-            ],
+      body: BlocProvider(
+        create: (context) => _userInfoCubit..getUserInfo(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                displayName,
+                displayFunction(),
+                const SizedBox(height: 24),
+                const VersionAppDebug(),
+                deleteUser(),
+                const SizedBox(height: 24 + kBottomNavigationBarHeight),
+              ],
+            ),
           ),
         ),
       ),
@@ -131,7 +159,7 @@ class _UserProfileScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-         // Assets.newAssets.icons.deleteAccount.image(height: 20),
+          // Assets.newAssets.icons.deleteAccount.image(height: 20),
           const SizedBox(width: 8),
           Text(
             "Đăng Xuất",

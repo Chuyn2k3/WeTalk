@@ -20,7 +20,7 @@ class CircularProfile extends StatelessWidget {
         radius:64,
         backgroundImage: avatarLink != null
             ? NetworkImage(avatarLink)
-            : Assets.images.profile.image().image,
+            : const AssetImage("assets/images/profile.png")as ImageProvider,
       ),
     );
   }

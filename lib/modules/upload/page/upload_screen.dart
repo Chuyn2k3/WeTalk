@@ -1,10 +1,25 @@
+import 'dart:io';
+
+import 'package:design_system_sl/theme/components/button/enums.dart';
+import 'package:design_system_sl/theme/components/button/sl_button.dart';
+import 'package:design_system_sl/typography/typography.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_app/modules/upload/widget/appbar_widget.dart';
-import 'package:flutter_app/modules/upload/widget/centerPopUp.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/modules/upload/bloc/ai_detection_cubit.dart';
+import 'package:flutter_app/modules/upload/bloc/create_upload_cubit.dart';
+import 'package:flutter_app/modules/upload/bloc/get_url_cubit.dart';
+import 'package:flutter_app/modules/upload/model/file_upload_model.dart';
+import 'package:flutter_app/modules/upload/page/widget/choose_vocabulary_widget.dart';
+import 'package:flutter_app/modules/upload/widget/bottom_sheet-action.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
-import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app/utils/convert_upload_file.dart';
+import 'package:flutter_app/utils/custom_app_bar.dart';
+import 'package:flutter_app/utils/snack_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpLoad extends StatefulWidget {
   const UpLoad({super.key});
@@ -14,225 +29,340 @@ class UpLoad extends StatefulWidget {
 }
 
 class _UpLoadState extends State<UpLoad> {
+  UploadFile? _file;
+  int vocabularyId = -1;
+  String dataLocation = "";
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return BaseScaffold(
-        //backgroundColor: Color.fromARGB(255, 234, 227, 227),
-        //appBar: uploadAppBar(),
-        body: Stack(
-          children: [
-            Positioned(
-              top: size.height * 0.025,
-              left: size.width * 0.03,
-              child: Container(
-                margin: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Gap(10),
-                      Text('05/03/2024'),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.arrow_drop_down_outlined))
-                    ]),
+      appBar: _buildAppBar(),
+      body: GestureDetector(
+        onTap: () {
+          if (Platform.isIOS) {
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
+          } else {
+            FocusManager.instance.primaryFocus?.unfocus();
+          }
+        },
+        behavior: HitTestBehavior.translucent,
+        child: Container(
+          margin: EdgeInsets.zero,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Đăng tải nội dung",
+                style: SLStyle.t20B,
               ),
-            ),
-            Positioned(
-              top: 20,
-              right: size.width * 0.1,
-              child: InkWell(
-                child: Container(
-                  width: size.width * 0.35,
-                  margin: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      color:  Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //Gap(10),
+              const SizedBox(
+                height: 20,
+              ),
+              //_buildTextFieldClaim(),
+              BuildChooseDeviceType(
+                getVocabulary: getVocabulary,
+              ),
+              _buildImportImageVideo(),
+              _buildFilesChoosen(),
+              const Expanded(child: SizedBox(),),
+              _builBottomButton()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-                        Image.asset('assets/images/price-tag.ico', width: 47),
-                        Text(
-                          'Nội dung',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ]),
-                ),
-                onTap: () {
-                  showCenteredPopup(context, YourPopupContentWidget());
-                },
-              ),
+  CustomAppbar _buildAppBar() {
+    return CustomAppbar.basic(
+      isLeading: false,
+      title: "Đăng tải nội dung tình nguyện",
+      actions: [
+        GestureDetector(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: SvgPicture.asset(Assets.icon.info),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Widget _buildTextFieldClaim() {
+  //   return InputTextField(
+  //     minLine: 5,
+  //     maxLine: 10,
+  //     textController: _descriptionCtrl,
+  //     textAlign: TextAlign.start,
+  //     hintText: S.current.claim_issue_example,
+  //   );
+  // }
+
+  Widget _buildImportImageVideo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        Text(
+          "Tải lên file",
+          style: SLStyle.t16R,
+        ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 1,
+              child: BottomSheetAction(
+                  icon: Assets.icon.takeVideo,
+                  label: "Quay video",
+                  onClick: () async {
+                    final imagePicker = ImagePicker();
+                    final resultVideo = await imagePicker.pickVideo(
+                      source: ImageSource.camera,
+                    );
+                    _handleResultImagePicker(resultVideo);
+                  }),
             ),
-            Positioned(
-              top: size.height * 0.2,
-              left: size.width * 0.05,
-              child: Container(
-                  height: size.height * 0.4,
-                  width: size.width * 0.9,
-                  decoration: BoxDecoration(
-                      color: Colors.white70,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Video cung cấp của bạn',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 21, 78, 177))),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Image.asset('assets/images/video_call.png')],
-                      ),
-                      Divider(
-                        color: Colors.black,
-                        height: 0.9,
-                        thickness: 0.2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(Icons.camera,
-                                    color: Color.fromARGB(255, 21, 78, 177)),
-                                Gap(20),
-                                Text("Quay video",
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 21, 78, 177)))
-                              ],
-                            ),
-                          ),
-                          InkWell(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.image,
-                                    color: Color.fromARGB(255, 21, 78, 177)),
-                                Gap(20),
-                                Text("Ảnh/video",
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 21, 78, 177)))
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  )),
+            Expanded(
+              flex: 1,
+              child: BottomSheetAction(
+                  icon: Assets.icon.takePicture,
+                  label: "Chụp ảnh",
+                  onClick: () async {
+                    final imagePicker = ImagePicker();
+                    final resultImage = await imagePicker.pickImage(
+                        source: ImageSource.camera);
+                    _handleResultImagePicker(resultImage);
+                  }),
             ),
-            Positioned(
-                bottom: size.height * 0.15,
-                right: size.width * 0.05,
-                child: Container(
-                  width: size.width * 0.9,
-                  height: size.width * 0.2,
-                  transformAlignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                          width: 5,
-                          color: Color.fromARGB(255, 106, 80, 255),
-                          style: BorderStyle.solid)),
-                  child: Center(
-                    child: InkWell(
-                      child: Text('Xem video hướng dẫn',
-                          style: GoogleFonts.lato(
-                              fontSize: size.width * 0.05,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 61, 34, 218))),
-                    ),
-                  ),
-                ))
+            Expanded(
+              flex: 1,
+              child: BottomSheetAction(
+                  icon: Assets.icon.importFromFiles,
+                  label: "Tải file từ thưa viện",
+                  onClick: () async {
+                    final imagePicker = ImagePicker();
+                    final choosenFiles = await imagePicker.pickMedia();
+                    _handleResultImagePicker(choosenFiles);
+                  }),
+            ),
           ],
         )
-        // Column(
-        //   children: [
-        //     Row(
-        //       children: [
-        //         Container(
-        //           margin: EdgeInsets.all(20),
-        //           decoration: BoxDecoration(
-        //               color: const Color.fromARGB(255, 232, 226, 226),
-        //               borderRadius: BorderRadius.all(Radius.circular(10))),
-        //           child: Row(children: [
-        //             Text('05/03/2024'),
-        //             IconButton(
-        //                 onPressed: () {},
-        //                 icon: Icon(Icons.arrow_drop_down_outlined))
-        //           ]),
-        //         ),
-        //         SizedBox(
-        //           width: size.width * 0.02,
-        //         ),
-        //         InkWell(
-        //           child: Container(
-        //             margin: EdgeInsets.all(20),
-        //             decoration: BoxDecoration(
-        //                 color: const Color.fromARGB(255, 232, 226, 226),
-        //                 borderRadius: BorderRadius.all(Radius.circular(10))),
-        //             child: Row(children: [
-        //               Image.asset('assets/images/price-tag.ico', width: 45),
-        //               Text('Nội dung'),
-        //             ]),
-        //           ),
-        //           onTap: () {
-        //             showCenteredPopup(context, YourPopupContentWidget());
-        //           },
-        //         ),
-        //       ],
-        //     ),
-        //     Container(
-        //         decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.all(Radius.circular(10))),
-        //         child: Column(
-        //           children: [
-        //             Text('video'),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [Image.asset('assets/images/video_call.png')],
-        //             ),
-        //             Divider(
-        //               height: 0.8,
-        //               thickness: 0.1,
-        //             ),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //               children: [
-        //                 InkWell(
-        //                   child: Row(
-        //                     children: [Icon(Icons.camera), Text("Quay video")],
-        //                   ),
-        //                 ),
-        //                 InkWell(
-        //                   child: Row(
-        //                     children: [Icon(Icons.image), Text("Kho")],
-        //                   ),
-        //                 )
-        //               ],
-        //             )
-        //           ],
-        //         )),
-        //     Container(
-        //       transformAlignment: Alignment.center,
-        //       decoration: BoxDecoration(
-        //           border: Border.all(
-        //               width: 8,
-        //               color: Colors.purple,
-        //               style: BorderStyle.solid)),
-        //       child: InkWell(
-        //         child: Text('Xem video'),
-        //       ),
-        //     )
-        //   ],
-        // )
-        );
+      ],
+    );
+  }
+
+  void _handleResultImagePicker(XFile? choosenFiles) async {
+    final file = await File(choosenFiles!.path).toUploadFile();
+    setState(() {
+      _file = file;
+    });
+    // if (!mounted) return;
+    // context.read<GetUrlCubit>().getUrl(_file!.file);
+  }
+
+  void getVocabulary(int idVocabulary) {
+    setState(() {
+      vocabularyId = idVocabulary;
+    });
+  }
+
+  Widget _buildFilesChoosen() {
+    if (_file == null) {
+      return Expanded(
+          child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        alignment: Alignment.center,
+        width: double.maxFinite,
+        child: Text(
+          'Không có file ',
+          style: SLStyle.t14R,
+        ),
+      ));
+    } else {
+      return Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+        ),
+        child: _buildFileItem(
+          file: _file!,
+          onClick: () async {},
+          onDelete: () {
+            setState(() {
+              _file = null;
+            });
+          },
+        ),
+      );
+    }
+  }
+
+  Widget _buildFileItem({
+    required UploadFile file,
+    required VoidCallback onClick,
+    required VoidCallback onDelete,
+  }) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Row(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(5),
+            child: file.thumnaill,
+          ),
+          Expanded(
+            child: Text(
+              file.fileName,
+              style: SLStyle.t14R,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 4),
+            child: Text(
+              _file!.fileSize,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Color(0x993C3C43),
+              ),
+            ),
+          ),
+          IconButton(
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onPressed: onDelete,
+            icon: SvgPicture.asset(Assets.icon.icClaimDelete),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _builBottomButton() {
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<GetUrlCubit, GetUrlState>(
+            listener: (context, state) {
+              if (state is GetUrlLoadedState) {
+                setState(() {
+                  dataLocation = state.link.replaceFirst("wetalk", "wesign");
+                });
+                context
+                    .read<AiDetectionCubit>()
+                    .aiDetection(state.link.replaceFirst("wetalk", "wesign"));
+              }
+              if (state is GetUrlErrorState) {
+                context.showSnackBarFail(text: "Lỗi đường dẫn");
+              }
+            },
+          ),
+          BlocListener<AiDetectionCubit, AiDetectionState>(
+            listener: (context, state) {
+              if (state is AiDetectionLoadedState) {
+                if (state.detection.status == "200") {
+                  context.showSnackBarSuccess(text: "AI nhận diện thành công");
+                } else if (state.detection.status != "200") {
+                  context.showSnackBarFail(
+                      text: "AI nhận diện không thành công");
+                }
+                if (vocabularyId >= 0 && dataLocation.isNotEmpty) {
+                  context.read<CreateUploadCubit>().createUpload(dataLocation,
+                      state.detection.data?.content, vocabularyId);
+                } else {
+                  context.showSnackBarFail(text: "Lỗi upload");
+                }
+              } else if (state is GetUrlErrorState) {
+                context.showSnackBarFail(text: "Lỗi đường dẫn");
+              }
+            },
+          )
+        ],
+        child: BlocListener<CreateUploadCubit, CreateUploadState>(
+          listener: (context, state) {
+            if (state is CreateUploadLoadedState) {
+              context.showSnackBarSuccess(
+                  text: " thành công", positionTop: true);
+              setState(() {
+                isLoading = false;
+                vocabularyId = -1;
+                dataLocation = "";
+                _file = null;
+              });
+            }
+            if (state is CreateUploadErrorState) {
+              context.showSnackBarFail(text: "Lỗi ");
+              setState(() {
+                isLoading = false;
+              });
+            }
+            if (state is CreateUploadLoadingState) {
+              setState(() {
+                isLoading = true;
+              });
+            }
+          },
+          child: Container(
+            margin: const EdgeInsets.only(top: 12),
+            child: SafeArea(
+              top: false,
+              child: SLButton.brand(
+                onTap: () async {
+                  if (_file != null) {
+                    context.read<GetUrlCubit>().getUrl(_file!.file);
+                  }
+                },
+                label: "Gửi file",
+                size: SLSize.large,
+                isLoading: isLoading,
+                isRounded: true,
+                isMaxWidth: true,
+              ),
+            ),
+          ),
+        ));
+
+    // BlocConsumer<CreateUploadCubit, CreateUploadState>(
+    //   listener: (context, state) async {
+    //     if (state is CreateUploadErrorState) {
+    //       context.showSnackBarFail(
+    //         text: state.error,
+    //         positionTop: true,
+    //       );
+    //     }
+    //     if (state is CreateUploadLoadedState) {
+    //       await Future.delayed(const Duration(milliseconds: 500));
+    //     }
+    //   },
+    //   builder: (context, state) {
+    //     return Container(
+    //       margin: const EdgeInsets.only(top: 12),
+    //       child: SafeArea(
+    //         top: false,
+    //         child: SLButton.brand(
+    //           onTap: () async {
+    //             if (_file != null) {
+    //               context.read<GetUrlCubit>().getUrl(_file!.file);
+    //             }
+    //           },
+    //           label: "Gửi file",
+    //           size: SLSize.large,
+    //           isLoading: state is CreateUploadLoadingState,
+    //           isRounded: true,
+    //           isMaxWidth: true,
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }

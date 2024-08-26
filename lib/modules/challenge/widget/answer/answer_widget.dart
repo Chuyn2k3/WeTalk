@@ -1,6 +1,5 @@
 //import 'package:DevQuiz/core/core.dart';
 //import 'package:DevQuiz/shared/models/answer_model.dart';
-import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/data/term/text_style.dart';

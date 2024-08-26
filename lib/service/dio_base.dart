@@ -56,4 +56,12 @@ class DioBase {
 
     return dio;
   }
+   static Future<Dio> dioGetUploadFunction() async {
+    String apiUrl = await getUploadUrl() ?? '';
+    final dio = Dio(
+      BaseOptions(baseUrl: apiUrl, connectTimeout: const Duration(seconds: 10)),
+    );
+
+    return dio;
+  }
 }

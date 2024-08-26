@@ -7,7 +7,7 @@ class ApiConstants {
   static const updateUserInforUrl = '/user';
   static const upLoadAvatarUrl = '/uploadAvatar';
   static const changePasswordUrl = '/changePassword';
-  static const searchUrl = '/search';
+  static const searchUserUrl = '/users/search/v2';
   static const userUrl = '/users/me/v2';
   static const allUserUrl = '/me';
   //friend-ship
@@ -43,4 +43,12 @@ class ApiConstants {
   static const sendMessageUrl = '/messages';
   //classroom
   static const getAllClassroom = "/classrooms/all";
+  //upload
+  static const getUrlLink = "/api/upload";
+  static const listHistoryCollectData = "/data-collection/all-me";
+  static const createUpload = "/data-collection";
+
+  //
+  static const aiCheckDataCollect =
+      "https://wetalk.ibme.edu.vn/emg-label-tool/ai/detection";
 }

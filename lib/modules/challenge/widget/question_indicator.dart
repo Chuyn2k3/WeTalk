@@ -1,6 +1,6 @@
 //import 'package:DevQuiz/core/core.dart';
 //import 'package:DevQuiz/shared/widgets/progress_indicator/progress_indicator_widget.dart';
-import 'package:appinio_video_player/appinio_video_player.dart';
+//import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/service/progress_indicator.dart';
@@ -25,7 +25,7 @@ class _QuestionIndicatorWidgetState extends State<QuestionIndicatorWidget> {
       padding: EdgeInsets.symmetric(horizontal: size.width*0.05),
       child: Column(
         children: [
-          
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -89,7 +89,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                           //backgroundColor: Colors.white.withOpacity(1.5),
                           elevation: 0,
                           content: PlayVideo(
-                              videoUrl: link!.items[index].fullPath ?? ''),
+                              videoUrl: link!.items[index].fullPath ),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {

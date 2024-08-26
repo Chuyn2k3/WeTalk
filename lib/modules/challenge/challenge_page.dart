@@ -1,4 +1,4 @@
-import 'package:appinio_video_player/appinio_video_player.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/challenge/challenge_controller.dart';
 import 'package:flutter_app/modules/challenge/result/result_page.dart';

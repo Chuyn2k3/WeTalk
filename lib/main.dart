@@ -13,6 +13,10 @@ import 'package:flutter_app/modules/study/bloc/list_topic_cubit.dart';
 import 'package:flutter_app/modules/study/bloc/list_vocabulary_by_topic_cubit.dart';
 import 'package:flutter_app/modules/study/bloc/question_all_cubit.dart';
 import 'package:flutter_app/modules/study/bloc/question_by_classroom_cubit.dart';
+import 'package:flutter_app/modules/upload/bloc/ai_detection_cubit.dart';
+import 'package:flutter_app/modules/upload/bloc/create_upload_cubit.dart';
+import 'package:flutter_app/modules/upload/bloc/get_url_cubit.dart';
+import 'package:flutter_app/modules/upload/bloc/history_upload_data_cubit.dart';
 import 'package:flutter_app/service/routes.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,9 +32,7 @@ void main() async {
     BlocProvider<AuthenticationBloc>(
       create: (BuildContext context) => AuthenticationBloc(),
     ),
-    // BlocProvider<QuestionBloc>(
-    //   create: (BuildContext context) => QuestionBloc(),
-    // ),
+    
     BlocProvider<ListFriendCubit>(
       create: (BuildContext context) => ListFriendCubit()..getListFriend(),
     ),
@@ -68,6 +70,22 @@ void main() async {
     BlocProvider<QuestionByClassroomCubit>(
       create: (BuildContext context) =>
           QuestionByClassroomCubit(),
+    ),
+    BlocProvider<CreateUploadCubit>(
+      create: (BuildContext context) =>
+          CreateUploadCubit(),
+    ),
+    BlocProvider<GetUrlCubit>(
+      create: (BuildContext context) =>
+          GetUrlCubit(),
+    ),
+    BlocProvider<AiDetectionCubit>(
+      create: (BuildContext context) =>
+          AiDetectionCubit(),
+    ),
+    BlocProvider<UploadHistoryCubit>(
+      create: (BuildContext context) =>
+          UploadHistoryCubit(),
     ),
   ], child: const MyApp()));
 }

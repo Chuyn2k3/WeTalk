@@ -1,4 +1,3 @@
-
 import 'package:flutter_app/data/term/network_term.dart';
 import 'package:flutter_app/modules/authentication/model/login_model.dart';
 import 'package:flutter_app/service/dio_base.dart';

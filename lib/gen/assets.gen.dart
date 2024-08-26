@@ -73,11 +73,18 @@ class $AssetsIconGen {
   /// File path: assets/icon/email.png
   AssetGenImage get email => const AssetGenImage('assets/icon/email.png');
 
+  /// File path: assets/icon/excercise.webp
+  AssetGenImage get excercise =>
+      const AssetGenImage('assets/icon/excercise.webp');
+
   /// File path: assets/icon/facebook.png
   AssetGenImage get facebook => const AssetGenImage('assets/icon/facebook.png');
 
   /// File path: assets/icon/google.png
   AssetGenImage get google => const AssetGenImage('assets/icon/google.png');
+
+  /// File path: assets/icon/icClaimDelete.svg
+  String get icClaimDelete => 'assets/icon/icClaimDelete.svg';
 
   /// File path: assets/icon/ic_1.png
   AssetGenImage get ic1 => const AssetGenImage('assets/icon/ic_1.png');
@@ -109,6 +116,12 @@ class $AssetsIconGen {
   /// File path: assets/icon/icon_video.svg
   String get iconVideo => 'assets/icon/icon_video.svg';
 
+  /// File path: assets/icon/importFromFiles.svg
+  String get importFromFiles => 'assets/icon/importFromFiles.svg';
+
+  /// File path: assets/icon/info.svg
+  String get info => 'assets/icon/info.svg';
+
   /// File path: assets/icon/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/icon/logo.png');
 
@@ -134,6 +147,12 @@ class $AssetsIconGen {
   /// File path: assets/icon/search_icon.png
   AssetGenImage get searchIcon =>
       const AssetGenImage('assets/icon/search_icon.png');
+
+  /// File path: assets/icon/takePicture.svg
+  String get takePicture => 'assets/icon/takePicture.svg';
+
+  /// File path: assets/icon/takeVideo.svg
+  String get takeVideo => 'assets/icon/takeVideo.svg';
 
   /// File path: assets/icon/target.svg
   String get target => 'assets/icon/target.svg';
@@ -182,8 +201,10 @@ class $AssetsIconGen {
         closeAction,
         dictionary,
         email,
+        excercise,
         facebook,
         google,
+        icClaimDelete,
         ic1,
         ic2,
         ic3,
@@ -194,6 +215,8 @@ class $AssetsIconGen {
         ic8,
         icSnackbarSuccess,
         iconVideo,
+        importFromFiles,
+        info,
         logo,
         name,
         notiDefault,
@@ -202,6 +225,8 @@ class $AssetsIconGen {
         password,
         profile,
         searchIcon,
+        takePicture,
+        takeVideo,
         target,
         test,
         topBackground,

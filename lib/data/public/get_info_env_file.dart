@@ -35,3 +35,9 @@ Future<String?> getChatUrl() async {
   String? apiUrl = dotenv.env['CHAT_URL'];
   return apiUrl;
 }
+
+Future<String?> getUploadUrl() async {
+  await dotenv.load(fileName: ".env");
+  String? apiUrl = dotenv.env['UPLOAD_URL'];
+  return apiUrl;
+}
