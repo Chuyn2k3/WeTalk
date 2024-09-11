@@ -1,3 +1,4 @@
+import 'package:flutter_app/modules/authentication/bloc/login/authentication_cubit.dart';
 import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
 import 'package:flutter_app/modules/chat/repo/chat_repository.dart';
 import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
@@ -35,6 +36,7 @@ Future setupLocator() async{
   serviceLocator.registerLazySingleton(() => CreateUploadCubit());
    serviceLocator.registerLazySingleton(() =>SendingListFriendCubit());
    serviceLocator.registerLazySingleton(() =>SearchUserCubit());
+   serviceLocator.registerLazySingleton(() => AuthenticationCubit());
   //repository
   serviceLocator.registerFactory<FriendRepository>(
       () => FriendRepositoryImp());

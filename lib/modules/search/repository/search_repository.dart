@@ -1,19 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_app/data/term/network_term.dart';
 import 'package:flutter_app/modules/search/model/search_user_model.dart';
-import 'package:flutter_app/modules/study/model/classroom_model.dart';
-import 'package:flutter_app/modules/study/model/topic_model.dart';
 import 'package:flutter_app/modules/study/model/vocabulary_model.dart';
-import 'package:flutter_app/modules/study/model/question_model.dart';
 import 'package:flutter_app/service/dio_base.dart';
 import 'package:flutter_app/service/store.dart';
 
 abstract class SearchRepository {
   Future<SearchUserModel> searchUser(String text);
+  Future<VocabularyModel> searchVocabularyByText(String content);
   // Future<TopicModel> getListTopicByClassroom(int classroomId);
   // Future<TopicModel> searchTopic(String topicName);
   // Future<ClassroomModel> getListClassroom();
-  // Future<VocabularyModel> getListVocabularyByTopicId(int topicId);
+
   // Future<QuestionStudyModel> getAllQuestion();
   // Future<QuestionStudyModel> getQuestionByClassroom(int classroomId);
 }
@@ -31,34 +29,31 @@ class SearchRepositoryImp implements SearchRepository {
               "Content-Type": "application/json",
             },
           ),
-          queryParameters: {"text":text,"size":100}
-          );
+          queryParameters: {"text": text, "size": 100});
       return SearchUserModel.fromJson((response.data));
     } catch (e) {
       rethrow;
     }
   }
 
-  // @override
-  // Future<TopicModel> getListTopicByClassroom(int classroomId) async {
-  //   final dio = await DioBase.dioGetStudyFunction();
-  //   try {
-  //     final response = await dio.get(
-  //       ApiConstants.topicByClassroom + classroomId.toString(),
-  //       options: Options(
-  //         method: 'get',
-  //         headers: {
-  //           "Authorization": "Bearer ${await Store.getToken()}",
-  //           "Content-Type": "application/json",
-  //         },
-  //       ),
-  //       //queryParameters: {"classRoomId": classroomId}
-  //     );
-  //     return TopicModel.fromJson((response.data));
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+  @override
+  Future<VocabularyModel> searchVocabularyByText(String content) async {
+    final dio = await DioBase.dioGetStudyFunction();
+    try {
+      final response = await dio.get(ApiConstants.searchVocabularyByText,
+          options: Options(
+            method: 'get',
+            headers: {
+              "Authorization": "Bearer ${await Store.getToken()}",
+              "Content-Type": "application/json",
+            },
+          ),
+          queryParameters: {"contentSearch": content, "vocabularyType": "WORD"});
+      return VocabularyModel.fromJson((response.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   // @override
   // Future<TopicModel> searchTopic(String topicName) async {
@@ -153,4 +148,3 @@ class SearchRepositoryImp implements SearchRepository {
   //   }
   //}
 }
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/gen/assets.gen.dart';
 import 'package:flutter_app/modules/personal/widget/item_navigate.dart';
 import 'package:flutter_app/modules/upload/page/history_upload_screen.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
@@ -11,7 +12,7 @@ class ListHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<(String, String, VoidCallback)> listInfor = [
       (
-       "assets/image/upload.png",
+       Assets.icon.historyUpload,
         "Lịch sử cung cấp dữ liệu",
         () {
           Navigator.push(context, PageRouteBuilder(

@@ -17,7 +17,7 @@ class VocabularyByTopicCubit extends Cubit<VocabularyByTopicState> {
       emit(VocabularyByTopicLoadingState());
       final result = await _vocabularyRepository.getVocabularyByTopic();
 
-      emit(VocabularyByTopicLoadedState(VocabularyByTopic: result));
+      emit(VocabularyByTopicLoadedState(vocabularyModel: result));
     } on DioException catch (e) {
       emit(VocabularyByTopicErrorState(error: e.message!));
     }

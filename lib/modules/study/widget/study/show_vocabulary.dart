@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/gen/assets.gen.dart';
 import 'package:flutter_app/modules/study/model/vocabulary_model.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/common_app.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
 
@@ -21,38 +21,108 @@ class ShowVocabulary extends StatefulWidget {
 }
 
 class _ShowVocabularyState extends State<ShowVocabulary> {
-  ScrollController scrollController = ScrollController();
-  ScrollController scrollImageController = ScrollController();
+  PageController scrollController = PageController(initialPage: 0);
+  PageController scrollImageController = PageController(initialPage: 0);
 
-  void _previousPage(double widthItem) {
-    scrollController.animateTo(
-      scrollController.offset - widthItem,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+  void _previousPage() {
+  if (scrollController.hasClients) {
+    int currentPage = scrollController.page!.toInt();
+    if (currentPage > 0) {
+      scrollController.animateToPage(
+        currentPage - 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
+}
 
-  void _nextPage(double widthItem) {
-    scrollController.animateTo(
-      scrollController.offset + widthItem,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+void _nextPage() {
+  if (scrollController.hasClients) {
+    int currentPage = scrollController.page!.toInt();
+    if (currentPage < widget.vocabularyVideoResList.length - 1) {
+      scrollController.animateToPage(
+        currentPage + 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
+}
 
-  void _previousImagePage(double widthItem) {
-    scrollImageController.animateTo(
-      scrollImageController.offset - widthItem,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+void _previousImagePage() {
+
+  if (scrollImageController.hasClients) {
+    int currentPage = scrollImageController.page!.toInt();
+    if (currentPage > 0) {
+      scrollImageController.animateToPage(
+        currentPage - 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
+}
 
-  void _nextImagePage(double widthItem) {
-    scrollImageController.animateTo(
-      scrollImageController.offset + widthItem,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+void _nextImagePage() {
+  if (scrollImageController.hasClients) {
+    int currentPage = scrollImageController.page!.toInt();
+    if (currentPage < widget.vocabularyImageResList.length - 1) {
+      scrollImageController.animateToPage(
+        currentPage + 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+}
+
+  Widget _showVideoItem(Size size, dynamic resList, PageController scrollController) {
+    return SizedBox(
+      height: size.height * 0.4,
+      child: PageView.builder(
+        controller: scrollController,
+        scrollDirection: Axis.horizontal,
+        itemCount: resList.length,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 24,
+              ),
+              Text(
+                resList[index].vocabularyContent ?? "",
+                style: textTheme.t18M,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              if ((resList is List<VocabularyVideoResList>) &&
+                  resList[index].videoLocation != null &&
+                  resList[index].videoLocation!.isNotEmpty)
+                PlayVideoVocabulary(
+                    videoUrl: resList[index].videoLocation ?? ""),
+              if ((resList is List<VocabularyImageResList>) &&
+                  resList[index].imageLocation != null &&
+                  resList[index].imageLocation!.isNotEmpty)
+                Container(
+                  height: size.height * 0.28,
+                  width: size.width * 0.8,
+                  padding: const EdgeInsets.all(8),
+                  //margin: const EdgeInsets.symmetric(horizontal: 48),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Image.network(
+                    resList[index].imageLocation ?? "",
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -62,141 +132,80 @@ class _ShowVocabularyState extends State<ShowVocabulary> {
     return BaseScaffold(
       appBar: CustomAppbar.basic(
         onTap: () => Navigator.pop(context),
+        title: "Minh họa từ vựng",
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "XEM VIDEO BIỂU DIỄN",
-            style: textTheme.t20B.copyWith(color: colorApp.labelPrimary),
-          ),
-          if (widget.vocabularyVideoResList.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              height: 210,
-              width: double.infinity,
-              child: ListView.builder(
-                controller: scrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.vocabularyVideoResList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 170,
-                    width: 360,
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(widget.vocabularyVideoResList[index]
-                                  .vocabularyContent ??
-                              ""),
-                          if (widget.vocabularyVideoResList[index]
-                                      .videoLocation !=
-                                  null &&
-                              widget.vocabularyVideoResList[index]
-                                  .videoLocation!
-                                  .isNotEmpty)
-                            PlayVideoVocabulary(
-                                videoUrl: widget.vocabularyVideoResList[index]
-                                        .videoLocation ??
-                                    ""),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 16,
             ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Image(
-                  width: 30,
-                  height: 30,
-                  image: AssetImage(Assets.icon.arrowBackPng.path),
-                ),
-                onPressed: () => _previousPage(size.width),
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              IconButton(
-                icon: Image(
-                  width: 30,
-                  height: 30,
-                  image: AssetImage(Assets.icon.arrowForwardPng.path),
-                ),
-                onPressed: () => _nextPage(size.width),
-              ),
-            ],
-          ),
-          Text(
-            "XEM ẢNH MINH HỌA",
-            style: textTheme.t20B.copyWith(color: colorApp.labelPrimary),
-          ),
-          const SizedBox(height: 30),
-          if (widget.vocabularyImageResList.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              height: 170,
-              width: double.infinity,
-              child: ListView.builder(
-                controller: scrollImageController,
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.vocabularyImageResList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 270,
-                    width: 360,
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(widget.vocabularyImageResList[index]
-                                  .vocabularyContent ??
-                              ""),
-                          Image.network(
-                            widget.vocabularyImageResList[index]
-                                    .imageLocation ??
-                                "",
-                            width: size.width * 0.67,
-                            height: 100,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+            Text(
+              "XEM VIDEO BIỂU DIỄN",
+              style: textTheme.t20B.copyWith(color: colorApp.labelPrimary),
             ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Image(
-                  width: 30,
-                  height: 30,
-                  image: AssetImage(Assets.icon.arrowBackPng.path),
+            if (widget.vocabularyVideoResList.isNotEmpty &&
+                widget.vocabularyVideoResList[0].videoLocation != null)
+              _showVideoItem(size, widget.vocabularyVideoResList,scrollController),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Image(
+                    width: 30,
+                    height: 30,
+                    image: AssetImage(Assets.icon.arrowBackPng.path),
+                  ),
+                  onPressed: () => _previousPage(),
                 ),
-                onPressed: () => _previousImagePage(size.width),
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              IconButton(
-                icon: Image(
+                const SizedBox(
                   width: 30,
-                  height: 30,
-                  image: AssetImage(Assets.icon.arrowForwardPng.path),
                 ),
-                onPressed: () => _nextImagePage(size.width),
-              ),
-            ],
-          ),
-        ],
+                IconButton(
+                  icon: Image(
+                    width: 30,
+                    height: 30,
+                    image: AssetImage(Assets.icon.arrowForwardPng.path),
+                  ),
+                  onPressed: () => _nextPage(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Text(
+              "XEM ẢNH MINH HỌA",
+              style: textTheme.t20B.copyWith(color: colorApp.labelPrimary),
+            ),
+            if (widget.vocabularyImageResList.isNotEmpty &&
+                widget.vocabularyImageResList[0].imageLocation != null)
+              _showVideoItem(size, widget.vocabularyImageResList,scrollImageController),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Image(
+                    width: 30,
+                    height: 30,
+                    image: AssetImage(Assets.icon.arrowBackPng.path),
+                  ),
+                  onPressed: () => _previousImagePage(),
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                IconButton(
+                  icon: Image(
+                    width: 30,
+                    height: 30,
+                    image: AssetImage(Assets.icon.arrowForwardPng.path),
+                  ),
+                  onPressed: () => _nextImagePage(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -227,14 +236,18 @@ class _PlayVideoVocabularyState extends State<PlayVideoVocabulary> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height * 0.2,
+    return Container(
+      padding: const EdgeInsets.all(8),
+      //margin: const EdgeInsets.symmetric(horizontal: 48),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      height: size.height * 0.28,
+      width: size.width * 0.8,
       child: _controller != null && _controller!.value.isInitialized
           ? AspectRatio(
               aspectRatio: _controller!.value.aspectRatio,
-              child: VideoPlayer(_controller!),
-            )
-          : const CircularProgressIndicator(),
+              child: VideoPlayer(_controller!))
+          : const Center(child: CircularIndicator()),
     );
   }
 

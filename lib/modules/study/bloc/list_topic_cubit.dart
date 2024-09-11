@@ -18,7 +18,6 @@ class ListTopicCubit extends Cubit<ListTopicState> {
       emit(ListTopicLoadingState());
       final result = await _studyRepository.getListTopic();
       emit(ListTopicLoadedState(lsttopic: result));
-      print("hee");
     } on DioException catch (e) {
       emit(ListTopicErrorState(error: e.message!));
     }

@@ -14,10 +14,8 @@ class SendingListFriendCubit extends Cubit<SendingListFriendState> {
   void getSendingListFriend() async {
     try {
       emit(SendingListFriendLoadingState());
-      print("loading");
       final result = await _friendRepository.getSendingListFriend();
       emit(SendingListFriendLoadedState(lstSendingFriend: result));
-      print("loaded");
     } on DioException catch (e) {
       emit(SendingListFriendErrorState(error: e.message!));
     }

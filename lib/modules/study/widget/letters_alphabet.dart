@@ -17,13 +17,13 @@ class Letter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
-      child: Image.asset(image,
-          height: size.height * 0.02, width: size.height * 0.02),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
 
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Color.fromARGB(255, 116, 68, 220),width: 1.5)),
+          border: Border.all(color: const Color.fromARGB(255, 116, 68, 220),width: 1.5)),
+      child: Image.asset(image,
+          height: size.height * 0.02, width: size.height * 0.02),
     );
   }
 }

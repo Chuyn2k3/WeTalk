@@ -17,7 +17,6 @@ class SearchUserCubit extends Cubit<SearchUserState> {
       emit(SearchUserLoadingState());
       final result = await _searchRepository.searchUser(text);
       emit(SearchUserLoadedState(searchUser: result));
-      print('call ok');
     } catch (e) {
       emit(SearchUserErrorState(error: e.toString()));
     }

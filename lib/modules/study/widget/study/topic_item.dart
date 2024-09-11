@@ -25,7 +25,7 @@ class TopicItem extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), color: Colors.white),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             if (linkImage.isNotEmpty)
@@ -62,24 +62,19 @@ class TopicItem extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Shimmer.fromColors(
-                    baseColor: Colors.red,
-                    highlightColor: Colors.yellow,
-                    child: const Text(
-                      "Ấn vào để học từ vựng",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+              child: Shimmer.fromColors(
+                baseColor: Colors.red,
+                highlightColor: Colors.yellow,
+                child: const Text(
+                  "Ấn vào để học từ vựng",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],

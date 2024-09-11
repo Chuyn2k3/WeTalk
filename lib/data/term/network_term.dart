@@ -47,7 +47,8 @@ class ApiConstants {
   static const getUrlLink = "/api/upload";
   static const listHistoryCollectData = "/data-collection/all-me";
   static const createUpload = "/data-collection";
-
+  //search
+  static const searchVocabularyByText = "/vocabularies/all";
   //
   static const aiCheckDataCollect =
       "https://wetalk.ibme.edu.vn/emg-label-tool/ai/detection";

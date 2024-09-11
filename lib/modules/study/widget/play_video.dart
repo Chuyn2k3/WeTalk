@@ -1,5 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayVideo extends StatefulWidget {
@@ -43,7 +44,7 @@ class _PlayVideoState extends State<PlayVideo> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       height: size.height * 0.2,
       child: Center(
         child: _controller != null && _controller!.value.isInitialized
@@ -51,7 +52,7 @@ class _PlayVideoState extends State<PlayVideo> {
                 aspectRatio: _controller!.value.aspectRatio,
                 child: VideoPlayer(_controller!),
               )
-            : CircularProgressIndicator(),
+            : const CircularIndicator(),
       ),
     );
   }

@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/gen/assets.gen.dart';
 import 'package:flutter_app/utils/common_app.dart';
-import 'package:flutter_app/utils/navigator_key.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 
 
 extension Snackbar on BuildContext {

@@ -20,37 +20,37 @@ class NextButtonWidget extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  NextButtonWidget.green({required String label, required VoidCallback onTap})
-    : this.backgroundColor = AppColors.darkGreen,
-    this.fontColor = AppColors.white,
-    this.borderColor = AppColors.darkGreen,
-    this.label = label,
-    this.onTap = onTap;
+  const NextButtonWidget.green({super.key, required String label, required VoidCallback onTap})
+    : backgroundColor = AppColors.darkGreen,
+    fontColor = AppColors.white,
+    borderColor = AppColors.darkGreen,
+    label = label,
+    onTap = onTap;
 
-  NextButtonWidget.purple({required String label, required VoidCallback onTap})
-    : this.backgroundColor = AppColors.purple,
-    this.fontColor = AppColors.white,
-    this.borderColor = AppColors.purple,
-    this.label = label,
-    this.onTap = onTap;
+  const NextButtonWidget.purple({super.key, required String label, required VoidCallback onTap})
+    : backgroundColor = AppColors.purple,
+    fontColor = AppColors.white,
+    borderColor = AppColors.purple,
+    label = label,
+    onTap = onTap;
 
-  NextButtonWidget.white({required String label, required VoidCallback onTap})
-    : this.backgroundColor = AppColors.white,
-    this.fontColor = AppColors.grey,
-    this.borderColor = AppColors.border,
-    this.label = label,
-    this.onTap = onTap;
+  const NextButtonWidget.white({super.key, required String label, required VoidCallback onTap})
+    : backgroundColor = AppColors.white,
+    fontColor = AppColors.grey,
+    borderColor = AppColors.border,
+    label = label,
+    onTap = onTap;
 
-  NextButtonWidget.transparent({required String label, required VoidCallback onTap})
-    : this.backgroundColor = Colors.transparent,
-    this.fontColor = AppColors.grey,
-    this.borderColor = Colors.transparent,
-    this.label = label,
-    this.onTap = onTap;
+  const NextButtonWidget.transparent({super.key, required String label, required VoidCallback onTap})
+    : backgroundColor = Colors.transparent,
+    fontColor = AppColors.grey,
+    borderColor = Colors.transparent,
+    label = label,
+    onTap = onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 48,
       child: TextButton(
         onPressed: onTap,

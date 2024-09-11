@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 AppBar uploadAppBar() {
   return AppBar(
-    backgroundColor: Color.fromARGB(255, 54, 63, 230),
-    title: Text('Cung cấp dữ liệu'),
+    backgroundColor: const Color.fromARGB(255, 54, 63, 230),
+    title: const Text('Cung cấp dữ liệu'),
     elevation: 0,
     actions: [
       Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white, // Thay đổi màu ở đây
             ),
             onPressed: () {},
-            child: Text(
+            child: const Text(
               'Lưu',
               style: TextStyle(color: Color.fromARGB(255, 54, 63, 230)),
             )),

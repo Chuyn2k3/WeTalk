@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_app/data/term/network_term.dart';
 import 'package:flutter_app/modules/friend/model/list_friend_model.dart';
-import 'package:flutter_app/modules/friend/model/request_list_friend-model.dart';
+import 'package:flutter_app/modules/friend/model/request_list_friend_model.dart';
 import 'package:flutter_app/modules/friend/model/sending_list_friend_model.dart';
 import 'package:flutter_app/service/dio_base.dart';
 import 'package:flutter_app/service/store.dart';

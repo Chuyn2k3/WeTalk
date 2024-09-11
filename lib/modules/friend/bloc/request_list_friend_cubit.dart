@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_app/di/locator.dart';
-import 'package:flutter_app/modules/friend/model/request_list_friend-model.dart';
+import 'package:flutter_app/modules/friend/model/request_list_friend_model.dart';
 import 'package:flutter_app/modules/friend/repo/friend_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';

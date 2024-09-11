@@ -7,6 +7,8 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignScreen extends StatefulWidget {
+  const SignScreen({super.key});
+
   @override
   State<SignScreen> createState() => _SignScreenState();
 }
@@ -23,7 +25,7 @@ class _SignScreenState extends State<SignScreen> {
   void get() async {
     link = (await getLink())!;
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +35,7 @@ class _SignScreenState extends State<SignScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text('Bảng dấu')),
+      appBar: AppBar(title: const Text('Bảng dấu')),
       body: SafeArea(
           child: Column(
         children: [
@@ -45,13 +47,13 @@ class _SignScreenState extends State<SignScreen> {
           Text('Ấn vào để xem video hướng dẫn',style:  GoogleFonts.lato( fontSize: size.width*0.04),),
           Expanded(
             child: GridView.count(
-              padding: EdgeInsets.all(30),
+              padding: const EdgeInsets.all(30),
               mainAxisSpacing: 30,
               crossAxisSpacing: 30,
               crossAxisCount: 4, // Number of columns
-              children: List.generate(Sign_List!.length, (index) {
+              children: List.generate(signList!.length, (index) {
                 return InkWell(
-                  child: Letter(image: Sign_List![index], size: size),
+                  child: Letter(image: signList![index], size: size),
                   onTap: () {
                     //print(link!.items);
                     //  print(link!.items[0].fullPath);
@@ -64,13 +66,13 @@ class _SignScreenState extends State<SignScreen> {
                           //backgroundColor: Colors.white.withOpacity(1.5),
                           elevation: 0,
                           content: PlayVideo(
-                              videoUrl: link!.items[index].fullPath ?? ''),
+                              videoUrl: link!.items[index].fullPath),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Close'),
+                              child: const Text('Close'),
                             ),
                           ],
                         );

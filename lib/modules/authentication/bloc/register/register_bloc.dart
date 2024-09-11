@@ -1,7 +1,7 @@
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc_state.dart';
 import 'package:flutter_app/modules/authentication/model/resgister_model.dart';
-import 'package:flutter_app/modules/authentication/repo/registerGenerateOtp_repo.dart';
+import 'package:flutter_app/modules/authentication/repo/registe_generate_otp_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -23,7 +23,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             if(data != null){
               if(data.code == 404){
                 emit(RegisterError(error: 'Email đã tồn tại'));
-              }  
+              }
               else {
                 emit(RegisterLoaded());
               }

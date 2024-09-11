@@ -9,6 +9,33 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsAnimationGen {
+  const $AssetsAnimationGen();
+
+  /// File path: assets/animation/loading_splash_screen.json
+  String get loadingSplashScreen =>
+      'assets/animation/loading_splash_screen.json';
+
+  /// File path: assets/animation/up.json
+  String get up => 'assets/animation/up.json';
+
+  /// File path: assets/animation/upload.json
+  String get upload => 'assets/animation/upload.json';
+
+  /// File path: assets/animation/upload1.json
+  String get upload1 => 'assets/animation/upload1.json';
+
+  /// File path: assets/animation/upload2.json
+  String get upload2 => 'assets/animation/upload2.json';
+
+  /// File path: assets/animation/upload3.json
+  String get upload3 => 'assets/animation/upload3.json';
+
+  /// List of all assets
+  List<String> get values =>
+      [loadingSplashScreen, up, upload, upload1, upload2, upload3];
+}
+
 class $AssetsIconGen {
   const $AssetsIconGen();
 
@@ -23,6 +50,9 @@ class $AssetsIconGen {
 
   /// File path: assets/icon/Package.svg
   String get package => 'assets/icon/Package.svg';
+
+  /// File path: assets/icon/PencilSimpleLine.svg
+  String get pencilSimpleLine => 'assets/icon/PencilSimpleLine.svg';
 
   /// File path: assets/icon/PhoneCall.svg
   String get phoneCall => 'assets/icon/PhoneCall.svg';
@@ -41,6 +71,13 @@ class $AssetsIconGen {
 
   /// File path: assets/icon/about_us.svg
   String get aboutUs => 'assets/icon/about_us.svg';
+
+  /// File path: assets/icon/add-group.png
+  AssetGenImage get addGroup =>
+      const AssetGenImage('assets/icon/add-group.png');
+
+  /// File path: assets/icon/arrow.png
+  AssetGenImage get arrow => const AssetGenImage('assets/icon/arrow.png');
 
   /// File path: assets/icon/arrow_back.png
   AssetGenImage get arrowBackPng =>
@@ -82,6 +119,9 @@ class $AssetsIconGen {
 
   /// File path: assets/icon/google.png
   AssetGenImage get google => const AssetGenImage('assets/icon/google.png');
+
+  /// File path: assets/icon/history_upload.svg
+  String get historyUpload => 'assets/icon/history_upload.svg';
 
   /// File path: assets/icon/icClaimDelete.svg
   String get icClaimDelete => 'assets/icon/icClaimDelete.svg';
@@ -125,6 +165,13 @@ class $AssetsIconGen {
   /// File path: assets/icon/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/icon/logo.png');
 
+  /// File path: assets/icon/message.svg
+  String get message => 'assets/icon/message.svg';
+
+  /// File path: assets/icon/microphone.png
+  AssetGenImage get microphone =>
+      const AssetGenImage('assets/icon/microphone.png');
+
   /// File path: assets/icon/name.png
   AssetGenImage get name => const AssetGenImage('assets/icon/name.png');
 
@@ -144,9 +191,19 @@ class $AssetsIconGen {
   /// File path: assets/icon/profile.png
   AssetGenImage get profile => const AssetGenImage('assets/icon/profile.png');
 
+  /// File path: assets/icon/search-user.png
+  AssetGenImage get searchUser =>
+      const AssetGenImage('assets/icon/search-user.png');
+
   /// File path: assets/icon/search_icon.png
   AssetGenImage get searchIcon =>
       const AssetGenImage('assets/icon/search_icon.png');
+
+  /// File path: assets/icon/star (1).png
+  AssetGenImage get star1 => const AssetGenImage('assets/icon/star (1).png');
+
+  /// File path: assets/icon/star.png
+  AssetGenImage get star => const AssetGenImage('assets/icon/star.png');
 
   /// File path: assets/icon/takePicture.svg
   String get takePicture => 'assets/icon/takePicture.svg';
@@ -186,12 +243,15 @@ class $AssetsIconGen {
         cloudArrowDown,
         newspaperClipping,
         package,
+        pencilSimpleLine,
         phoneCall,
         question,
         starHalf,
         video,
         abc,
         aboutUs,
+        addGroup,
+        arrow,
         arrowBackPng,
         arrowBackSvg,
         arrowForwardPng,
@@ -204,6 +264,7 @@ class $AssetsIconGen {
         excercise,
         facebook,
         google,
+        historyUpload,
         icClaimDelete,
         ic1,
         ic2,
@@ -218,13 +279,18 @@ class $AssetsIconGen {
         importFromFiles,
         info,
         logo,
+        message,
+        microphone,
         name,
         notiDefault,
         notification,
         numberBlocks,
         password,
         profile,
+        searchUser,
         searchIcon,
+        star1,
+        star,
         takePicture,
         takeVideo,
         target,
@@ -311,6 +377,9 @@ class $AssetsImageGen {
   AssetGenImage get lightbulb =>
       const AssetGenImage('assets/image/lightbulb.png');
 
+  /// File path: assets/image/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/image/logo.png');
+
   /// File path: assets/image/multiply.png
   AssetGenImage get multiply =>
       const AssetGenImage('assets/image/multiply.png');
@@ -365,6 +434,9 @@ class $AssetsImageGen {
   AssetGenImage get topicImage =>
       const AssetGenImage('assets/image/topic_image.png');
 
+  /// File path: assets/image/upload.png
+  AssetGenImage get upload => const AssetGenImage('assets/image/upload.png');
+
   /// File path: assets/image/user.png
   AssetGenImage get user => const AssetGenImage('assets/image/user.png');
 
@@ -399,6 +471,7 @@ class $AssetsImageGen {
         google,
         learning,
         lightbulb,
+        logo,
         multiply,
         notification,
         numberBlocks,
@@ -414,6 +487,7 @@ class $AssetsImageGen {
         test,
         topic,
         topicImage,
+        upload,
         user,
         userPlaceholder,
         video,
@@ -844,6 +918,7 @@ class Assets {
   Assets._();
 
   static const String aEnv = '.env';
+  static const $AssetsAnimationGen animation = $AssetsAnimationGen();
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const $AssetsImageGen image = $AssetsImageGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();

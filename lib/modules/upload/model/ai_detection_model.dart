@@ -11,16 +11,19 @@ class AiDetectionModel {
         message = json["message"];
         status = json["status"];
     }
+Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = <String, dynamic>{};
+   data["status"] = status;
+  data["message"] = message;
 
-    Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        if(data != null) {
-            _data["data"] = data?.toJson();
-        }
-        _data["message"] = message;
-        _data["status"] = status;
-        return _data;
-    }
+  // Kiểm tra xem "data" có phải là một danh sách không, rồi chuyển đổi thành JSON
+  if (this.data != null && this.data is List) {
+    data["data"] = (this.data as List).map((e) => e.toJson()).toList();
+  }
+
+  return data;
+}
+  
 }
 
 class Data {
@@ -37,10 +40,10 @@ class Data {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["confidence"] = confidence;
-        _data["content"] = content;
-        _data["fileLocation"] = fileLocation;
-        return _data;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["confidence"] = confidence;
+        data["content"] = content;
+        data["fileLocation"] = fileLocation;
+        return data;
     }
 }

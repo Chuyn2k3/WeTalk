@@ -114,13 +114,13 @@
 //                                     ));
 //                               },
 //                             )
-//                           : CircularProgressIndicator();
+//                           : CircularIndicator();
 //                     })
 //                     // [
 //                     //   BlocBuilder<QuestionBloc, QuestionState>(
 //                     //       builder: (context, state) {
 //                     //     if (state is QuestionLoading) {
-//                     //       return const CircularProgressIndicator();
+//                     //       return const CircularIndicator();
 //                     //     } else if (state is QuestionLoaded) {
 //                     //       Data a = state.data.data![0];
 //                     //       return InkWell(
@@ -162,7 +162,7 @@
 //     // } else {
 //     //   return Scaffold(
 //     //     body: Center(
-//     //       child: CircularProgressIndicator(
+//     //       child: CircularIndicator(
 //     //         valueColor: AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
 //     //       ),
 //     //     ),

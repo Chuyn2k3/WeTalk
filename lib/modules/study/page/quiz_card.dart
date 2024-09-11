@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/data/term/app_images.dart';
-import 'package:flutter_app/data/term/text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuizCardWidget extends StatelessWidget {
@@ -29,7 +28,7 @@ class QuizCardWidget extends StatelessWidget {
       //width: size.height*0.3,
         //padding: EdgeInsets.all(10),
         decoration: BoxDecoration(        
-          border: Border.fromBorderSide(
+          border: const Border.fromBorderSide(
             BorderSide(
               color: Color.fromARGB(255, 100, 51, 190),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/modules/study/widget/study/learning_method.dart';
+import 'package:flutter_app/modules/study/page/study/all_topic.dart';
+import 'package:flutter_app/modules/study/page/study/classroom/classroom_screen.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
@@ -36,14 +37,22 @@ class _StudyScreenState extends State<StudyScreen> {
               const SizedBox(
                 height: 8,
               ),
-              const LearningMethod(),
+              //const LearningMethod(),
               _typeVocabulary(
-                'TỪ ĐƠN',
-                "",
-                "assets/image/word.png",
+                'HỌC TẬP THEO CHỦ ĐỀ',
+                () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AllTopicScreen(),
+            )),
+                "assets/image/topic.png",
               ),
-              _typeVocabulary('CÂU VĂN', "", "assets/image/sentence.png"),
-              _typeVocabulary('ĐOẠN VĂN', "", "assets/image/paragragh.png"),
+              _typeVocabulary('HỌC TẬP THEO LỚP HỌC', () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ClassroomScreen(),
+            )), "assets/image/classroom.png"),
+
             ],
           ),
         ),
@@ -53,11 +62,11 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Widget _typeVocabulary(
     String title,
-    String content,
+    VoidCallback action,
     String linkImage,
   ) {
     return GestureDetector(
-      onTap: () {},
+      onTap: action,
       child: Container(
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.all(8),
@@ -65,7 +74,6 @@ class _StudyScreenState extends State<StudyScreen> {
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         height: 100,
         child: Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(linkImage,height: 60,width: 60,),
@@ -76,12 +84,7 @@ class _StudyScreenState extends State<StudyScreen> {
                     title,
                     style: textTheme.t16M.copyWith(color: AppColors.chartPrimary),
                   ),
-                  Text(
-                    content,
-                    style: textTheme.t12M.copyWith(color: AppColors.chartPrimary),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 5,
-                  ),
+                  
                 ],
               ),
             )

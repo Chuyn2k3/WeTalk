@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter_app/modules/study/page/fragment_talk_upload.dart';
-import 'package:flutter_app/modules/upload/model/url_model.dart';
 import 'package:flutter_app/modules/upload/repo/upload_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';

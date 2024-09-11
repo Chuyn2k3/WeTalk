@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/di/locator.dart';
-import 'package:flutter_app/modules/authentication/bloc/login/authentication_bloc.dart';
-import 'package:flutter_app/modules/challenge/bloc/question_bloc.dart';
+import 'package:flutter_app/modules/authentication/bloc/login/authentication_cubit.dart';
 import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
 import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
 import 'package:flutter_app/modules/home/bloc/vocabulary_by_topic_cubit.dart';
@@ -29,17 +28,10 @@ void main() async {
   await setupLocator();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiBlocProvider(providers: [
-    BlocProvider<AuthenticationBloc>(
-      create: (BuildContext context) => AuthenticationBloc(),
+    BlocProvider<AuthenticationCubit>(
+      create: (BuildContext context) => AuthenticationCubit(),
     ),
-    
-    BlocProvider<ListFriendCubit>(
-      create: (BuildContext context) => ListFriendCubit()..getListFriend(),
-    ),
-    BlocProvider<ListConversationCubit>(
-      create: (BuildContext context) =>
-          ListConversationCubit()..getListConversation(),
-    ),
+
     BlocProvider<UserInfoCubit>(
       create: (BuildContext context) => UserInfoCubit()..getUserInfo(),
     ),

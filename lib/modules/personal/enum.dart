@@ -1,19 +1,16 @@
-import 'package:design_system_sl/theme/components/button/enums.dart';
-import 'package:design_system_sl/theme/components/button/sl_button.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/modules/chat/page/fragment_talk_chat.dart';
 import 'package:flutter_app/modules/personal/page/history.dart';
 import 'package:flutter_app/modules/personal/widget/profile_body_button.dart';
 import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
 import 'package:flutter_app/utils/snack_bar.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get_it/get_it.dart';
 
 enum UserProfileEnum {
   packageBattery,
+  message,
   history,
   contact,
   privacy,
@@ -29,6 +26,8 @@ extension RenderUserProfileEnum on UserProfileEnum {
     switch (this) {
       case UserProfileEnum.packageBattery:
         return Assets.icon.package;
+      case UserProfileEnum.message:
+        return Assets.icon.message;
       case UserProfileEnum.history:
         return Assets.icon.clockCounterClockwise;
       case UserProfileEnum.contact:
@@ -52,10 +51,12 @@ extension RenderUserProfileEnum on UserProfileEnum {
     switch (this) {
       case UserProfileEnum.packageBattery:
         return "Gói dịch vụ";
+      case UserProfileEnum.message:
+        return "Tin nhắn";
       case UserProfileEnum.history:
-        return "Giới thiệu người mới";
-      case UserProfileEnum.contact:
         return "Thống kê & Lịch sử";
+      case UserProfileEnum.contact:
+        return "Giới thiệu người mới";
       case UserProfileEnum.privacy:
         return "Trung tâm hỗ trợ";
       case UserProfileEnum.aboutUs:
@@ -76,13 +77,24 @@ extension RenderUserProfileEnum on UserProfileEnum {
     switch (this) {
       case UserProfileEnum.packageBattery:
         return () {
+          getContext.showSnackBarSuccess(text: "Đang phát triển");
+        };
+        case UserProfileEnum.message:
+        return (){
+          Navigator.push(
+              getContext,
+              MaterialPageRoute(
+                builder: (context) => const ChatMainScreen(),
+              ));
+        };
+      case UserProfileEnum.history:
+        return () {
           Navigator.push(
               getContext,
               MaterialPageRoute(
                 builder: (context) => const ListHistoryScreen(),
               ));
         };
-      case UserProfileEnum.history:
       case UserProfileEnum.contact:
       case UserProfileEnum.privacy:
       case UserProfileEnum.aboutUs:

@@ -8,7 +8,7 @@ import 'package:flutter_app/service/progress_indicator.dart';
 class QuestionIndicatorWidget extends StatefulWidget {
   final int currentPage;
   final int length;
-   QuestionIndicatorWidget(
+   const QuestionIndicatorWidget(
       {Key? key, required this.currentPage, required this.length, })
       : super(key: key);
 
@@ -39,7 +39,7 @@ class _QuestionIndicatorWidgetState extends State<QuestionIndicatorWidget> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           ProgressIndicatorWidget(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
 import 'package:flutter_app/utils/common_app.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 
@@ -60,7 +58,5 @@ class ItemNotification extends StatelessWidget {
         ));
   }
 
-  void _navigatorToDetailNotification(BuildContext context) {
-
-  }
+ 
 }

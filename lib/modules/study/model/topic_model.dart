@@ -19,14 +19,17 @@ class TopicModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["code"] = code;
-    _data["message"] = message;
-    if(data != null) {
-      _data["data"] = data?.map((e) => e.toJson()).toList();
-    }
-    return _data;
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data["code"] = code;
+  data["message"] = message;
+
+  // Kiểm tra xem "data" có phải là một danh sách không, rồi chuyển đổi thành JSON
+  if (this.data != null && this.data is List) {
+    data["data"] = (this.data as List).map((e) => e.toJson()).toList();
   }
+
+  return data;
+}
 }
 
 class DataTopic {
@@ -49,11 +52,11 @@ class DataTopic {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["topicId"] = topicId;
-    _data["content"] = content;
-    _data["imageLocation"] = imageLocation;
-    _data["videoLocation"] = videoLocation;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["topicId"] = topicId;
+    data["content"] = content;
+    data["imageLocation"] = imageLocation;
+    data["videoLocation"] = videoLocation;
+    return data;
   }
 }

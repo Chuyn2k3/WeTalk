@@ -1,3 +1,4 @@
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/text_style.dart';
@@ -39,42 +40,69 @@ class _QuizWidgetState extends State<QuizWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       child: Column(
         children: [
           Text(
             widget.question.content!,
             style: AppTextStyles.heading,
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           if (videoLocation.isNotEmpty)
-            Center(
-              child: _controller != null && _controller!.value.isInitialized
-                  ? AspectRatio(
-                      aspectRatio: _controller!.value.aspectRatio,
-                      child: VideoPlayer(_controller!),
-                    )
-                  : const CircularProgressIndicator(),
+            Expanded(
+              flex: 2,
+              child: Center(
+                child: _controller != null && _controller!.value.isInitialized
+                    ? AspectRatio(
+                        aspectRatio: _controller!.value.aspectRatio,
+                        child: VideoPlayer(_controller!),
+                      )
+                    : const CircularIndicator(),
+              ),
             ),
           if (imageLocation.isNotEmpty)
-            Image.network(imageLocation, height: 200),
+            Expanded(
+                child:
+                    Center(child: Image.network(imageLocation, height: 200))),
           const SizedBox(
-            height: 24,
+            height: 16,
           ),
-          for (var i = 0; i < widget.question.answerResList!.length; i++)
-            AnswerWidget(
-              answer: widget.question.answerResList![i],
-              disabled: indexSelected != -1,
-              isSelected: indexSelected == i,
-              onTap: (value) {
-                widget.onSelected(value);
-                indexSelected = i;
-                setState(() {});
+          Expanded(
+            flex: 3,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: widget.question.answerResList!.length,
+              itemBuilder: (context, index) {
+                return AnswerWidget(
+                  answer: widget.question.answerResList![index],
+                  disabled: indexSelected != -1,
+                  isSelected: indexSelected == index,
+                  onTap: (value) {
+                    widget.onSelected(value);
+                    indexSelected = index;
+                    setState(() {});
+                  },
+                );
               },
             ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          // for (var i = 0; i < widget.question.answerResList!.length; i++)
+          //   AnswerWidget(
+          //     answer: widget.question.answerResList![i],
+          //     disabled: indexSelected != -1,
+          //     isSelected: indexSelected == i,
+          //     onTap: (value) {
+          //       widget.onSelected(value);
+          //       indexSelected = i;
+          //       setState(() {});
+          //     },
+          //   ),
         ],
       ),
     );

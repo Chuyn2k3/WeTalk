@@ -12,15 +12,18 @@ class ListConversationModel {
         data = json["data"] == null ? null : (json["data"] as List).map((e) => Data.fromJson(e)).toList();
     }
 
-    Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["code"] = code;
-        _data["message"] = message;
-        if(data != null) {
-            _data["data"] = data?.map((e) => e.toJson()).toList();
-        }
-        return _data;
-    }
+   Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data["code"] = code;
+  data["message"] = message;
+
+  // Kiểm tra xem "data" có phải là một danh sách không, rồi chuyển đổi thành JSON
+  if (this.data != null && this.data is List) {
+    data["data"] = (this.data as List).map((e) => e.toJson()).toList();
+  }
+
+  return data;
+}
 }
 
 class Data {
@@ -35,12 +38,12 @@ class Data {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["conversationId"] = conversationId;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["conversationId"] = conversationId;
         if(grouAttachConvResList != null) {
-            _data["grouAttachConvResList"] = grouAttachConvResList?.map((e) => e.toJson()).toList();
+            data["grouAttachConvResList"] = grouAttachConvResList?.map((e) => e.toJson()).toList();
         }
-        return _data;
+        return data;
     }
 }
 
@@ -64,16 +67,16 @@ class GrouAttachConvResList {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["contactId"] = contactId;
-        _data["contactName"] = contactName;
-        _data["avatarLocation"] = avatarLocation;
-        _data["email"] = email;
-        _data["lastActivity"] = lastActivity;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["contactId"] = contactId;
+        data["contactName"] = contactName;
+        data["avatarLocation"] = avatarLocation;
+        data["email"] = email;
+        data["lastActivity"] = lastActivity;
         if(lastMessageRes != null) {
-            _data["lastMessageRes"] = lastMessageRes?.toJson();
+            data["lastMessageRes"] = lastMessageRes?.toJson();
         }
-        return _data;
+        return data;
     }
 }
 
@@ -99,14 +102,14 @@ class LastMessageRes {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["messageId"] = messageId;
-        _data["content"] = content;
-        _data["messageType"] = messageType;
-        _data["mediaLocation"] = mediaLocation;
-        _data["status"] = status;
-        _data["created"] = created;
-        _data["contactName"] = contactName;
-        return _data;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["messageId"] = messageId;
+        data["content"] = content;
+        data["messageType"] = messageType;
+        data["mediaLocation"] = mediaLocation;
+        data["status"] = status;
+        data["created"] = created;
+        data["contactName"] = contactName;
+        return data;
     }
 }

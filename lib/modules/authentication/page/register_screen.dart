@@ -1,16 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/term/app_term.dart';
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc.dart';
-import 'package:flutter_app/modules/authentication/bloc/register/register_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/register/register_bloc_state.dart';
 import 'package:flutter_app/modules/authentication/page/login_screen.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/input_text_field.dart';
-import 'package:flutter_app/utils/show_dialog_widget.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'otp_screen.dart';
 
@@ -50,15 +46,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        leading: Icon(Icons.arrow_back_ios,size: 18,),
-        title: Text("Tạo tài khoản"),
+        leading: const Icon(
+          Icons.arrow_back_ios,
+          size: 18,
+        ),
+        title: const Text("Tạo tài khoản"),
       ),
       body: Form(
         key: formfield,
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.,
           children: [
-            SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
@@ -67,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Họ và tên',
                         style: TextStyle(
                           color: Color(0xFF000000),
@@ -85,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //     str: item ?? '', name: S.current.user_account)
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'Số điện thoại',
                         style: TextStyle(
                           color: Color(0xFF000000),
@@ -103,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //     str: item ?? '', name: S.current.user_account)
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'Email',
                         style: TextStyle(
                           color: Color(0xFF000000),
@@ -121,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //     str: item ?? '', name: S.current.user_account)
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'Mật khẩu',
                         style: TextStyle(
                           color: Color(0xFF000000),
@@ -139,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //     str: item ?? '', name: S.current.user_account)
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'Xác nhận mật khẩu',
                         style: TextStyle(
                           color: Color(0xFF000000),
@@ -161,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -189,12 +190,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return InkWell(
       onTap: () {
         Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OtpScreen(
-                    email: emailController.text,
-                  ),
-                ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => OtpScreen(
+                email: emailController.text,
+              ),
+            ));
         // fetchRegister.add(FetchRegister(
         //     name: nameController.text.isNotEmpty ? nameController.text : ' ',
         //     email: emailController.text,
@@ -224,18 +225,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         },
         builder: (context, state) {
           if (state is RegisterLoading) {
-            return CircularProgressIndicator();
+            return const CircularIndicator();
           }
           return IntrinsicHeight(
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Color(0x99007AFF),
+                color: const Color(0x99007AFF),
               ),
-              padding: EdgeInsets.symmetric(vertical: 13),
-              margin: EdgeInsets.only(bottom: 13, left: 10, right: 10),
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              margin: const EdgeInsets.only(bottom: 13, left: 10, right: 10),
               width: double.infinity,
-              child: Column(children: [
+              child: const Column(children: [
                 Text(
                   'Tạo tài khoản',
                   style: TextStyle(
@@ -256,7 +257,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       onTap: () {
         //GoRouter.of(context).push(RouteUri.forgotPassword);
       },
-      child: Text(
+      child: const Text(
         'Điều khoản sử dụng',
         style: TextStyle(
           color: Color(0xFF007aff),
@@ -286,7 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           const SizedBox(
             width: 4,
           ),
-          Text(
+          const Text(
             'Tôi đồng ý với',
             style: TextStyle(
               color: Color(0xFF000000),
@@ -335,7 +336,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           text: TextSpan(
               //style: textTheme.t16R.copyWith(color: colorApp.blue),
               children: [
-            TextSpan(
+            const TextSpan(
               text: "Đã có tài khoản?",
               style: TextStyle(
                 color: Color(0xFF000000),
@@ -353,10 +354,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
+                        builder: (context) => const LoginScreen(),
                       ));
                 },
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFF007aff),
                 fontSize: 16,
               ),

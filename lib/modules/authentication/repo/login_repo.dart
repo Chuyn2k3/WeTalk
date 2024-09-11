@@ -9,7 +9,7 @@ class AuhthenticationRepo {
     await Store.setToken(token);
   }
 
-  static Future<LoginDataModel?> diologin(String email, String password) async {
+  static Future<LoginDataModel> diologin(String email, String password) async {
     final dio = await DioBase.dioWithBaseOptionLogin();
     try {
       final response = await dio.post(
@@ -19,9 +19,8 @@ class AuhthenticationRepo {
       await _saveToken(response.data);
       return LoginDataModel.fromJson((response.data));
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+       rethrow;
     }
-    return null;
+
   }
 }

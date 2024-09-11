@@ -5,6 +5,7 @@ import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_state.dart';
 import 'package:flutter_app/modules/authentication/page/register_done_screen.dart.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _OtpScreenState extends State<OtpScreen> {
   late Timer _timer;
   int _start = 10;
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -51,7 +52,8 @@ class _OtpScreenState extends State<OtpScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(left: size.width*0.05, right: size.width*0.05, top: 70.0),
+          padding: EdgeInsets.only(
+              left: size.width * 0.05, right: size.width * 0.05, top: 70.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -63,18 +65,18 @@ class _OtpScreenState extends State<OtpScreen> {
                   _buildTab(3),
                 ],
               ),
-              SizedBox(height: size.width*0.05),
+              SizedBox(height: size.width * 0.05),
               SizedBox(
-                width: size.width*0.05,
+                width: size.width * 0.05,
                 height: 150,
-                child: Icon(
+                child: const Icon(
                   Icons.mail_outline,
                   color: Colors.blue,
                   size: 150,
                 ),
               ),
-              SizedBox(height: size.width*0.025),
-              Text(
+              SizedBox(height: size.width * 0.025),
+              const Text(
                 'Enter OTP',
                 style: TextStyle(
                   fontFamily: 'Roboto',
@@ -84,8 +86,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: size.width*0.05),
-              Container(
+              SizedBox(height: size.width * 0.05),
+              SizedBox(
                 width: 200,
                 child: TextField(
                   controller: otpController,
@@ -94,11 +96,11 @@ class _OtpScreenState extends State<OtpScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    contentPadding: EdgeInsets.all(10),
+                    contentPadding: const EdgeInsets.all(10),
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Column(
                 children: [
                   // Nút NEXT
@@ -111,15 +113,15 @@ class _OtpScreenState extends State<OtpScreen> {
                             email: widget.email,
                             otp: int.parse(otpController.text)));
                       },
-                      child: Text(
-                        'Next',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                         backgroundColor: Colors.blue,
+                      ),
+                      child: const Text(
+                        'Next',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ),
@@ -127,24 +129,24 @@ class _OtpScreenState extends State<OtpScreen> {
                     bloc: fetchOtp,
                     builder: (context, state) {
                       if (state is OtpLoading) {
-                        return const CircularProgressIndicator();
-                      } else
-                        return SizedBox();
+                        return const CircularIndicator();
+                      } else {
+                        return const SizedBox();
+                      }
                     },
                     listener: (BuildContext context, OtpState state) async {
                       if (state is OtpLoaded) {
-                        print(state.data.message);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterDoneScreen()),
+                              builder: (context) => const RegisterDoneScreen()),
                         );
                       }
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // ProgressBar
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'Resend OTP in $_start sec',
                     textAlign: TextAlign.center,
@@ -164,14 +166,14 @@ class _OtpScreenState extends State<OtpScreen> {
         borderRadius: BorderRadius.circular(20),
       ),
       color: number == 2 ? Colors.blue[800] : Colors.white30,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Container(
         width: 32,
         height: 32,
         alignment: Alignment.center,
         child: Text(
           number.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),

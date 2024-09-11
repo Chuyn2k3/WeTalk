@@ -1,7 +1,6 @@
 import 'package:design_system_sl/design_system_sl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/common_app.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VersionAppDebug extends StatefulWidget {
   const VersionAppDebug({super.key});

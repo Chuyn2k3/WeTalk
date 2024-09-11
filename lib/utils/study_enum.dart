@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/gen/assets.gen.dart';
-import 'package:flutter_app/modules/study/page/Sign.dart';
 import 'package:flutter_app/modules/study/page/alphabet.dart';
-import 'package:flutter_app/modules/study/page/exam.dart';
 import 'package:flutter_app/modules/study/page/numbers.dart';
+import 'package:flutter_app/modules/study/page/pratice.dart';
 import 'package:flutter_app/modules/study/page/question/question_screen.dart';
 import 'package:flutter_app/modules/study/page/study/study_screen.dart';
-import 'package:flutter_app/service/test1.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
-import 'package:flutter_app/utils/snack_bar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tflite_plugin/tflite_plugin.dart';
 
 enum StudyEnum { alphabet, number, exam, vocabulary, practice }
 
@@ -50,12 +45,12 @@ extension ExtStudyEnum on StudyEnum {
       case StudyEnum.alphabet:
         return () => Navigator.push(
               getContext,
-              MaterialPageRoute(builder: (context) => AlphabetScreen()),
+              MaterialPageRoute(builder: (context) => const AlphabetScreen()),
             );
       case StudyEnum.number:
         return () => Navigator.push(
               getContext,
-              MaterialPageRoute(builder: (context) => NumberScreen()),
+              MaterialPageRoute(builder: (context) => const NumberScreen()),
             );
       case StudyEnum.exam:
         return () => Navigator.push(
@@ -68,13 +63,11 @@ extension ExtStudyEnum on StudyEnum {
               MaterialPageRoute(builder: (context) => const StudyScreen()),
             );
       case StudyEnum.practice:
-      return () => Navigator.push(
+        return () => Navigator.push(
               getContext,
-              MaterialPageRoute(builder: (context) => const ObjectDetectionPage1()),
+              MaterialPageRoute(
+                  builder: (context) => const ObjectDetectionScreen()),
             );
-        // return () {
-        //   getContext.showSnackBarSuccess(text: "Đang phát triển");
-        // };
     }
   }
 }

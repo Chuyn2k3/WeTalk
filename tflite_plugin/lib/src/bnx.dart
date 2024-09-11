@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:tflite_plugin/src/TFLiteObjectDetectionAPIModel.dart';
+import 'package:tflite_plugin/src/tfite_object_detection_api_model.dart';
 
 class BndBox extends StatelessWidget {
   final List<Recognition> results;
@@ -11,37 +11,37 @@ class BndBox extends StatelessWidget {
   final double screenW;
 
 
-  BndBox(this.results, this.previewH, this.previewW, this.screenH, this.screenW,
+  const BndBox(this.results, this.previewH, this.previewW, this.screenH, this.screenW, {super.key}
       );
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _renderBoxes() {
+    List<Widget> renderBoxes() {
       return results.map((re) {
-        var _x = re.location.left;
-        var _w =  re.location.right;
-        var _y =  re.location.top;
-        var _h =  re.location.bottom;
+        var x0 = re.location.left;
+        var w0 =  re.location.right;
+        var y0 =  re.location.top;
+        var h0 =  re.location.bottom;
         var scaleW, scaleH, x, y, w, h;
 
         if (screenH / screenW > previewH / previewW) {
           scaleW = screenH / previewH * previewW;
           scaleH = screenH;
           var difW = (scaleW - screenW) / scaleW;
-          x = (_x - difW / 2) * scaleW;
-          w = _w * scaleW;
-          if (_x < difW / 2) w -= (difW / 2 - _x) * scaleW;
-          y = _y * scaleH;
-          h = _h * scaleH;
+          x = (x0 - difW / 2) * scaleW;
+          w = w0 * scaleW;
+          if (x0 < difW / 2) w -= (difW / 2 - x0) * scaleW;
+          y = y0 * scaleH;
+          h = h0 * scaleH;
         } else {
           scaleH = screenW / previewW * previewH;
           scaleW = screenW;
           var difH = (scaleH - screenH) / scaleH;
-          x = _x * scaleW;
-          w = _w * scaleW;
-          y = (_y - difH / 2) * scaleH;
-          h = _h * scaleH;
-          if (_y < difH / 2) h -= (difH / 2 - _y) * scaleH;
+          x = x0 * scaleW;
+          w = w0 * scaleW;
+          y = (y0 - difH / 2) * scaleH;
+          h = h0 * scaleH;
+          if (y0 < difH / 2) h -= (difH / 2 - y0) * scaleH;
         }
 
         return Positioned(
@@ -50,16 +50,16 @@ class BndBox extends StatelessWidget {
           width: w,
           height: h,
           child: Container(
-            padding: EdgeInsets.only(top: 5.0, left: 5.0),
+            padding: const EdgeInsets.only(top: 5.0, left: 5.0),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Color.fromRGBO(37, 213, 253, 1.0),
+                color: const Color.fromRGBO(37, 213, 253, 1.0),
                 width: 3.0,
               ),
             ),
             child: Text(
               "${re.id} ${(re.confidence * 29).toStringAsFixed(0)}%",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color.fromRGBO(37, 213, 253, 1.0),
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class BndBox extends StatelessWidget {
       }).toList();
     }
 
-    List<Widget> _renderStrings() {
+    List<Widget> renderStrings() {
       double offset = -10;
       return results.map((re) {
         offset = offset + 14;
@@ -81,7 +81,7 @@ class BndBox extends StatelessWidget {
           height: screenH,
           child: Text(
             "${re.title} ${(re.confidence)}%",
-            style: TextStyle(
+            style: const TextStyle(
               color: Color.fromRGBO(37, 213, 253, 1.0),
               fontSize: 14.0,
               fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class BndBox extends StatelessWidget {
     // }
 
     return Column(
-      children: _renderStrings(),
+      children: renderStrings(),
     );
   }
 }

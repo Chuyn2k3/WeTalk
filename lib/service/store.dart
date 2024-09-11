@@ -11,6 +11,11 @@ class Store {
     final preferences = await SharedPreferences.getInstance();
     return preferences.getString(tokenKey);
   }
+
+  static Future<void> removeToken() async {
+    final preferences = await SharedPreferences.getInstance();
+   preferences.remove(tokenKey);
+  }
 }
 
 class StoreLogin {

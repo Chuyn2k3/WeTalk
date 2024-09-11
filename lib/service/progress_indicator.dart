@@ -10,7 +10,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
       backgroundColor: AppColors.chartSecondary,
-      valueColor: AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
+      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
       value: value,
     );
   }

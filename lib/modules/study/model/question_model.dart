@@ -13,14 +13,17 @@ class QuestionStudyModel {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["code"] = code;
-        _data["message"] = message;
-        if(data != null) {
-            _data["data"] = data?.map((e) => e.toJson()).toList();
-        }
-        return _data;
-    }
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data["code"] = code;
+  data["message"] = message;
+
+  // Kiểm tra xem "data" có phải là một danh sách không, rồi chuyển đổi thành JSON
+  if (this.data != null && this.data is List) {
+    data["data"] = (this.data as List).map((e) => e.toJson()).toList();
+  }
+
+  return data;
+}
 }
 
 class Data {
@@ -51,20 +54,20 @@ class Data {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["questionId"] = questionId;
-        _data["content"] = content;
-        _data["explanation"] = explanation;
-        _data["imageLocation"] = imageLocation;
-        _data["videoLocation"] = videoLocation;
-        _data["questionType"] = questionType;
-        _data["fileType"] = fileType;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["questionId"] = questionId;
+        data["content"] = content;
+        data["explanation"] = explanation;
+        data["imageLocation"] = imageLocation;
+        data["videoLocation"] = videoLocation;
+        data["questionType"] = questionType;
+        data["fileType"] = fileType;
         if(answerResList != null) {
-            _data["answerResList"] = answerResList?.map((e) => e.toJson()).toList();
+            data["answerResList"] = answerResList?.map((e) => e.toJson()).toList();
         }
-        _data["classRoomId"] = classRoomId;
-        _data["classRoomContent"] = classRoomContent;
-        return _data;
+        data["classRoomId"] = classRoomId;
+        data["classRoomContent"] = classRoomContent;
+        return data;
     }
 }
 
@@ -88,13 +91,13 @@ class AnswerResList {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["answerId"] = answerId;
-        _data["content"] = content;
-        _data["imageLocation"] = imageLocation;
-        _data["videoLocation"] = videoLocation;
-        _data["questionId"] = questionId;
-        _data["correct"] = correct;
-        return _data;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["answerId"] = answerId;
+        data["content"] = content;
+        data["imageLocation"] = imageLocation;
+        data["videoLocation"] = videoLocation;
+        data["questionId"] = questionId;
+        data["correct"] = correct;
+        return data;
     }
 }

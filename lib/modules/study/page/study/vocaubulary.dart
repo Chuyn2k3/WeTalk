@@ -14,19 +14,32 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Widget build(BuildContext context) {
     final data = widget.listVocabulary.data;
     if (data != null) {
-      return GridView.count(
-        crossAxisCount: 2,
-        children: data
-            .map((e) => vocabularyWidget(
-                  e.content ?? "",
-                  e.vocabularyVideoResList!.isNotEmpty?(e.vocabularyVideoResList?[0].videoLocation ?? ""):"",
-                  e.vocabularyImageResList!.isNotEmpty?(e.vocabularyImageResList?[0].imageLocation ?? ""):"",
-                  e.vocabularyImageResList ?? [],
-                  e.vocabularyVideoResList ?? [],
-                ))
-            .toList(),
-      );
+      if (data.isNotEmpty) {
+        return GridView.count(
+          padding: EdgeInsets.zero,
+          crossAxisCount: 2,
+          children: data
+              .map((e) => vocabularyWidget(
+                    e.content ?? "",
+                    e.vocabularyVideoResList!.isNotEmpty
+                        ? (e.vocabularyVideoResList?[0].videoLocation ?? "")
+                        : "",
+                    e.vocabularyImageResList!.isNotEmpty
+                        ? (e.vocabularyImageResList?[0].imageLocation ?? "")
+                        : "",
+                    e.vocabularyImageResList ?? [],
+                    e.vocabularyVideoResList ?? [],
+                  ))
+              .toList(),
+        );
+      } else {
+        return const Center(
+          child: Text("Không có từ vựng"),
+        );
+      }
     }
-    return const SizedBox.shrink();
+    return const Center(
+          child: Text("Không có từ vựng"),
+        );
   }
 }

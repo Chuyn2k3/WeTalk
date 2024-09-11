@@ -12,15 +12,18 @@ class ClassroomModel {
         data = json["data"] == null ? null : (json["data"] as List).map((e) => Data.fromJson(e)).toList();
     }
 
-    Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["code"] = code;
-        _data["message"] = message;
-        if(data != null) {
-            _data["data"] = data?.map((e) => e.toJson()).toList();
-        }
-        return _data;
-    }
+   Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data["code"] = code;
+  data["message"] = message;
+
+  // Kiểm tra xem "data" có phải là một danh sách không, rồi chuyển đổi thành JSON
+  if (this.data != null && this.data is List) {
+    data["data"] = (this.data as List).map((e) => e.toJson()).toList();
+  }
+
+  return data;
+}
 }
 
 class Data {
@@ -37,10 +40,10 @@ class Data {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["classRoomId"] = classRoomId;
-        _data["content"] = content;
-        _data["imageLocation"] = imageLocation;
-        return _data;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["classRoomId"] = classRoomId;
+        data["content"] = content;
+        data["imageLocation"] = imageLocation;
+        return data;
     }
 }

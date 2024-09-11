@@ -5,6 +5,8 @@ import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../widget/circular_indicator.dart';
+
 class VocabularyByTopic extends StatefulWidget {
   const VocabularyByTopic({super.key, required this.topicId});
   final int topicId;
@@ -27,6 +29,9 @@ class _VocabularyByTopicState extends State<VocabularyByTopic> {
         builder: (context, state) {
           if (state is ListVocabularyByTopicLoadedState) {
             return VocabularyScreen(listVocabulary: state.lstvocabulary);
+          }
+          if (state is ListVocabularyByTopicLoadingState) {
+            return const Center(child: CircularIndicator());
           }
           return const SizedBox.shrink();
         },

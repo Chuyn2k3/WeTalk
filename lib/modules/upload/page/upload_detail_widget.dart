@@ -95,7 +95,7 @@ class _DetailClaimScreenState extends State<DetailClaimScreen> {
               ),
               SizedBox(
                 height: 48,
-                width: double.maxFinite,
+                //width: double.maxFinite,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Container(

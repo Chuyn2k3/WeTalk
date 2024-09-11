@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/challenge/challenge_controller.dart';
 import 'package:flutter_app/modules/challenge/result/result_page.dart';
@@ -20,7 +19,7 @@ class ChallengePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ChallengePageState createState() => _ChallengePageState();
+  State<ChallengePage> createState() => _ChallengePageState();
 }
 
 class _ChallengePageState extends State<ChallengePage> {
@@ -62,43 +61,24 @@ class _ChallengePageState extends State<ChallengePage> {
     nextPage(1000);
   }
 
-  Widget _previousButton(VoidCallback? onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(99),
-        ),
-        child: const Icon(
-          Icons.arrow_back_ios_new,
-          color: Colors.black,
-          size: 16,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return BaseScaffold(
-      appBar:CustomAppbar.basic(
+      appBar: CustomAppbar.basic(
         onTap: () => Navigator.pop(context),
+        title: "Bài kiểm tra",
       ),
       body: (question.isNotEmpty)
           ? Column(
-            children: [
-              ValueListenableBuilder<int>(
-                  valueListenable: controller.currentPageNotifier,
-                  builder: (context, value, _) => QuestionIndicatorWidget(
-                        currentPage: value,
-                        length: widget.questions.data?.length ?? 0,
-                      )),
-              Expanded(
-                child: PageView(
+              children: [
+                ValueListenableBuilder<int>(
+                    valueListenable: controller.currentPageNotifier,
+                    builder: (context, value, _) => QuestionIndicatorWidget(
+                          currentPage: value,
+                          length: widget.questions.data?.length ?? 0,
+                        )),
+                Expanded(
+                  child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
                     children: question
@@ -108,9 +88,12 @@ class _ChallengePageState extends State<ChallengePage> {
                             ))
                         .toList(),
                   ),
-              ),
-            ],
-          )
+                ),
+                const SizedBox(
+                  height: 36,
+                )
+              ],
+            )
           : const SizedBox.shrink(),
       bottom: SafeArea(
         child: Padding(

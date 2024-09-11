@@ -9,6 +9,7 @@ import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
 import 'package:flutter_app/utils/snack_bar.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -53,7 +54,7 @@ class HistoryUploadScreen extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is UploadHistoryLoadingState) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularIndicator());
         }
 
         if (state is UploadHistoryLoadedState) {
@@ -96,7 +97,7 @@ class HistoryUploadScreen extends StatelessWidget {
       children: [
         Expanded(
           child: ListView.builder(
-           // physics: const NeverScrollableScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
             itemCount: items.length,
             shrinkWrap: true,
             padding: EdgeInsets.zero,

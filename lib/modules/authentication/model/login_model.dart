@@ -14,9 +14,9 @@ class LoginDataModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["access_token"] = accessToken;
-    _data["refresh_token"] = refreshToken;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["access_token"] = accessToken;
+    data["refresh_token"] = refreshToken;
+    return data;
   }
 }

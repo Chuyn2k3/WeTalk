@@ -12,6 +12,7 @@ import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/button/base_button.dart';
 import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailProfile extends StatelessWidget {
@@ -27,7 +28,7 @@ class DetailProfile extends StatelessWidget {
       body: BlocBuilder<UserInfoCubit, UserInfoState>(
         builder: (context, state) {
           if (state is UserInfoLoadingState) {
-            return const CircularProgressIndicator();
+            return const CircularIndicator();
           }
           UserModel user = UserModel();
           if (state is UserInfoLoadedState) {
@@ -61,7 +62,7 @@ class _DetailProfile extends StatelessWidget {
               style: SLStyle.t14R,
             ),
             Text(
-              field.getValue(userModel) ??"-",
+              field.getValue(userModel) ?? "-",
               style: SLStyle.t14R.copyWith(
                   color: field.getValue(userModel) != null
                       ? Colors.black
@@ -101,9 +102,7 @@ class _DetailProfile extends StatelessWidget {
 
     Widget deleteUser() {
       return BaseRoundedButton.all(
-        onTap: () {
-
-        },
+        onTap: () {},
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,

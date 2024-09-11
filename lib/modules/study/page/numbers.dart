@@ -7,6 +7,8 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NumberScreen extends StatefulWidget {
+  const NumberScreen({super.key});
+
   @override
   State<NumberScreen> createState() => _NumberScreenState();
 }
@@ -33,7 +35,7 @@ class _NumberScreenState extends State<NumberScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text('Bảng chữ số')),
+      appBar: AppBar(title: const Text('Bảng chữ số')),
       body: SafeArea(
           child: Column(
         children: [
@@ -46,13 +48,13 @@ class _NumberScreenState extends State<NumberScreen> {
           Text('Ấn vào để xem video hướng dẫn',style:  GoogleFonts.lato( fontSize: size.width*0.04),),
           Expanded(
             child: GridView.count(
-              padding: EdgeInsets.all(30),
+              padding: const EdgeInsets.all(30),
               mainAxisSpacing: 30,
               crossAxisSpacing: 30,
               crossAxisCount: 4, // Number of columns
-              children: List.generate(Number_List!.length, (index) {
+              children: List.generate(numberList!.length, (index) {
                 return InkWell(
-                  child: Letter(image: Number_List![index], size: size),
+                  child: Letter(image: numberList![index], size: size),
                   onTap: () {
                     //print(link!.items);
                     //  print(link!.items[0].fullPath);
@@ -65,13 +67,13 @@ class _NumberScreenState extends State<NumberScreen> {
                           //backgroundColor: Colors.white.withOpacity(1.5),
                           elevation: 0,
                           content: PlayVideo(
-                              videoUrl: link!.items[index].fullPath ?? ''),
+                              videoUrl: link!.items[index].fullPath),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Close'),
+                              child: const Text('Close'),
                             ),
                           ],
                         );
@@ -86,7 +88,7 @@ class _NumberScreenState extends State<NumberScreen> {
                     // }));
                   },
                 );
-                
+
                 //Letter(image: Number_List![index], size: size);
               }).toList(),
             ),

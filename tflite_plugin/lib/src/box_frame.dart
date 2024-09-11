@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tflite_plugin/src/TFLiteObjectDetectionAPIModel.dart';
+import 'package:tflite_plugin/src/tfite_object_detection_api_model.dart';
 
 class RecognitionPainter extends CustomPainter {
   final Recognition? recognition;

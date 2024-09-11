@@ -26,7 +26,7 @@ class BaseScaffold extends StatelessWidget {
             Container(
               width: double.maxFinite,
               height: double.maxFinite,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/image/back_ground.png'),
                   fit: BoxFit.fill,

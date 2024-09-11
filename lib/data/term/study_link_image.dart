@@ -1,4 +1,4 @@
-List<String>? Letters_Alphabet = [
+List<String>? lettersAlphabet = [
   'assets/images/letter-a.png',
   'assets/images/letter-b.png',
   'assets/images/letter-c.png',
@@ -26,7 +26,7 @@ List<String>? Letters_Alphabet = [
   'assets/images/letter-y.png',
   'assets/images/letter-z.png',
 ];
-List<String>? Number_List = [
+List<String>? numberList = [
   'assets/images/number-circle-zero.png',
   'assets/images/number-circle-one.png',
   'assets/images/number-circle-two.png',
@@ -39,9 +39,8 @@ List<String>? Number_List = [
   'assets/images/number-circle-nine.png',
 ];
 
-List<String>? Sign_List = [
+List<String>? signList = [
   'assets/images/Â.png',
-  
   'assets/images/Dấu huyền.png',
   'assets/images/Dấu nặng.png',
   'assets/images/Dấu hỏi.png',
@@ -52,26 +51,26 @@ List<String>? Sign_List = [
   'assets/images/Ơ.png',
 ];
 
-List<String>? ListName = [
-  'chuyên',
-  'doanh',
-  'quỳnh',
-  'đức',
-  'tuyến',
-  'chuyên',
-  'doanh',
-  'quỳnh',
-  'đức',
-  'tuyến',
-  'chuyên',
-  'doanh',
-  'quỳnh',
-  'đức',
-  'tuyến',
-];
+// List<String>? listName = [
+//   'chuyên',
+//   'doanh',
+//   'quỳnh',
+//   'đức',
+//   'tuyến',
+//   'chuyên',
+//   'doanh',
+//   'quỳnh',
+//   'đức',
+//   'tuyến',
+//   'chuyên',
+//   'doanh',
+//   'quỳnh',
+//   'đức',
+//   'tuyến',
+// ];
 
-class AppLinkImage {
-  static const logoLink = 'assets/images/logo.png';
-  static const topBackground = 'assets/images/top_background1.png';
-  static const loginButton = 'assets/images/btn_arraw1.png';
-}
+// class AppLinkImage {
+//   static const logoLink = 'assets/images/logo.png';
+//   static const topBackground = 'assets/images/top_background1.png';
+//   static const loginButton = 'assets/images/btn_arraw1.png';
+// }

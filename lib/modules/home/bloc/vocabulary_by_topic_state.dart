@@ -15,11 +15,11 @@ class VocabularyByTopicLoadingState extends VocabularyByTopicState {
 }
 
 class VocabularyByTopicLoadedState extends VocabularyByTopicState {
-  final VocabularyModel VocabularyByTopic;
-  const VocabularyByTopicLoadedState({required this.VocabularyByTopic});
+  final VocabularyModel vocabularyModel;
+  const VocabularyByTopicLoadedState({required this.vocabularyModel});
 
   @override
-  List<Object> get props => [VocabularyByTopic];
+  List<Object> get props => [vocabularyModel];
 }
 
 class EmptyVocabularyByTopicState extends VocabularyByTopicState {

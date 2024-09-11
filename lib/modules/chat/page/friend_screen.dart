@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app/modules/chat/bloc/conversation/list_conversation_cubit.dart';
 import 'package:flutter_app/modules/friend/bloc/list_friend_cubit.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
+import 'package:flutter_app/widget/circular_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'fragment_talk_chat_home.dart';
 
 final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
-
 class ChatMainScreen extends StatefulWidget {
   static String routeName = 'chat_screen';
   const ChatMainScreen({super.key});
   @override
-  _ChatMainScreenState createState() => _ChatMainScreenState();
+ State<ChatMainScreen> createState() => _ChatMainScreenState();
 }
 
 class _ChatMainScreenState extends State<ChatMainScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return BaseScaffold(
         appBar: AppBar(
           leading: const Icon(
@@ -64,24 +58,28 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
                 child: BlocBuilder<ListFriendCubit, ListFriendState>(
                   builder: (context, state) {
                     if (state is ListFriendLoadingState) {
-                      return const CircularProgressIndicator();
+                      return const CircularIndicator();
                     }
                     if (state is ListFriendLoadedState) {
                       return ListView.builder(
+                        padding: EdgeInsets.zero,
                         itemCount: state.lstFriend.data!.length,
                         itemBuilder: (context, index) {
                           return Container(
                             padding: const EdgeInsets.all(8),
                             child: Row(
                               children: [
-                                 CircleAvatar(
-                              radius: 30,
-                              backgroundImage: state.lstFriend.data?[index]
-                                        .avatarLocation != null
-                                  ? NetworkImage(state.lstFriend.data![index]
-                                        .avatarLocation!)
-                                  : const AssetImage("assets/images/profile.png")as ImageProvider,
-                            ),
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: state.lstFriend.data?[index]
+                                              .avatarLocation !=
+                                          null
+                                      ? NetworkImage(state.lstFriend
+                                          .data![index].avatarLocation!)
+                                      : const AssetImage(
+                                              "assets/images/profile.png")
+                                          as ImageProvider,
+                                ),
                                 Column(
                                   children: [
                                     Text(state.lstFriend.data![index].name ??

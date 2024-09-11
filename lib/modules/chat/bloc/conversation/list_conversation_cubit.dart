@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app/di/locator.dart';
 import 'package:flutter_app/modules/chat/model/list_conversation_model.dart';
 import 'package:flutter_app/modules/chat/repo/chat_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

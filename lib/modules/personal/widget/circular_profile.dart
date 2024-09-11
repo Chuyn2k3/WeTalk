@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
 import 'package:flutter_app/modules/personal/bloc/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +17,7 @@ class CircularProfile extends StatelessWidget {
     return InkWell(
       child: CircleAvatar(
         radius:64,
-        backgroundImage: avatarLink != null
+        backgroundImage: (avatarLink != null&&avatarLink.isNotEmpty)
             ? NetworkImage(avatarLink)
             : const AssetImage("assets/images/profile.png")as ImageProvider,
       ),

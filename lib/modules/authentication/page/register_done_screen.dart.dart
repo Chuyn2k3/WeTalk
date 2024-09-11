@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/home/page/home_screen.dart.dart';
 
 class RegisterDoneScreen extends StatelessWidget {
+  const RegisterDoneScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +22,8 @@ class RegisterDoneScreen extends StatelessWidget {
                   _buildTab(3),
                 ],
               ),
-              SizedBox(height: 20),
-              SizedBox(
+              const SizedBox(height: 20),
+              const SizedBox(
                 width: 150,
                 height: 150,
                 child: Icon(
@@ -30,8 +32,8 @@ class RegisterDoneScreen extends StatelessWidget {
                   size: 150,
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 'Đăng ký thành công',
                 style: TextStyle(
                   fontFamily: 'Roboto',
@@ -41,7 +43,7 @@ class RegisterDoneScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              Text(
+              const Text(
                 'Chào mừng bạn đến với app',
                 style: TextStyle(
                   fontFamily: 'Roboto',
@@ -51,7 +53,7 @@ class RegisterDoneScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // EditText để nhập OTP
               // Container(
               //   width: 300,
@@ -76,19 +78,19 @@ class RegisterDoneScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>HomeScreen()),
+                          MaterialPageRoute(builder: (context)=>const HomeScreen()),
                         );
                       },
-                      child: Text('Next',style: TextStyle(color: Colors.white, fontSize: 16),),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                         backgroundColor: Colors.blue,
                       ),
+                      child: const Text('Next',style: TextStyle(color: Colors.white, fontSize: 16),),
                     ),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   // ProgressBar
                 ],
               ),
@@ -105,14 +107,14 @@ class RegisterDoneScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       color: number == 3 ? Colors.blue[800] : Colors.white30,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Container(
         width: 32,
         height: 32,
         alignment: Alignment.center,
         child: Text(
           number.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),

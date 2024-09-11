@@ -1,10 +1,7 @@
-import 'package:design_system_sl/typography/typography.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/modules/personal/model/user_model.dart';
 import 'package:flutter_app/modules/personal/widget/profile_body_button.dart';
 import 'package:flutter_app/utils/common_app.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 enum DetailProfileEnum {
@@ -40,22 +37,22 @@ extension ExtendDetailProfile on DetailProfileEnum {
   }
 
   String? getValue(UserModel user) {
-    final _user = user.data;
+    final user0 = user.data;
     switch (this) {
       case DetailProfileEnum.fullName:
-        return _user?.name;
+        return user0?.name;
       case DetailProfileEnum.userEmail:
-        return _user?.email;
+        return user0?.email;
       case DetailProfileEnum.id:
-        return _user?.userId.toString();
+        return user0?.userId.toString();
       case DetailProfileEnum.address:
-        return _user?.address;
+        return user0?.address;
       case DetailProfileEnum.userPhone:
-        return _user?.phoneNumber;
+        return user0?.phoneNumber;
       case DetailProfileEnum.role:
-        return _user?.role;
+        return user0?.role;
       case DetailProfileEnum.birthDay:
-        return _user?.birthDay;
+        return user0?.birthDay;
     }
   }
 }

@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/modules/challenge/challenge_page.dart';
 import 'package:flutter_app/modules/study/page/question/question_all_screen.dart';
 import 'package:flutter_app/modules/study/page/question/question_classroom.dart';
-import 'package:flutter_app/modules/study/page/study/classroom/classroom_screen.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/common_app.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';

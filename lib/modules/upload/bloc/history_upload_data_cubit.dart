@@ -26,7 +26,6 @@ class UploadHistoryCubit extends Cubit<UploadHistoryState> {
       final result = await _uploadRepository.getHistoryUpload();
       emit(UploadHistoryLoadedState(uploads: result));
     } catch (e) {
-      print(e);
       emit(UploadHistoryErrorState(error: e.toString()));
     }
   }

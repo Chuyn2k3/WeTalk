@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:design_system_sl/theme/components/button/enums.dart';
 import 'package:design_system_sl/theme/components/button/sl_button.dart';
 import 'package:design_system_sl/typography/typography.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/gen/assets.gen.dart';
@@ -12,7 +11,7 @@ import 'package:flutter_app/modules/upload/bloc/create_upload_cubit.dart';
 import 'package:flutter_app/modules/upload/bloc/get_url_cubit.dart';
 import 'package:flutter_app/modules/upload/model/file_upload_model.dart';
 import 'package:flutter_app/modules/upload/page/widget/choose_vocabulary_widget.dart';
-import 'package:flutter_app/modules/upload/widget/bottom_sheet-action.dart';
+import 'package:flutter_app/modules/upload/widget/bottom_sheet_action.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/convert_upload_file.dart';
 import 'package:flutter_app/utils/custom_app_bar.dart';
@@ -21,14 +20,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UpLoad extends StatefulWidget {
-  const UpLoad({super.key});
+class UpLoadScreen extends StatefulWidget {
+  const UpLoadScreen({super.key});
 
   @override
-  State<UpLoad> createState() => _UpLoadState();
+  State<UpLoadScreen> createState() => _UpLoadScreenState();
 }
 
-class _UpLoadState extends State<UpLoad> {
+class _UpLoadScreenState extends State<UpLoadScreen> {
   UploadFile? _file;
   int vocabularyId = -1;
   String dataLocation = "";
@@ -46,8 +45,8 @@ class _UpLoadState extends State<UpLoad> {
           }
         },
         behavior: HitTestBehavior.translucent,
-        child: Container(
-          margin: EdgeInsets.zero,
+        child: Padding(
+          //margin: EdgeInsets.zero,
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 12,
@@ -55,20 +54,17 @@ class _UpLoadState extends State<UpLoad> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Đăng tải nội dung",
-                style: SLStyle.t20B,
-              ),
               const SizedBox(
-                height: 20,
+                height: 8,
               ),
-              //_buildTextFieldClaim(),
               BuildChooseDeviceType(
                 getVocabulary: getVocabulary,
               ),
               _buildImportImageVideo(),
-              _buildFilesChoosen(),
-              const Expanded(child: SizedBox(),),
+              Expanded(child: _buildFilesChoosen()),
+              const Expanded(
+                child: SizedBox(),
+              ),
               _builBottomButton()
             ],
           ),
@@ -79,8 +75,9 @@ class _UpLoadState extends State<UpLoad> {
 
   CustomAppbar _buildAppBar() {
     return CustomAppbar.basic(
-      isLeading: false,
-      title: "Đăng tải nội dung tình nguyện",
+      onTap: () => Navigator.pop(context),
+      isLeading: true,
+      title: "Đăng tải nội dung",
       actions: [
         GestureDetector(
           onTap: () {},
@@ -93,26 +90,16 @@ class _UpLoadState extends State<UpLoad> {
     );
   }
 
-  // Widget _buildTextFieldClaim() {
-  //   return InputTextField(
-  //     minLine: 5,
-  //     maxLine: 10,
-  //     textController: _descriptionCtrl,
-  //     textAlign: TextAlign.start,
-  //     hintText: S.current.claim_issue_example,
-  //   );
-  // }
-
   Widget _buildImportImageVideo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
         Text(
           "Tải lên file",
           style: SLStyle.t16R,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 8),
         Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,8 +125,8 @@ class _UpLoadState extends State<UpLoad> {
                   label: "Chụp ảnh",
                   onClick: () async {
                     final imagePicker = ImagePicker();
-                    final resultImage = await imagePicker.pickImage(
-                        source: ImageSource.camera);
+                    final resultImage =
+                        await imagePicker.pickImage(source: ImageSource.camera);
                     _handleResultImagePicker(resultImage);
                   }),
             ),
@@ -165,8 +152,6 @@ class _UpLoadState extends State<UpLoad> {
     setState(() {
       _file = file;
     });
-    // if (!mounted) return;
-    // context.read<GetUrlCubit>().getUrl(_file!.file);
   }
 
   void getVocabulary(int idVocabulary) {
@@ -177,16 +162,12 @@ class _UpLoadState extends State<UpLoad> {
 
   Widget _buildFilesChoosen() {
     if (_file == null) {
-      return Expanded(
-          child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        alignment: Alignment.center,
-        width: double.maxFinite,
+      return Center(
         child: Text(
           'Không có file ',
           style: SLStyle.t14R,
         ),
-      ));
+      );
     } else {
       return Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
@@ -330,39 +311,5 @@ class _UpLoadState extends State<UpLoad> {
             ),
           ),
         ));
-
-    // BlocConsumer<CreateUploadCubit, CreateUploadState>(
-    //   listener: (context, state) async {
-    //     if (state is CreateUploadErrorState) {
-    //       context.showSnackBarFail(
-    //         text: state.error,
-    //         positionTop: true,
-    //       );
-    //     }
-    //     if (state is CreateUploadLoadedState) {
-    //       await Future.delayed(const Duration(milliseconds: 500));
-    //     }
-    //   },
-    //   builder: (context, state) {
-    //     return Container(
-    //       margin: const EdgeInsets.only(top: 12),
-    //       child: SafeArea(
-    //         top: false,
-    //         child: SLButton.brand(
-    //           onTap: () async {
-    //             if (_file != null) {
-    //               context.read<GetUrlCubit>().getUrl(_file!.file);
-    //             }
-    //           },
-    //           label: "Gửi file",
-    //           size: SLSize.large,
-    //           isLoading: state is CreateUploadLoadingState,
-    //           isRounded: true,
-    //           isMaxWidth: true,
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }

@@ -12,15 +12,18 @@ class ListFriendModel {
         data = json["data"] == null ? null : (json["data"] as List).map((e) => Data.fromJson(e)).toList();
     }
 
-    Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["code"] = code;
-        _data["message"] = message;
-        if(data != null) {
-            _data["data"] = data?.map((e) => e.toJson()).toList();
-        }
-        return _data;
-    }
+   Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data["code"] = code;
+  data["message"] = message;
+
+  // Kiểm tra xem "data" có phải là một danh sách không, rồi chuyển đổi thành JSON
+  if (this.data != null && this.data is List) {
+    data["data"] = (this.data as List).map((e) => e.toJson()).toList();
+  }
+
+  return data;
+}
 }
 
 class Data {
@@ -49,16 +52,16 @@ class Data {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> _data = <String, dynamic>{};
-        _data["userId"] = userId;
-        _data["name"] = name;
-        _data["email"] = email;
-        _data["phoneNumber"] = phoneNumber;
-        _data["address"] = address;
-        _data["role"] = role;
-        _data["birthDay"] = birthDay;
-        _data["gender"] = gender;
-        _data["avatarLocation"] = avatarLocation;
-        return _data;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data["userId"] = userId;
+        data["name"] = name;
+        data["email"] = email;
+        data["phoneNumber"] = phoneNumber;
+        data["address"] = address;
+        data["role"] = role;
+        data["birthDay"] = birthDay;
+        data["gender"] = gender;
+        data["avatarLocation"] = avatarLocation;
+        return data;
     }
 }

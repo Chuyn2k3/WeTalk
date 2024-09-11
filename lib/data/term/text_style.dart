@@ -20,7 +20,7 @@ class AppTextStyles {
     fontSize: 30,
     fontWeight: FontWeight.bold,
   );
-  static final TextStyle authentication = TextStyle(
+  static const TextStyle authentication = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
     color: Color(0xFF3B608C),

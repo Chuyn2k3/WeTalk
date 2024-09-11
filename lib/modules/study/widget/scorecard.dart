@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/data/term/text_style.dart';
 import 'package:flutter_app/modules/study/widget/chart.dart';
 
 class ScoreCardWidget extends StatelessWidget {
@@ -32,10 +31,10 @@ class ScoreCardWidget extends StatelessWidget {
                   percentage: percentage,
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 3,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 24),
+                  padding: EdgeInsets.only(left: 24),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,

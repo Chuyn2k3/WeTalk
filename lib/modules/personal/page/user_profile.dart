@@ -1,15 +1,15 @@
 import 'package:design_system_sl/typography/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/modules/authentication/bloc/login/authentication_cubit.dart';
 import 'package:flutter_app/modules/authentication/page/login_screen.dart';
 import 'package:flutter_app/modules/personal/bloc/user_cubit.dart';
 import 'package:flutter_app/modules/personal/enum.dart';
-import 'package:flutter_app/modules/personal/model/user_model.dart';
 import 'package:flutter_app/modules/personal/page/detail_profile.dart';
 import 'package:flutter_app/modules/personal/widget/circular_profile.dart';
 import 'package:flutter_app/modules/personal/widget/profile_body_button.dart';
 import 'package:flutter_app/modules/personal/widget/version_app.dart';
+import 'package:flutter_app/service/store.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/button/base_button.dart';
 import 'package:flutter_app/utils/common_app.dart';
@@ -36,10 +36,21 @@ class _UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<_UserProfileScreen> {
   late UserInfoCubit _userInfoCubit;
+  bool isLogin = false;
   @override
   void initState() {
+    setLogin();
     super.initState();
     _userInfoCubit = UserInfoCubit();
+  }
+
+  void setLogin() async {
+    final temp = await Store.getToken();
+    if (temp != null && temp.isNotEmpty) {
+      setState(() {
+        isLogin = true;
+      });
+    }
   }
 
   @override
@@ -49,7 +60,7 @@ class _UserProfileScreenState extends State<_UserProfileScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailProfile(),
+              builder: (context) => const DetailProfile(),
             ));
       },
       child: ProfileBodyButtonNext(
@@ -87,6 +98,44 @@ class _UserProfileScreenState extends State<_UserProfileScreen> {
         }),
       ),
     );
+
+    Widget toLogin() {
+      return Column(
+            children: [
+              Text(
+                "Đăng nhập để sử dụng toàn bộ tính năng",
+                style: textTheme.t16R,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              BaseRoundedButton.all(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    getContext,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Assets.newAssets.icons.deleteAccount.image(height: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      "Đăng Nhập",
+                      style: textTheme.t16R.copyWith(color: AppColors.redColor),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+          );
+    }
 
     Widget displayFunction([int cutTheLine = 1]) {
       final int lengthOfFuncion = UserProfileEnum.values.length;
@@ -132,12 +181,14 @@ class _UserProfileScreenState extends State<_UserProfileScreen> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
+                if(!isLogin)
+                toLogin(),
                 displayName,
                 displayFunction(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 2),
                 const VersionAppDebug(),
-                deleteUser(),
-                const SizedBox(height: 24 + kBottomNavigationBarHeight),
+                logout(),
+                const SizedBox(height: 48 + kBottomNavigationBarHeight),
               ],
             ),
           ),
@@ -146,14 +197,17 @@ class _UserProfileScreenState extends State<_UserProfileScreen> {
     );
   }
 
-  Widget deleteUser() {
+  Widget logout() {
     return BaseRoundedButton.all(
-      onTap: () {
-        Navigator.push(
-            getContext,
-            MaterialPageRoute(
-              builder: (context) => LoginScreen(),
-            ));
+      onTap: () async {
+        await Store.removeToken();
+        Navigator.pushAndRemoveUntil(
+          getContext,
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+          (Route<dynamic> route) => false,
+        );
       },
       child: Row(
         mainAxisSize: MainAxisSize.max,
