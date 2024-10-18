@@ -68,6 +68,11 @@ dependencies:
   video_player: ^2.6.0
   dropdown_search: ^5.0.6
   video_thumbnail: ^0.5.3
+  url_launcher: ^6.2.4
+  share_plus: ^4.5.3
+  speech_to_text: ^6.0.0
+  avatar_glow: ^3.0.1
+  permission_handler: ^11.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -91,7 +96,10 @@ flutter:
     - assets/images/
     - assets/image/
     - assets/icon/
+    - assets/animal_image/
     - assets/animation/
+    - assets/family_image/
+    - assets/object_image/
     - .env
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

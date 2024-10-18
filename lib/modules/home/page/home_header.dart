@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/modules/search/page/search_by_voice.dart';
 import 'package:flutter_app/modules/search/page/search_vocabulary.dart';
 import 'package:flutter_app/utils/common_app.dart';
 
@@ -60,10 +61,19 @@ class HomeHeader extends StatelessWidget {
           const SizedBox(
             width: 12,
           ),
-          SizedBox(
-              height: 36,
-              width: 36,
-              child: Image.asset("assets/icon/microphone.png")),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchByVoice(),
+                  ));
+            },
+            child: SizedBox(
+                height: 36,
+                width: 36,
+                child: Image.asset("assets/icon/microphone.png")),
+          ),
           const SizedBox(
             width: 4,
           ),

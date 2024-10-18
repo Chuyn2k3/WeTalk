@@ -29,7 +29,20 @@ class ActionStudyDisplay extends StatelessWidget {
             ),
             Expanded(child: _actionItem(StudyEnum.alphabet)),
           ],
-        )
+        ),
+        const SizedBox(
+              height: 24,
+            ),
+         Row(
+          children: [
+            Expanded(child: _actionItem(StudyEnum.dictionary)),
+            const SizedBox(
+              width: 16,
+            ),
+            const Expanded(child: SizedBox()),
+          ],
+        ),
+
       ],
     );
   }

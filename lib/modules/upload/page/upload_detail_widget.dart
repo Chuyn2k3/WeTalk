@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/upload/page/widget/item_card.dart';
 import 'package:flutter_app/modules/upload/page/widget/video_display.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';

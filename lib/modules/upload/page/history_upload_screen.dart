@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/upload/bloc/history_upload_data_cubit.dart';
 import 'package:flutter_app/modules/upload/model/history_upload_model.dart';
 import 'package:flutter_app/modules/upload/page/widget/upload_item_widget.dart';

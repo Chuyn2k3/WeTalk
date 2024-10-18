@@ -5,7 +5,7 @@ import 'package:design_system_sl/theme/components/button/sl_button.dart';
 import 'package:design_system_sl/typography/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/upload/bloc/ai_detection_cubit.dart';
 import 'package:flutter_app/modules/upload/bloc/create_upload_cubit.dart';
 import 'package:flutter_app/modules/upload/bloc/get_url_cubit.dart';

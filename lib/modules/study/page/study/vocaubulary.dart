@@ -39,7 +39,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       }
     }
     return const Center(
-          child: Text("Không có từ vựng"),
-        );
+      child: Text("Không có từ vựng"),
+    );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/modules/personal/page/about_us/about_us_screen.dart';
+import 'package:flutter_app/modules/personal/page/support_center/support_center.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/chat/page/fragment_talk_chat.dart';
 import 'package:flutter_app/modules/personal/page/history.dart';
 import 'package:flutter_app/modules/personal/widget/profile_body_button.dart';
@@ -95,9 +97,25 @@ extension RenderUserProfileEnum on UserProfileEnum {
                 builder: (context) => const ListHistoryScreen(),
               ));
         };
-      case UserProfileEnum.contact:
-      case UserProfileEnum.privacy:
+
       case UserProfileEnum.aboutUs:
+      return () {
+          Navigator.push(
+              getContext,
+              MaterialPageRoute(
+                builder: (context) => const AboutUsScreen(),
+              ));
+        };
+
+      case UserProfileEnum.privacy:
+      return () {
+          Navigator.push(
+              getContext,
+              MaterialPageRoute(
+                builder: (context) => const SupportCenterScreen(),
+              ));
+        };
+      case UserProfileEnum.contact:
       case UserProfileEnum.guide:
       case UserProfileEnum.fqa:
       case UserProfileEnum.voteRate:

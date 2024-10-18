@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/study/model/vocabulary_model.dart';
 import 'package:flutter_app/utils/base_scaffold.dart';
 import 'package:flutter_app/utils/common_app.dart';

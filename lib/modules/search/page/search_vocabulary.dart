@@ -132,7 +132,7 @@ class _SearchVocabularyByTextState extends State<SearchVocabularyByText> {
                       .toList(),
                 );
               }
-              return const Text("Không tìm thấy tù vựng");
+              return const Text("Không tìm thấy từ vựng");
             }
             if (state is SearchVocabularyByTextErrorState) {
               return const Text("Có lỗi xảy ra");

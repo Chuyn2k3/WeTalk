@@ -1,7 +1,7 @@
 import 'package:design_system_sl/typography/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/term/app_colors.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/study/model/vocabulary_model.dart';
 import 'package:flutter_app/modules/study/widget/study/show_vocabulary.dart';
 import 'package:flutter_app/utils/navigator_key.dart';

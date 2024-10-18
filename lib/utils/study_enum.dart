@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/gen/assets.gen.dart';
+import 'package:flutter_app/modules/dictionary/view/index.dart';
+import 'package:flutter_app/service/gen/assets.gen.dart';
 import 'package:flutter_app/modules/study/page/alphabet.dart';
 import 'package:flutter_app/modules/study/page/numbers.dart';
 import 'package:flutter_app/modules/study/page/pratice.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_app/modules/study/page/question/question_screen.dart';
 import 'package:flutter_app/modules/study/page/study/study_screen.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
 
-enum StudyEnum { alphabet, number, exam, vocabulary, practice }
+enum StudyEnum { alphabet, number, exam, vocabulary, practice, dictionary }
 
 extension ExtStudyEnum on StudyEnum {
   String get title {
@@ -22,6 +23,8 @@ extension ExtStudyEnum on StudyEnum {
         return "Từ vựng";
       case StudyEnum.practice:
         return "Luyện tay";
+      case StudyEnum.dictionary:
+        return "Từ vựng";
     }
   }
 
@@ -37,6 +40,8 @@ extension ExtStudyEnum on StudyEnum {
         return Assets.image.dictionary.image();
       case StudyEnum.practice:
         return Assets.image.target.image();
+      case StudyEnum.dictionary:
+        return Image.asset("assets/image/book.png");
     }
   }
 
@@ -67,6 +72,12 @@ extension ExtStudyEnum on StudyEnum {
               getContext,
               MaterialPageRoute(
                   builder: (context) => const ObjectDetectionScreen()),
+            );
+      case StudyEnum.dictionary:
+        return () => Navigator.push(
+              getContext,
+              MaterialPageRoute(
+                  builder: (context) => const DictionaryScreen()),
             );
     }
   }

@@ -76,9 +76,6 @@ class $AssetsIconGen {
   AssetGenImage get addGroup =>
       const AssetGenImage('assets/icon/add-group.png');
 
-  /// File path: assets/icon/animal.svg
-  String get animal => 'assets/icon/animal.svg';
-
   /// File path: assets/icon/arrow.png
   AssetGenImage get arrow => const AssetGenImage('assets/icon/arrow.png');
 
@@ -110,12 +107,6 @@ class $AssetsIconGen {
   /// File path: assets/icon/dictionary.svg
   String get dictionary => 'assets/icon/dictionary.svg';
 
-  /// File path: assets/icon/dictionary_icon.svg
-  String get dictionaryIcon => 'assets/icon/dictionary_icon.svg';
-
-  /// File path: assets/icon/download.svg
-  String get download => 'assets/icon/download.svg';
-
   /// File path: assets/icon/email.png
   AssetGenImage get email => const AssetGenImage('assets/icon/email.png');
 
@@ -125,9 +116,6 @@ class $AssetsIconGen {
 
   /// File path: assets/icon/facebook.png
   AssetGenImage get facebook => const AssetGenImage('assets/icon/facebook.png');
-
-  /// File path: assets/icon/family.svg
-  String get family => 'assets/icon/family.svg';
 
   /// File path: assets/icon/google.png
   AssetGenImage get google => const AssetGenImage('assets/icon/google.png');
@@ -174,9 +162,6 @@ class $AssetsIconGen {
   /// File path: assets/icon/info.svg
   String get info => 'assets/icon/info.svg';
 
-  /// File path: assets/icon/letter.svg
-  String get letter => 'assets/icon/letter.svg';
-
   /// File path: assets/icon/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/icon/logo.png');
 
@@ -205,9 +190,6 @@ class $AssetsIconGen {
 
   /// File path: assets/icon/profile.png
   AssetGenImage get profile => const AssetGenImage('assets/icon/profile.png');
-
-  /// File path: assets/icon/profile1.png
-  AssetGenImage get profile1 => const AssetGenImage('assets/icon/profile1.png');
 
   /// File path: assets/icon/search-user.png
   AssetGenImage get searchUser =>
@@ -269,7 +251,6 @@ class $AssetsIconGen {
         abc,
         aboutUs,
         addGroup,
-        animal,
         arrow,
         arrowBackPng,
         arrowBackSvg,
@@ -279,12 +260,9 @@ class $AssetsIconGen {
         checkMark,
         closeAction,
         dictionary,
-        dictionaryIcon,
-        download,
         email,
         excercise,
         facebook,
-        family,
         google,
         historyUpload,
         icClaimDelete,
@@ -300,7 +278,6 @@ class $AssetsIconGen {
         iconVideo,
         importFromFiles,
         info,
-        letter,
         logo,
         message,
         microphone,
@@ -310,7 +287,6 @@ class $AssetsIconGen {
         numberBlocks,
         password,
         profile,
-        profile1,
         searchUser,
         searchIcon,
         star1,
@@ -348,17 +324,6 @@ class $AssetsImageGen {
   AssetGenImage get addGroup =>
       const AssetGenImage('assets/image/add-group.png');
 
-  /// File path: assets/image/app_logo.jpg
-  AssetGenImage get appLogo => const AssetGenImage('assets/image/app_logo.jpg');
-
-  /// File path: assets/image/app_logo1.jpg
-  AssetGenImage get appLogo1 =>
-      const AssetGenImage('assets/image/app_logo1.jpg');
-
-  /// File path: assets/image/app_logo2.png
-  AssetGenImage get appLogo2 =>
-      const AssetGenImage('assets/image/app_logo2.png');
-
   /// File path: assets/image/back_ground.png
   AssetGenImage get backGround =>
       const AssetGenImage('assets/image/back_ground.png');
@@ -371,9 +336,6 @@ class $AssetsImageGen {
   AssetGenImage get banGoThietKeTheoPhongCachDonGian600x312 =>
       const AssetGenImage(
           'assets/image/ban-go-thiet-ke-theo-phong-cach-don-gian-600x312.jpg');
-
-  /// File path: assets/image/book.png
-  AssetGenImage get book => const AssetGenImage('assets/image/book.png');
 
   /// File path: assets/image/cach-chup-anh-dong-vat-hoang-da-2.jpg
   AssetGenImage get cachChupAnhDongVatHoangDa2 =>
@@ -417,10 +379,6 @@ class $AssetsImageGen {
 
   /// File path: assets/image/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/image/logo.png');
-
-  /// File path: assets/image/microphone.png
-  AssetGenImage get microphone =>
-      const AssetGenImage('assets/image/microphone.png');
 
   /// File path: assets/image/multiply.png
   AssetGenImage get multiply =>
@@ -499,13 +457,9 @@ class $AssetsImageGen {
         abc,
         aboutUs,
         addGroup,
-        appLogo,
-        appLogo1,
-        appLogo2,
         backGround,
         background,
         banGoThietKeTheoPhongCachDonGian600x312,
-        book,
         cachChupAnhDongVatHoangDa2,
         chat,
         classroom,
@@ -518,7 +472,6 @@ class $AssetsImageGen {
         learning,
         lightbulb,
         logo,
-        microphone,
         multiply,
         notification,
         numberBlocks,
@@ -825,10 +778,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/profile.png
   AssetGenImage get profile => const AssetGenImage('assets/images/profile.png');
 
-  /// File path: assets/images/profile1.png
-  AssetGenImage get profile1 =>
-      const AssetGenImage('assets/images/profile1.png');
-
   /// File path: assets/images/search_icon.png
   AssetGenImage get searchIcon =>
       const AssetGenImage('assets/images/search_icon.png');
@@ -950,7 +899,6 @@ class $AssetsImagesGen {
         password,
         priceTag,
         profile,
-        profile1,
         searchIcon,
         tilde,
         topBackground,
