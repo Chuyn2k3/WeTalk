@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:flutter_app/data/term/app_colors.dart';
 import 'package:flutter_app/modules/study/page/study/all_topic.dart';
 import 'package:flutter_app/modules/study/page/study/classroom/classroom_screen.dart';
