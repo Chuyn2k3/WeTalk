@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_app/data/term/app_term.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_event.dart';
 import 'package:flutter_app/modules/authentication/bloc/otp/otp_bloc_state.dart';
