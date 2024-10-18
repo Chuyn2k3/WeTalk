@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/modules/dictionary/view/index.dart';
 import 'package:flutter_app/service/gen/assets.gen.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_app/modules/study/page/pratice.dart';
 import 'package:flutter_app/modules/study/page/question/question_screen.dart';
 import 'package:flutter_app/modules/study/page/study/study_screen.dart';
 import 'package:flutter_app/utils/navigator_key.dart';
+import 'package:flutter_app/utils/snack_bar.dart';
 
 enum StudyEnum { alphabet, number, exam, vocabulary, practice, dictionary }
 
@@ -68,16 +71,22 @@ extension ExtStudyEnum on StudyEnum {
               MaterialPageRoute(builder: (context) => const StudyScreen()),
             );
       case StudyEnum.practice:
-        return () => Navigator.push(
+        return () {
+          if (Platform.isAndroid) {
+            return Navigator.push(
               getContext,
               MaterialPageRoute(
                   builder: (context) => const ObjectDetectionScreen()),
             );
+          } else if (Platform.isIOS) {
+            getContext.showSnackBarFail(
+                text: "Chức năng chưa hỗ trợ hệ điều hành này");
+          }
+        };
       case StudyEnum.dictionary:
         return () => Navigator.push(
               getContext,
-              MaterialPageRoute(
-                  builder: (context) => const DictionaryScreen()),
+              MaterialPageRoute(builder: (context) => const DictionaryScreen()),
             );
     }
   }
