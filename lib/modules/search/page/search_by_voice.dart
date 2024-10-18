@@ -34,19 +34,27 @@ class _SearchByVoiceState extends State<SearchByVoice> {
   }
 
   Future<void> _checkPermission() async {
-    final status = await Permission.microphone.request();
-    // Kiểm tra và yêu cầu quyền truy cập micro
-    if (status.isGranted) {
-      final available = await _speech.initialize();
-
-      setState(() {
-        _available = available;
-      });
-    } else {
-      if (!mounted) return;
-      context.showSnackBarFail(text: "Cần cấp quyền truy cập micro");
-    }
+  PermissionStatus status = await Permission.microphone.status;
+  if (status.isDenied) {
+    // Yêu cầu cấp quyền
+    status = await Permission.microphone.request();
   }
+  if (status.isGranted) {
+    // Khởi tạo SpeechToText nếu quyền được cấp
+    final available = await _speech.initialize();
+    setState(() {
+      _available = available;
+    });
+  } else if (status.isPermanentlyDenied) {
+    // Nếu quyền bị từ chối vĩnh viễn, hướng dẫn người dùng vào cài đặt
+    openAppSettings();
+  } else {
+    // Hiển thị SnackBar khi quyền bị từ chối
+    if (!mounted) return;
+    context.showSnackBarFail(text: "Cần cấp quyền truy cập micro để sử dụng chức năng này");
+  }
+}
+
 
   void _listen() async {
     // Chỉ thu âm khi quyền đã được cấp
