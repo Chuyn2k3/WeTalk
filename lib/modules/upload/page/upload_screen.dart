@@ -134,7 +134,7 @@ class _UpLoadScreenState extends State<UpLoadScreen> {
               flex: 1,
               child: BottomSheetAction(
                   icon: Assets.icon.importFromFiles,
-                  label: "Tải file từ thưa viện",
+                  label: "Tải file từ thư viện",
                   onClick: () async {
                     final imagePicker = ImagePicker();
                     final choosenFiles = await imagePicker.pickMedia();

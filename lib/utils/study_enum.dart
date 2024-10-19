@@ -27,7 +27,7 @@ extension ExtStudyEnum on StudyEnum {
       case StudyEnum.practice:
         return "Luyện tay";
       case StudyEnum.dictionary:
-        return "Từ vựng";
+        return "Từ Điển";
     }
   }
 
